@@ -8,31 +8,20 @@ export class MessageService {
   constructor(private readonly prismaServices: PrismaService) { }
 
   async create(createMessageDto: CreateMessageDto) {
-    try {
-      console.log(createMessageDto)
-      return {
-        sucess: true,
-        message: "Message Sent, We will get back to you soon",
-        data: await this.prismaServices.message.create({
-          data: {
-            name: createMessageDto.name,
-            email: createMessageDto.email,
-            phone: createMessageDto.phone,
-            message: createMessageDto.message
-          }
-        })
+
+    return await this.prismaServices.message.create({
+      data: {
+        name: createMessageDto.name,
+        email: createMessageDto.email,
+        phone: createMessageDto.phone,
+        message: createMessageDto.message
       }
-    } catch (error) {
-      throw new Error(error)
-    }
+    })
+
   }
 
   async findAll() {
-    return {
-      sucess: true,
-      message: "All Messages",
-      data: await this.prismaServices.message.findMany()
-    }
+    return await this.prismaServices.message.findMany()
   }
 
   // findOne(id: number) {
@@ -44,14 +33,11 @@ export class MessageService {
   // }
 
   async remove(id: number) {
-    return {
-      sucess: true,
-      message: "Message Deleted Successfully",
-      data: await this.prismaServices.message.delete({
-        where: {
-          id: id
-        }
-      })
-    }
+    return await this.prismaServices.message.delete({
+      where: {
+        id: id
+      }
+    })
   }
+
 }

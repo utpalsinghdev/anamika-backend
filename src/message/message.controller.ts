@@ -3,19 +3,45 @@ import { MessageService } from './message.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { STATUS_CODES } from 'http';
 @ApiTags("Message APIs")
 @Controller('message')
 export class MessageController {
   constructor(private readonly messageService: MessageService) { }
 
   @Post()
-  create(@Body() createMessageDto: CreateMessageDto) {
-    return this.messageService.create(createMessageDto);
+  async create(@Body() createMessageDto: CreateMessageDto) {
+    try {
+      const message = await this.messageService.create(createMessageDto);
+      return {
+        success: true,
+        message: "Message Sent, We will get back to you soon",
+        data: message
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
   }
 
   @Get()
-  findAll() {
-    return this.messageService.findAll();
+  async findAll() {
+    try {
+      return {
+        success: true,
+        message: "All Messages",
+        data: await this.messageService.findAll()
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
   }
 
   // @Get(':id')
@@ -29,12 +55,20 @@ export class MessageController {
   // }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     try {
-      return this.messageService.remove(+id);
+      return {
+        success: true,
+        message: "message deleted !",
+        data: await this.messageService.remove(+id)
+      }
     } catch (err) {
 
-      throw new Error(err)
+      return {
+        success: false,
+        message: err.message,
+        data: null
+      }
     }
   }
 }
