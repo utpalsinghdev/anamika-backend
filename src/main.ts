@@ -3,8 +3,12 @@ import { AppModule } from './app.module';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { ValidationPipe } from '@nestjs/common/pipes';
+import * as morgan from 'morgan';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn'],
+  });
+
   app.useGlobalPipes(new ValidationPipe())
   const config = new DocumentBuilder()
     .setTitle('Green Apple APIs')
@@ -13,6 +17,7 @@ async function bootstrap() {
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
+  app.use(morgan("dev"))
 
   SwaggerModule.setup('/api-docs', app, document)
   await app.listen(8084);
