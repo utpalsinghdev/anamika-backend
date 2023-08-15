@@ -11,7 +11,7 @@ async function bootstrap() {
   });
   app.enableCors();
   app.setGlobalPrefix('/api');
-  // app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true })); //TODO: Fixing Pipe Issue
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true })); //TODO: Fixing Pipe Issue
   const config = new DocumentBuilder()
     .setTitle('Green Apple APIs')
     .setDescription('All Apis for Green Apple Pvt. Ltd.')
