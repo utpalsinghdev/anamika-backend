@@ -12,10 +12,10 @@ jobs:
         run: cd /root/green-apple-backend && git pull origin development
 
       - name: Install Dependencies
-        run: cd /root/green-apple-backend && npm install && npm run build && npm run format && pm2 list
+        run: cd /root/green-apple-backend && npm install && npm run build && npm run format && pm2 list && pm2 ls
 
       - name: Making Build Directory
-        run: cd /root/green-apple-backend && mkir building
+        run: cd /root/green-apple-backend && mkdir building
         
       
 
