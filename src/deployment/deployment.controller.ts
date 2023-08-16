@@ -6,9 +6,10 @@ export class DeploymentController {
   @Get()
   async deploy(): Promise<string> {
     try {
-      // await this.executeCommand('git pull origin development');
+      await this.executeCommand('git stash');
+      await this.executeCommand('git pull origin development');
       await this.executeCommand('npm run build');
-      await this.executeCommand('yarn start:prod');
+      await this.executeCommand('pm2 restart all');
       return 'Deployment successful';
     } catch (error) {
       console.error(`Deployment error: ${error}`);
