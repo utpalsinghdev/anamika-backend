@@ -16,12 +16,12 @@ async function bootstrap() {
     .setTitle('Green Apple APIs')
     .setDescription('All Apis for Green Apple Pvt. Ltd.')
     .setVersion('0.0.1')
-    .build()
+    .build();
 
-  const document = SwaggerModule.createDocument(app, config)
-  app.use(morgan("dev"))
+  const document = SwaggerModule.createDocument(app, config);
+  app.use(morgan('dev'));
 
-  SwaggerModule.setup('/api-docs', app, document)
+  SwaggerModule.setup('/api-docs', app, document);
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
   await app.listen(8084);
