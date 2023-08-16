@@ -8,10 +8,11 @@ jobs:
   checkdir:
     runs-on: self-hosted
     steps:
-      - name: print pwd
-        run: pwd
-      - name: list files
-        run: ls -la
-      - name: list files
-        run: ls -la
+      - name: Full Checkout
+        run: cd /root/green-apple-backend && git pull origin development
 
+      - name: Install Dependencies
+        run: cd /root/green-apple-backend && npm install
+
+      - name: Run Tests
+        run: cd /root/green-apple-backend && npm test
