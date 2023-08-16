@@ -4,23 +4,21 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class MessageService {
-  constructor(private readonly prismaServices: PrismaService) { }
+  constructor(private readonly prismaServices: PrismaService) {}
 
   async create(createMessageDto: CreateMessageDto) {
-
     return await this.prismaServices.message.create({
       data: {
         name: createMessageDto.name,
         email: createMessageDto.email,
         phone: createMessageDto.phone,
-        message: createMessageDto.message
-      }
-    })
-
+        message: createMessageDto.message,
+      },
+    });
   }
 
   async findAll() {
-    return await this.prismaServices.message.findMany()
+    return await this.prismaServices.message.findMany();
   }
 
   // findOne(id: number) {
@@ -34,9 +32,8 @@ export class MessageService {
   async remove(id: number) {
     return await this.prismaServices.message.delete({
       where: {
-        id: id
-      }
-    })
+        id: id,
+      },
+    });
   }
-
 }
