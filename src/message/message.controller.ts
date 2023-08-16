@@ -7,10 +7,10 @@ import {
   Param,
   Delete,
   ValidationPipe,
-} from '@nestjs/common';
-import { MessageService } from './message.service';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { ApiTags } from '@nestjs/swagger';
+} from '@nestjs/common'
+import { MessageService } from './message.service'
+import { CreateMessageDto } from './dto/create-message.dto'
+import { ApiTags } from '@nestjs/swagger'
 @ApiTags('Message APIs')
 @Controller('message')
 export class MessageController {
@@ -19,18 +19,18 @@ export class MessageController {
   @Post()
   async create(@Body() createMessageDto: CreateMessageDto) {
     try {
-      const message = await this.messageService.create(createMessageDto);
+      const message = await this.messageService.create(createMessageDto)
       return {
         success: true,
         message: 'Message Sent, We will get back to you soon',
         data: message,
-      };
+      }
     } catch (error) {
       return {
         success: false,
         message: error.message,
         data: null,
-      };
+      }
     }
   }
 
@@ -39,15 +39,15 @@ export class MessageController {
     try {
       return {
         success: true,
-        message: 'All messages fetched 🚀',
+        message: 'All messages fetched CICD',
         data: await this.messageService.findAll(),
-      };
+      }
     } catch (error) {
       return {
         success: false,
         message: error.message,
         data: null,
-      };
+      }
     }
   }
 
@@ -63,20 +63,20 @@ export class MessageController {
 
   @Delete(':id')
   async remove(
-    @Param('id', new ValidationPipe({ transform: true })) id: number,
+    @Param('id', new ValidationPipe({ transform: true })) id: number
   ) {
     try {
       return {
         success: true,
         message: 'message deleted !',
         data: await this.messageService.remove(id),
-      };
+      }
     } catch (err) {
       return {
         success: false,
         message: err.message,
         data: null,
-      };
+      }
     }
   }
 }
