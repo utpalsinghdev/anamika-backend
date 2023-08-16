@@ -18,4 +18,4 @@ jobs:
         run: cd /root/green-apple-backend && npm run build
 
       - name: Restarting PM2
-        run: cd /root/green-apple-backend && pm2 restart all
+        run: cd /root/green-apple-backend && pm2 list
