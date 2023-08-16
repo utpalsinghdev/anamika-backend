@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable } from '@nestjs/common'
+import { CreateMessageDto } from './dto/create-message.dto'
+import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
 export class MessageService {
@@ -14,11 +14,11 @@ export class MessageService {
         phone: createMessageDto.phone,
         message: createMessageDto.message,
       },
-    });
+    })
   }
 
   async findAll() {
-    return await this.prismaServices.message.findMany();
+    return await this.prismaServices.message.findMany()
   }
 
   // findOne(id: number) {
@@ -34,6 +34,6 @@ export class MessageService {
       where: {
         id: id,
       },
-    });
+    })
   }
 }
