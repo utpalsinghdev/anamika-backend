@@ -6,7 +6,6 @@ export class DeploymentController {
     @Get()
     @HttpCode(HttpStatus.OK)
     async deploy(): Promise<string> {
-        // Acknowledge the request immediately with an "OK" response
         this.backgroundDeployment();
 
         return 'Deployment started. Please wait for the changes to reflect.';
