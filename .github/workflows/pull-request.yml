@@ -6,7 +6,7 @@ on:
 
 jobs:
   checkdir:
-    runs-on: sefl-hosted
+    runs-on: self-hosted
     steps:
       - name: print pwd
         run: pwd
