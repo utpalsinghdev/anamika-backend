@@ -25,3 +25,73 @@ model Message {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+enum ROLE {
+  AGENT
+  DEALERSHIP
+  FEILDOFFICER
+  ADMIN
+  CUSTOMER
+}
+
+enum Status {
+  APPROVED
+  REJECTED
+  UNDER_REVIEW
+  PENDING
+}
+
+model CareerApplication {
+  id            Int                       @unique @default(autoincrement())
+  title         String
+  firstName     String
+  LastName      String
+  Email         String                    @unique
+  Phone         String                    @unique
+  Status        Status                    @default(PENDING)
+  ApplicationID String
+  city          String
+  docId         Int                       @unique
+  resume        CareerApplicationDocument @relation(fields: [docId], references: [id])
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+  approvedAt    DateTime
+}
+
+model CareerApplicationDocument {
+  id        Int                @unique @default(autoincrement())
+  name      String
+  size      String
+  url       String
+  careerDoc CareerApplication?
+}
+
+model EmployeeDocument {
+  id          Int       @unique @default(autoincrement())
+  name        String
+  size        String
+  url         String
+  emoloyeeDoc Employee? @relation(fields: [employeeId], references: [id])
+  employeeId  Int?
+}
+
+model Employee {
+  id           Int                @unique @default(autoincrement())
+  employeeCode String
+  password     String
+  title        String
+  firstName    String
+  LastName     String
+  city         String
+  phone        String
+  email        String
+  designation  String
+  resume       EmployeeDocument[]
+  resumeId     Int                @unique
+  status       Status             @default(PENDING)
+  park         Boolean            @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  joinedAt  DateTime
+}

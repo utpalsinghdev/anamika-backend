@@ -2,7 +2,7 @@
     "name": "green-apple-backend",
     "version": "0.0.1",
     "description": "",
-    "author": "",
+    "author": "Utpal Singh <utpalsingh915@gmail.com>",
     "private": true,
     "license": "UNLICENSED",
     "scripts": {
@@ -74,5 +74,7 @@
         ],
         "coverageDirectory": "../coverage",
         "testEnvironment": "node"
-    }
+    },
+    "main": "dist/main.js",
+    "repository": "https://github.com/utpalsinghdev/green-apple-backend.git"
 }
