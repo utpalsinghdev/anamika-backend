@@ -30,7 +30,7 @@ export class MessageController {
     try {
       return {
         success: true,
-        message: "All Messages",
+        message: "All Messages 🚀",
         data: await this.messageService.findAll()
       }
     } catch (error) {
