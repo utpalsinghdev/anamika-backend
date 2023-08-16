@@ -39,7 +39,7 @@ export class MessageController {
     try {
       return {
         success: true,
-        message: 'All Messages 🚀❤️‍🩹',
+        message: 'All messages fetched',
         data: await this.messageService.findAll(),
       };
     } catch (error) {
