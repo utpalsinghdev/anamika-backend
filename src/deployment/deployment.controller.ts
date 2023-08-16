@@ -1,19 +1,26 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpStatus, HttpCode } from '@nestjs/common';
 import { exec } from 'child_process';
 
 @Controller('deployment')
 export class DeploymentController {
     @Get()
+    @HttpCode(HttpStatus.OK)
     async deploy(): Promise<string> {
+        // Acknowledge the request immediately with an "OK" response
+        this.backgroundDeployment();
+
+        return 'Deployment started. Please wait for the changes to reflect.';
+    }
+
+    private async backgroundDeployment(): Promise<void> {
         try {
             await this.executeCommand('git stash');
             await this.executeCommand('git pull origin development');
             await this.executeCommand('npm run build');
 
-            return 'Deployment done please wait for 2 minutes to reflect the changes';
+            console.log('Deployment completed.');
         } catch (error) {
             console.error(`Deployment error: ${error}`);
-            throw new Error('Deployment failed');
         } finally {
             await this.executeCommand('pm2 restart all');
         }
