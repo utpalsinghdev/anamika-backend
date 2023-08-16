@@ -12,14 +12,4 @@ jobs:
         run: cd /root/green-apple-backend && git pull origin development
 
       - name: Install Dependencies
-        run: cd /root/green-apple-backend && npm install && npm run build && npm run format && sudo pm2 list &&  ls
-
-      - name: Making Build Directory
-        run: cd /root/green-apple-backend && mkdir building
-        
-      
-
-      - run: ls
-      - run: npm install
-      - run: npm run format
-      - run: npm run build --if-present
+        run: cd /root/green-apple-backend && npm install && npm run build && npm run format && sudo pm2 list &&  sudo pm2 restart 0
