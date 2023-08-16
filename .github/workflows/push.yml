@@ -8,8 +8,17 @@ jobs:
   checkdir:
     runs-on: self-hosted
     steps:
-      - name: Full Checkout
-        run: cd /root/green-apple-backend && git stash && git pull origin development
-
-      - name: Install Dependencies
-        run: cd /root/green-apple-backend && npm install && npm run build && npm run format && sudo pm2 list &&  sudo pm2 restart 0
+      - name: Pulling Code and Install Dependencies
+        run: |
+          cd /root/green-apple-backend &&
+          (
+            git stash &&
+            git pull origin development
+          ) &&
+          (
+            # npm install &&
+            npm run build &&
+            npm run format &&
+            sudo pm2 list &&
+            sudo pm2 restart 0
+          )
