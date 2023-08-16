@@ -6,8 +6,7 @@ on:
 
 jobs:
   checkdir:
-    runs-on:
-      labels: ubuntu-s-1vcpu-1gb-blr1-01
+    runs-on: sefl-hosted
     steps:
       - name: print pwd
         run: pwd
