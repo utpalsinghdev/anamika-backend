@@ -7,9 +7,10 @@ import { MessageModule } from './message/message.module'
 import { PrismaService } from './prisma/prisma.service'
 import { AgentModule } from './agent/agent.module';
 import { AgentApplicationModule } from './agent-application/agent-application.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule],
   controllers: [AppController],
   providers: [PrismaService ,AppService],
 })
