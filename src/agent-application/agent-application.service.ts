@@ -14,7 +14,7 @@ export class AgentApplicationService {
       },
     });
     if (!!findEmail) {
-      throw new HttpException('Email already exists', HttpStatus.CONFLICT);
+      throw new HttpException('Your Form is already Submitted', HttpStatus.CONFLICT);
     }
 
     const findPhone = await this.prisma.careerApplication.findFirst({
@@ -23,7 +23,7 @@ export class AgentApplicationService {
       },
     });
     if (!!findPhone) {
-      throw new HttpException('Phone number already exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Your Form is already Submitted', HttpStatus.BAD_REQUEST);
     }
 
     const applicationId = await this.prisma.careerApplication.findMany({
