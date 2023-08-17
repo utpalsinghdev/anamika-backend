@@ -11,6 +11,7 @@
         "start": "nest start",
         "dev": "nest start --watch",
         "db": "npx prisma generate && npx prisma db push",
+        "studio": "npx prisma studio",
         "start:debug": "nest start --debug --watch",
         "start:prod": "node dist/main",
         "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

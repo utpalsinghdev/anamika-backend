@@ -4,7 +4,6 @@ import { DocumentBuilder } from '@nestjs/swagger'
 import { SwaggerModule } from '@nestjs/swagger/dist'
 import { ValidationPipe } from '@nestjs/common/pipes'
 import * as morgan from 'morgan'
-import { PrismaClientExceptionFilter } from './prisma-client-exception/prisma-client-exception.filter'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn'],
@@ -22,8 +21,6 @@ async function bootstrap() {
   app.use(morgan('dev'))
 
   SwaggerModule.setup('/api-docs', app, document)
-  const { httpAdapter } = app.get(HttpAdapterHost)
-  app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter))
   await app.listen(8084)
 }
 bootstrap()
