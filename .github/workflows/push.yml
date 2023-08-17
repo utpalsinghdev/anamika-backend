@@ -5,7 +5,7 @@ on:
     branches: [development]
 
 jobs:
-  checkdir:
+  ciC:
     runs-on: self-hosted
     steps:
       - name: Pulling Code and Install Dependencies
@@ -16,8 +16,8 @@ jobs:
             git pull origin development
           ) &&
           (
-             npm install &&
-             npx prisma db push &&
+            #  npm install &&
+            #  npx prisma db push &&
             npm run build &&
             npm run format &&
             sudo pm2 list &&
