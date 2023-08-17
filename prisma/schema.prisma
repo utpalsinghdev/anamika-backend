@@ -62,7 +62,6 @@ model CareerApplication {
 model CareerApplicationDocument {
   id        Int                @unique @default(autoincrement())
   name      String
-  size      String
   url       String
   careerDoc CareerApplication?
 }

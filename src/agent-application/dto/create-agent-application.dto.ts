@@ -29,4 +29,8 @@ export class CreateAgentApplicationDto {
     @IsString()
     @IsNotEmpty()
     city: string;
+
+    @IsBase64()
+    @IsNotEmpty()
+    resume: string;
 }
