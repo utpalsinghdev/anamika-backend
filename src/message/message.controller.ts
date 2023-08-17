@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Patch,
+  Res,
   Param,
   Delete,
   ValidationPipe,
@@ -11,6 +12,7 @@ import {
 import { MessageService } from './message.service'
 import { CreateMessageDto } from './dto/create-message.dto'
 import { ApiTags } from '@nestjs/swagger'
+import { Response } from 'express'
 @ApiTags('Message APIs')
 @Controller('message')
 export class MessageController {
@@ -63,7 +65,7 @@ export class MessageController {
 
   @Delete(':id')
   async remove(
-    @Param('id', new ValidationPipe({ transform: true })) id: number
+    @Param('id', new ValidationPipe({ transform: true })) id: number, @Res({ passthrough: true }) res: Response
   ) {
     try {
       return {
@@ -71,10 +73,11 @@ export class MessageController {
         message: 'message deleted !',
         data: await this.messageService.remove(id),
       }
-    } catch (err) {
+    } catch (error) {
+      res.status(error.status || 500)
       return {
         success: false,
-        message: err.message,
+        message: error.message,
         data: null,
       }
     }

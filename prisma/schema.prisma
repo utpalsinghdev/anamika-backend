@@ -45,17 +45,18 @@ model CareerApplication {
   id            Int                       @unique @default(autoincrement())
   title         String
   firstName     String
+  role          ROLE
   LastName      String
   Email         String                    @unique
   Phone         String                    @unique
   Status        Status                    @default(PENDING)
   ApplicationID String
   city          String
-  docId         Int                       @unique
-  resume        CareerApplicationDocument @relation(fields: [docId], references: [id])
+  docId         Int?                       @unique
+  resume        CareerApplicationDocument? @relation(fields: [docId], references: [id])
   createdAt     DateTime                  @default(now())
   updatedAt     DateTime                  @updatedAt
-  approvedAt    DateTime
+  approvedAt    DateTime?
 }
 
 model CareerApplicationDocument {

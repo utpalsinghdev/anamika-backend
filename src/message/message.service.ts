@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
-
 @Injectable()
 export class MessageService {
-  constructor(private readonly prismaServices: PrismaService) {}
+  constructor(private readonly prismaServices: PrismaService) { }
 
   async create(createMessageDto: CreateMessageDto) {
     return await this.prismaServices.message.create({
@@ -30,6 +29,12 @@ export class MessageService {
   // }
 
   async remove(id: number) {
+    const f_message = await this.prismaServices.message.findFirst({
+      where: {
+        id
+      }
+    })
+    if (!f_message) { throw new NotFoundException }
     return await this.prismaServices.message.delete({
       where: {
         id: id,
