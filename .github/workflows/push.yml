@@ -16,8 +16,8 @@ jobs:
             git pull origin development
           ) &&
           (
-            #  npm install &&
-            #  npx prisma db push &&
+             npm install &&
+             npx prisma db push &&
             npm run build &&
             npm run format &&
             sudo pm2 list &&
