@@ -4,12 +4,11 @@ import { AppService } from './app.service'
 import { UserModule } from './user/user.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { MessageModule } from './message/message.module'
-import { DeploymentController } from './deployment/deployment.controller'
 import { PrismaService } from './prisma/prisma.service'
 
 @Module({
   imports: [UserModule, MessageModule],
-  controllers: [AppController, DeploymentController],
+  controllers: [AppController],
   providers: [PrismaService ,AppService],
 })
 export class AppModule {}
