@@ -17,7 +17,9 @@ jobs:
           ) &&
           (
              npm install &&
-             npx prisma db push &&
+
+             npx prisma db push --accept-data-loss &&
+
             npm run build &&
             npm run format &&
             sudo pm2 list &&
