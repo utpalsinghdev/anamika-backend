@@ -14,6 +14,6 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule],
   controllers: [AppController],
-  providers: [PrismaService ,AppService],
+  providers: [PrismaService, AppService],
 })
-export class AppModule {}
+export class AppModule { }

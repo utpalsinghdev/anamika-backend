@@ -97,7 +97,7 @@ model Employee {
 }
 
 enum Lane {
-  FIST
+  FIRST
   SECOND
 }
 

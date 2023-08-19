@@ -1,34 +1,103 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Res, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { NewService } from './new.service';
 import { CreateNewDto } from './dto/create-new.dto';
 import { UpdateNewDto } from './dto/update-new.dto';
+import { Response, response } from 'express';
 
-@Controller('new')
+@Controller('news')
 export class NewController {
-  constructor(private readonly newService: NewService) {}
+  constructor(private readonly newService: NewService) { }
 
   @Post()
-  create(@Body() createNewDto: CreateNewDto) {
-    return this.newService.create(createNewDto);
+  async create(@Body() createNewDto: CreateNewDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "News Created Successfully",
+        data: await this.newService.create(createNewDto)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+
   }
 
   @Get()
-  findAll() {
-    return this.newService.findAll();
+  async findAll(@Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "All News Fetched",
+        data: await this.newService.findAll()
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.newService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "One News",
+        data: await this.newService.findOne(+id)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewDto: UpdateNewDto) {
-    return this.newService.update(+id, updateNewDto);
+  async update(@Param('id') id: string, @Body() updateNewDto: UpdateNewDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "News Updated",
+        data: await this.newService.update(+id, updateNewDto)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.newService.remove(+id);
+  async remove(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "News Deleted",
+        data: await this.newService.remove(+id)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
   }
 }
