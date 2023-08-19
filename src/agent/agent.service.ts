@@ -5,6 +5,17 @@ import { UpdateAgentDto } from './dto/update-agent.dto';
 @Injectable()
 export class AgentService {
   create(createAgentDto: CreateAgentDto) {
+    /**
+     * - Create a new agent
+     * - Meanwhile, Approve the agent application
+     * 
+     * These tasks will run Parallelly
+     * 
+     * - Send an SMS to the agent
+     * This will run in the background
+     * 
+     */
+
     return 'This action adds a new agent';
   }
 
