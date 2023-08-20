@@ -1,9 +1,12 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class AuthDto {
+export class CreateAdminDto {
     @IsNotEmpty()
     @IsString()
-    Id: string;
+    firstName: string;
+    @IsNotEmpty()
+    @IsString()
+    LastName: string
     @IsNotEmpty()
     @IsString()
     password: string

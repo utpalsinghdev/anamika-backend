@@ -79,21 +79,22 @@ model Employee {
   id           Int                @unique @default(autoincrement())
   employeeCode String
   password     String
-  title        String
+  title        String?
   firstName    String
   LastName     String
-  city         String
-  phone        String
-  email        String
-  designation  String
+  role         ROLE
+  city         String?
+  phone        String?
+  email        String?
+  designation  String?
   resume       EmployeeDocument[]
-  resumeId     Int                @unique
+  resumeId     Int?               @unique
   status       Status             @default(PENDING)
   park         Boolean            @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  joinedAt  DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  joinedAt  DateTime?
 }
 
 enum Lane {
