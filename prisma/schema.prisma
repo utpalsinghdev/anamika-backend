@@ -42,20 +42,20 @@ enum Status {
 }
 
 model CareerApplication {
-  id            Int                       @unique @default(autoincrement())
+  id            Int                        @unique @default(autoincrement())
   title         String
   firstName     String
   role          ROLE
   LastName      String
-  Email         String                    @unique
-  Phone         String                    @unique
-  Status        Status                    @default(PENDING)
+  Email         String                     @unique
+  Phone         String                     @unique
+  Status        Status                     @default(PENDING)
   ApplicationID String
   city          String
   docId         Int?                       @unique
   resume        CareerApplicationDocument? @relation(fields: [docId], references: [id])
-  createdAt     DateTime                  @default(now())
-  updatedAt     DateTime                  @updatedAt
+  createdAt     DateTime                   @default(now())
+  updatedAt     DateTime                   @updatedAt
   approvedAt    DateTime?
 }
 
@@ -79,19 +79,34 @@ model Employee {
   id           Int                @unique @default(autoincrement())
   employeeCode String
   password     String
-  title        String
+  title        String?
   firstName    String
   LastName     String
-  city         String
-  phone        String
-  email        String
-  designation  String
+  role         ROLE
+  city         String?
+  phone        String?
+  email        String?
+  designation  String?
   resume       EmployeeDocument[]
-  resumeId     Int                @unique
+  resumeId     Int?               @unique
   status       Status             @default(PENDING)
   park         Boolean            @default(false)
 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  joinedAt  DateTime?
+}
+
+enum Lane {
+  FIRST
+  SECOND
+}
+
+model News {
+  id   Int    @unique @default(autoincrement())
+  text String
+  lane Lane
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  joinedAt  DateTime
 }

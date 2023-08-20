@@ -8,10 +8,12 @@ import { PrismaService } from './prisma/prisma.service'
 import { AgentModule } from './agent/agent.module';
 import { AgentApplicationModule } from './agent-application/agent-application.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { NewModule } from './new/new.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule],
   controllers: [AppController],
-  providers: [PrismaService ,AppService],
+  providers: [PrismaService, AppService],
 })
-export class AppModule {}
+export class AppModule { }

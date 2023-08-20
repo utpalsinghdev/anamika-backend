@@ -1,1 +1,4 @@
-export class CreateAgentDto {}
+export class CreateAgentDto {
+    applicationId: string;
+    
+}
