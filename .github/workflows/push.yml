@@ -21,7 +21,6 @@ jobs:
              npx prisma db push --accept-data-loss &&
 
             npm run build &&
-            npm run format &&
             sudo pm2 list &&
             sudo pm2 restart 0
           )
