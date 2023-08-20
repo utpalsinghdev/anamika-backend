@@ -1,13 +1,18 @@
-import { Controller, Get, Res, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Res, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { NewService } from './new.service';
 import { CreateNewDto } from './dto/create-new.dto';
 import { UpdateNewDto } from './dto/update-new.dto';
 import { Response, response } from 'express';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/auth/guards/role.guard';
+import { Roles } from 'src/decoretors/role.decorator';
+import { ROLE } from '@prisma/client';
 
 @Controller('news')
 export class NewController {
   constructor(private readonly newService: NewService) { }
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
   @Post()
   async create(@Body() createNewDto: CreateNewDto, @Res({ passthrough: true }) res: Response) {
     try {
@@ -24,8 +29,9 @@ export class NewController {
         data: null
       }
     }
-
   }
+
+
 
   @Get()
   async findAll(@Res({ passthrough: true }) res: Response) {
@@ -45,6 +51,9 @@ export class NewController {
     }
   }
 
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
   @Get(':id')
   async findOne(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
@@ -64,6 +73,8 @@ export class NewController {
 
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateNewDto: UpdateNewDto, @Res({ passthrough: true }) res: Response) {
     try {
@@ -83,6 +94,8 @@ export class NewController {
 
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
   @Delete(':id')
   async remove(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
