@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UploadedFile, UseInterceptors, HttpException, HttpStatus, HttpCode, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UploadedFile, UseInterceptors, HttpException, HttpStatus, HttpCode, Res, UseGuards } from '@nestjs/common';
 import { AgentApplicationService } from './agent-application.service';
 import { CreateAgentApplicationDto } from './dto/create-agent-application.dto';
 import { UpdateAgentApplicationDto } from './dto/update-agent-application.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { validate } from 'class-validator';
 import { Response } from 'express';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/auth/guards/role.guard';
+import { Roles } from 'src/decoretors/role.decorator';
+import { ROLE } from '@prisma/client';
 
 @Controller('agent-application')
 export class AgentApplicationController {
@@ -24,7 +26,7 @@ export class AgentApplicationController {
       if (!!findEmail) {
         throw new HttpException('Your Form is already Submitted', HttpStatus.CONFLICT);
       }
-  
+
       const findPhone = await this.prisma.careerApplication.findFirst({
         where: {
           Phone: createAgentApplicationDto.phone,
@@ -48,11 +50,16 @@ export class AgentApplicationController {
       }
     }
   }
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
   @Get()
   async findAll() {
     try {
-      return await this.agentApplicationService.findAll();
+      return {
+        success: true,
+        message: 'All Job Application Fetched',
+        data: await this.agentApplicationService.findAll()
+      }
     } catch (error) {
       return {
         success: false,
@@ -62,11 +69,20 @@ export class AgentApplicationController {
     }
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
+  @Post(':id')
+  async update(@Param('id') id: string, @Body() updatePayload: UpdateAgentApplicationDto, @Res({ passthrough: true }) res: Response) {
     try {
-      return await this.agentApplicationService.findOne(+id);
+      return {
+        success: true,
+        message: 'Employee Added Successfully',
+        data: await this.agentApplicationService.approve(+id, updatePayload)
+      }
+
     } catch (error) {
+      res.status(error.status || 500)
       return {
         success: false,
         message: error.message,
@@ -74,25 +90,18 @@ export class AgentApplicationController {
       }
     }
   }
-
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateAgentApplicationDto: UpdateAgentApplicationDto) {
-    try {
-      return await this.agentApplicationService.update(+id, updateAgentApplicationDto);
-    } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-        data: null,
-      }
-    }
-  }
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
-      return await this.agentApplicationService.remove(+id);
+      return {
+        success: true,
+        message: 'Application Rejected',
+        data: await this.agentApplicationService.reject(+id)
+      }
     } catch (error) {
+      res.status(error.status || 500)
       return {
         success: false,
         message: error.message,
