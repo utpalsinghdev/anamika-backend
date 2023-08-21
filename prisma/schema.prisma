@@ -77,7 +77,7 @@ model EmployeeDocument {
 
 model Employee {
   id           Int                @unique @default(autoincrement())
-  employeeCode String
+  employeeCode String             @unique
   password     String
   title        String?
   firstName    String
@@ -91,11 +91,14 @@ model Employee {
   resumeId     Int?               @unique
   status       Status             @default(PENDING)
   park         Boolean            @default(false)
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  joinedAt  DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  joinedAt     DateTime?
+  managedBy    Employee?          @relation("ManagedBy", fields: [managedById], references: [id])
+  managedById  Int?
+  managing     Employee[]         @relation("ManagedBy")
 }
+
 
 enum Lane {
   FIRST

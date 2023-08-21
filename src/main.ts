@@ -6,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common/pipes'
 import * as morgan from 'morgan'
 import * as express from 'express'
 import { v2 as cloudinary } from 'cloudinary';
+import moment from 'moment'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn'],
@@ -29,6 +30,7 @@ async function bootstrap() {
     api_secret: "fu26Y1WSxB20E3V4-c2Z3KNqZrk",
   });
   SwaggerModule.setup('/api-docs', app, document)
+  // console.log();
   await app.listen(8084)
 }
 bootstrap()
