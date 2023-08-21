@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAgentDto } from './dto/create-agent.dto';
 import { UpdateAgentDto } from './dto/update-agent.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AgentService {
-  create(createAgentDto: CreateAgentDto) {
-    /**
-     * - Create a new agent
-     * - Meanwhile, Approve the agent application
-     * 
-     * These tasks will run Parallelly
-     * 
-     * - Send an SMS to the agent
-     * This will run in the background
-     * 
-     */
+  constructor(private readonly prisma: PrismaService) { }
 
-    return 'This action adds a new agent';
+  async findAll() {
+    return await this.prisma.employee.findMany({
+      where: {
+        role: "AGENT",
+        park: false
+      }
+    });
   }
+  async findAllEmployee() {
+    return await this.prisma.employee.findMany({
+      where: {
+        role: {
+          not: "ADMIN",
 
-  findAll() {
-    return `This action returns all agent`;
+        },
+        park: false
+      }
+    });
   }
 
   findOne(id: number) {
