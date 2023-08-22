@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "Parallelly"
+    ],
+    "github-actions.workflows.pinned.workflows": [
+        ".github/workflows/push.yml"
     ]
 }
