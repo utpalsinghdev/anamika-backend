@@ -114,11 +114,72 @@ export class AgentService {
     return rest;
   }
 
-  update(id: number, updateAgentDto: UpdateAgentDto) {
-    return `This action updates a #${id} agent`;
+  async update(id: number, updateAgentDto: UpdateAgentDto) {
+    const Get_age = await this.prisma.employee.findFirst({
+      where: { id }
+    })
+    const update_agent = await this.prisma.employee.update({
+      where: {
+        id
+      },
+      data: {
+        title: updateAgentDto.title || Get_age.title,
+        firstName: updateAgentDto.firstName || Get_age.firstName,
+        LastName: updateAgentDto.LastName || Get_age.LastName,
+        role: updateAgentDto.role as ROLE || Get_age.role,
+        email: updateAgentDto.Email || Get_age.email,
+        designation: updateAgentDto.designation || Get_age.designation,
+        phone: updateAgentDto.Phone || Get_age.phone,
+        city: updateAgentDto.city || Get_age.city,
+        password: updateAgentDto.password ? await hash(updateAgentDto.password, 10) : Get_age.password,
+        managedById: Number(updateAgentDto.workUnder) || Get_age.managedById || null
+      },
+      include: {
+        managedBy: {
+          select: {
+            id: true,
+            title: true,
+            firstName: true,
+            LastName: true,
+            email: true,
+            employeeCode: true
+          }
+        }
+      }
+    });
+
+    const { password, ...rest } = update_agent
+
+    return rest
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} agent`;
+  async remove(id: number) {
+    const f_em = await this.prisma.employee.update({
+      where: {
+        id
+      },
+      data: {
+        park: true,
+      },
+      include: {
+        managing: true
+      }
+    });
+    const managedEmployeeIds = f_em.managing.map((employee) => employee.id);
+    const updatAl = await this.prisma.employee.updateMany(
+
+      {
+        where: {
+          id: {
+            in: managedEmployeeIds,
+          },
+        },
+        data: {
+          managedById: null
+        }
+      }
+    )
+
+    return updatAl
   }
 }

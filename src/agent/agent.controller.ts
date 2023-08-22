@@ -31,7 +31,7 @@ export class AgentController {
       }
     }
   }
-  
+
   @Get()
   async findAll() {
     return {
@@ -58,7 +58,11 @@ export class AgentController {
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateAgentDto: UpdateAgentDto, @Res({ passthrough: true }) res: Response) {
     try {
-
+      return {
+        success: true,
+        message: "All Employees Successfully",
+        data: await this.agentService.update(+id, updateAgentDto)
+      }
     } catch (error) {
       res.status(error.status || 500)
       return {
@@ -67,7 +71,6 @@ export class AgentController {
         data: null
       }
     }
-    return this.agentService.update(+id, updateAgentDto);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -75,7 +78,11 @@ export class AgentController {
   @Delete(':id')
   async remove(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
-
+      return {
+        success: true,
+        message: "Employee Removed Successfully",
+        data: await await this.agentService.remove(+id)
+      }
     } catch (error) {
       res.status(error.status || 500)
       return {
@@ -84,7 +91,7 @@ export class AgentController {
         data: null
       }
     }
-    return this.agentService.remove(+id);
+    return;
   }
 
 }

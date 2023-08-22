@@ -99,7 +99,6 @@ model Employee {
   managing     Employee[]         @relation("ManagedBy")
 }
 
-
 enum Lane {
   FIRST
   SECOND
