@@ -10,19 +10,24 @@ export class AgentService {
   constructor(private readonly prisma: PrismaService) { }
 
   async findAll() {
-    return await this.prisma.employee.findMany({
+    const ag = await this.prisma.employee.findMany({
       where: {
         role: "AGENT",
         park: false
       },
-      orderBy:{
-        id:"desc"
-      }
+      orderBy: {
+        id: "desc"
+      },
+    
     });
+    return ag?.map((e) => {
+      let { password, ...rest } = e
+      return rest
+    })
   }
 
   async findAllEmployee() {
-    return await this.prisma.employee.findMany({
+    const em = await this.prisma.employee.findMany({
       where: {
         role: {
           not: "ADMIN",
@@ -30,10 +35,37 @@ export class AgentService {
         },
         park: false,
       },
-      orderBy:{
-        id:"desc"
-      }
+      orderBy: {
+        id: "desc"
+      },
+      include: {
+        managedBy: {
+          select: {
+            id: true,
+            title: true,
+            firstName: true,
+            LastName: true,
+            email: true,
+            employeeCode: true
+          }
+        },
+        managing: {
+          select: {
+            id: true,
+            title: true,
+            firstName: true,
+            LastName: true,
+            email: true,
+            employeeCode: true
+
+          }
+        }
+      },
     });
+    return em?.map((e) => {
+      let { password, ...rest } = e
+      return rest
+    })
   }
 
   async createEmployee(body: CreateAgentDto) {
