@@ -18,7 +18,7 @@ export class AgentService {
       orderBy: {
         id: "desc"
       },
-    
+
     });
     return ag?.map((e) => {
       let { password, ...rest } = e
@@ -76,6 +76,9 @@ export class AgentService {
       },
       orderBy: {
         id: 'desc'
+      },
+      include: {
+        managedBy: true
       }
     })
 
@@ -107,7 +110,7 @@ export class AgentService {
         managedById: Number(body.workUnder) || null
       }
     })
-    const {password, ...rest} = create_agent
+    const { password, ...rest } = create_agent
     return rest;
   }
 
