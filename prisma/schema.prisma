@@ -97,6 +97,7 @@ model Employee {
   managedBy    Employee?          @relation("ManagedBy", fields: [managedById], references: [id])
   managedById  Int?
   managing     Employee[]         @relation("ManagedBy")
+  Customer     Customer[]
 }
 
 enum Lane {
@@ -108,6 +109,76 @@ model News {
   id   Int    @unique @default(autoincrement())
   text String
   lane Lane
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum GuardianRelation {
+  SONOF
+  DOF
+  WOF
+}
+
+enum Type {
+  CURRENT
+  SAVING
+}
+
+model CustomerDocument {
+  id                 Int        @unique @default(autoincrement())
+  name               String
+  url                String
+  applicationId      String
+  photoCustomers     Customer[] @relation("photo")
+  adharCardCustomers Customer[] @relation("AdharCard")
+  proofCustomers     Customer[] @relation("bankProof")
+  panCard            Customer[] @relation("panCard")
+}
+
+enum Proof {
+  PASSBOOK
+  CHECQUE
+  STATEMENT
+}
+
+model Customer {
+  id                Int               @unique @default(autoincrement())
+  loanId            String            @unique
+  name              String
+  guardian_relation GuardianRelation
+  guardian_name     String
+  phone             String
+  dob               DateTime
+  email             String
+  loanInNumber      Int
+  loanInWords       String
+  loanYear          Int
+  address           String
+  district          String
+  State             String
+  pinCode           Int
+  agent             Employee          @relation(fields: [employeeId], references: [id])
+  employeeId        Int
+  bank              String
+  AccountNumber     String
+  ifsc              String
+  accountType       Type
+  photo             CustomerDocument? @relation("photo", fields: [photoId], references: [id])
+  photoId           Int?
+  AdharCard         CustomerDocument? @relation("AdharCard", fields: [addharId], references: [id])
+  addharId          Int?
+  adharNumber       String
+  panNumber         String
+  panCard           CustomerDocument? @relation("panCard", fields: [panId], references: [id])
+  panId             Int?
+  bankProof         Proof
+  proofDoc          CustomerDocument? @relation("bankProof", fields: [proofId], references: [id])
+  proofId           Int?
+  status            Status
+
+  customerId String?
+  password   String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

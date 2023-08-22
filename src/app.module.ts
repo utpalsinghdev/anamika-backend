@@ -10,9 +10,10 @@ import { AgentApplicationModule } from './agent-application/agent-application.mo
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { NewModule } from './new/new.module';
 import { AuthModule } from './auth/auth.module';
+import { CustomerModule } from './customer/customer.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule],
   controllers: [AppController],
   providers: [PrismaService, AppService],
 })
