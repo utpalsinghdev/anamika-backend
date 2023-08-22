@@ -14,10 +14,13 @@ export class AgentService {
       where: {
         role: "AGENT",
         park: false
+      },
+      orderBy:{
+        id:"desc"
       }
     });
   }
-  
+
   async findAllEmployee() {
     return await this.prisma.employee.findMany({
       where: {
@@ -25,7 +28,10 @@ export class AgentService {
           not: "ADMIN",
 
         },
-        park: false
+        park: false,
+      },
+      orderBy:{
+        id:"desc"
       }
     });
   }
