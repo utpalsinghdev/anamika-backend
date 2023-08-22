@@ -22,5 +22,5 @@ jobs:
 
             npm run build &&
             sudo pm2 list &&
-            sudo pm2 restart 0
+            sudo pm2 restart all  --update-env
           )

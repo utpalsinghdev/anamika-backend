@@ -1,5 +1,4 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateAgentApplicationDto } from './create-agent-application.dto';
+
 import { ROLE } from '@prisma/client';
 import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 

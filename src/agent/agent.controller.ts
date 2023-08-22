@@ -12,6 +12,26 @@ import { Roles } from 'src/decoretors/role.decorator';
 export class AgentController {
   constructor(private readonly agentService: AgentService) { }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
+  @Post('/employee')
+  async create(@Body() createBody: CreateAgentDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "Employee Created Successfully",
+        data: await this.agentService.createEmployee(createBody)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+  }
+  
   @Get()
   async findAll() {
     return {
@@ -19,8 +39,8 @@ export class AgentController {
       message: "All Agents Successfully",
       data: await this.agentService.findAll()
     }
-
   }
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Get('/employee')
@@ -32,6 +52,7 @@ export class AgentController {
     }
 
   }
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Put(':id')
@@ -48,6 +69,7 @@ export class AgentController {
     }
     return this.agentService.update(+id, updateAgentDto);
   }
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Delete(':id')
@@ -64,4 +86,5 @@ export class AgentController {
     }
     return this.agentService.remove(+id);
   }
+
 }
