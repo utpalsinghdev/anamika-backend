@@ -107,7 +107,8 @@ export class AgentService {
         managedById: Number(body.workUnder) || null
       }
     })
-    return create_agent;
+    const {password, ...rest} = create_agent
+    return rest;
   }
 
   update(id: number, updateAgentDto: UpdateAgentDto) {
