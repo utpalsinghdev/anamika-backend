@@ -33,7 +33,7 @@ export class CustomerController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
-  @Get()
+  @Get('/loan') //Applications
   async findAll(@Res({ passthrough: true }) res: Response) {
     try {
       return {
@@ -50,11 +50,30 @@ export class CustomerController {
       }
     }
   }
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
+  @Get('') // Customers
+  async findAllCustomer(@Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "All Customers Fetched",
+        data: await this.newService.findAllCustomer()
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+  }
 
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
-  @Get(':id')
+  @Get('get-one/:id')
   async findOne(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {
@@ -75,13 +94,13 @@ export class CustomerController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateNewDto: UpdateCustomerDto, @Res({ passthrough: true }) res: Response) {
+  @Patch(':id') //Accept
+  async update(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
         message: "Application Approved",
-        data: await this.newService.update(+id, updateNewDto)
+        data: await this.newService.approve(+id)
       }
     } catch (error) {
       res.status(error.status || 500)
@@ -96,13 +115,32 @@ export class CustomerController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
-  @Delete(':id')
+  @Delete(':id') //Delete Customer
   async remove(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
-        message: "Application Rejected",
+        message: "Customer Deleted",
         data: await this.newService.remove(+id)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+  }
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
+  @Delete('reject/:id') //Reject
+  async reject(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "Application Rejected",
+        data: await this.newService.reject(+id)
       }
     } catch (error) {
       res.status(error.status || 500)
