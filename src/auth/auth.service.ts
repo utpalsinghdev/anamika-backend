@@ -20,7 +20,7 @@ export class AuthService {
       }
     })
     const last_application = applicationId[0]
-    let a_id = "EMID"
+    let a_id = "GAEID"
     if (!last_application?.employeeCode) {
       a_id = a_id + "0001"
     } else {
