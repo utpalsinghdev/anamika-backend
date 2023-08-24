@@ -25,7 +25,7 @@ export class AuthService {
       a_id = a_id + "0001"
     } else {
       const last_id = last_application.employeeCode
-      const _id = last_id.split("APID")[1]
+      const _id = last_id.split("GAEID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
     }
