@@ -66,8 +66,28 @@ export class AuthService {
     };
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} auth`;
+  async agent(userInfo: AuthDto) {
+    const find_em = await this.prisma.employee.findFirst({
+      where: {
+        employeeCode: userInfo.Id,
+        role: {
+          not: "ADMIN"
+        }
+      }
+    })
+    if (!find_em) {
+      throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
+    }
+    const hashPassword = await compare(userInfo.password, find_em.password)
+    if (!hashPassword) {
+      throw new HttpException("Password doesn't match", HttpStatus.NOT_ACCEPTABLE);
+    }
+    const { password, title, city, phone, email, resumeId, status, park, joinedAt, ...rest } = find_em;
+    const token = this._createToken(rest);
+    return {
+      ...token,
+      user: rest,
+    };
   }
 
   async update(id: number, updateAuthDto: AuthDto) {

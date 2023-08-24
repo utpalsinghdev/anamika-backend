@@ -31,7 +31,7 @@ export class AgentApplicationController {
         where: {
           Phone: createAgentApplicationDto.phone,
         },
-      });
+      }); 
       if (!!findPhone) {
         throw new HttpException('Your Form is already Submitted', HttpStatus.BAD_REQUEST);
       }

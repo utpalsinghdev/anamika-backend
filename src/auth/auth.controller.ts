@@ -46,12 +46,17 @@ export class AuthController {
         data: null
       }
     }
-    return this.authService.admin(createAuthDto);
   }
 
   @Post("/agent")
   async agentLogin(@Body() createAuthDto: AuthDto, @Res({ passthrough: true }) res: Response) {
-    try { }
+    try { 
+      return {
+        success: true,
+        message: 'Logged In Successfully',
+        data: await this.authService.agent(createAuthDto)
+      }
+    }
     catch (error) {
       res.status(error.status || 500)
       return {
@@ -60,7 +65,6 @@ export class AuthController {
         data: null
       }
     }
-    return this.authService.create(createAuthDto);
   }
   @Post("/customer")
   async customerLogin(@Body() createAuthDto: AuthDto, @Res({ passthrough: true }) res: Response) {
