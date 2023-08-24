@@ -31,11 +31,11 @@ export class AgentApplicationController {
         where: {
           Phone: createAgentApplicationDto.phone,
         },
-      });
+      }); 
       if (!!findPhone) {
         throw new HttpException('Your Form is already Submitted', HttpStatus.BAD_REQUEST);
       }
-      this.agentApplicationService.create(createAgentApplicationDto);
+     await this.agentApplicationService.create(createAgentApplicationDto);
       return {
         success: true,
         message: 'Your application has been submitted successfully, we will get back to you soon',
