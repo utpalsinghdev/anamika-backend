@@ -11,9 +11,10 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { NewModule } from './new/new.module';
 import { AuthModule } from './auth/auth.module';
 import { CustomerModule } from './customer/customer.module';
+import { WelcomeLetterModule } from './welcome-letter/welcome-letter.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule],
   controllers: [AppController],
   providers: [PrismaService, AppService],
 })
