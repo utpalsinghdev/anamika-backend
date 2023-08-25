@@ -14,9 +14,11 @@ import { CustomerModule } from './customer/customer.module';
 import { WelcomeLetterModule } from './welcome-letter/welcome-letter.module';
 import { IcardModule } from './icard/icard.module';
 import { AppointmentSalaryModule } from './appointment-salary/appointment-salary.module';
+import { InvoiceModule } from './invoice/invoice.module';
+import { ApprovalLetterModule } from './approval-letter/approval-letter.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule, InvoiceModule, ApprovalLetterModule],
   controllers: [AppController],
   providers: [PrismaService, AppService],
 })

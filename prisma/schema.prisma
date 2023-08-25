@@ -183,9 +183,11 @@ model Customer {
   customerId String?
   password   String?
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  WelcomeLetter WelcomeLetter[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  WelcomeLetter  WelcomeLetter[]
+  approval       invoice[]
+  ApprovalLetter ApprovalLetter[]
 }
 
 model WelcomeLetter {
@@ -221,6 +223,45 @@ model AppointmentSalary {
   targetOne  Int
   targetTwo  Int
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Method {
+  ONLINE
+  CASH
+  CHECQUE
+  NETBANKING
+  UPI
+}
+
+model invoice {
+  id            Int      @unique @default(autoincrement())
+  invoiceId     String   @unique
+  customer      Customer @relation(fields: [customerId], references: [id])
+  customerId    Int
+  desciption    String
+  total         Int
+  price         Int?
+  qty           Int?
+  subT          Int?
+  paymentMethod Method
+  recived       Int?
+  refence       String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ApprovalLetter {
+  id               Int      @unique @default(autoincrement())
+  customer         Customer @relation(fields: [customerId], references: [id])
+  customerId       Int
+  address          String
+  permanentAddress String
+  processingCharge String
+  photo            String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

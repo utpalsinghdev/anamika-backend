@@ -23,7 +23,11 @@ export class AppointmentSalaryService {
   async findAll() {
     return await this.prisma.appointmentSalary.findMany({
       include: {
-        agent: true
+        agent: {
+          include:{
+            managedBy: true
+          }
+        }
       }
     });
   }
