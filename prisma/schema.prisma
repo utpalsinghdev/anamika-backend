@@ -76,30 +76,31 @@ model EmployeeDocument {
 }
 
 model Employee {
-  id            Int                @unique @default(autoincrement())
-  employeeCode  String             @unique
-  password      String
-  title         String?
-  firstName     String
-  LastName      String
-  role          ROLE
-  city          String?
-  phone         String?
-  email         String?
-  designation   String?
-  resume        EmployeeDocument[]
-  resumeId      Int?               @unique
-  status        Status             @default(PENDING)
-  park          Boolean            @default(false)
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
-  joinedAt      DateTime?
-  managedBy     Employee?          @relation("ManagedBy", fields: [managedById], references: [id])
-  managedById   Int?
-  managing      Employee[]         @relation("ManagedBy")
-  Customer      Customer[]
-  WelcomeLetter WelcomeLetter[]
-  Icard         Icard[]
+  id                Int                 @unique @default(autoincrement())
+  employeeCode      String              @unique
+  password          String
+  title             String?
+  firstName         String
+  LastName          String
+  role              ROLE
+  city              String?
+  phone             String?
+  email             String?
+  designation       String?
+  resume            EmployeeDocument[]
+  resumeId          Int?                @unique
+  status            Status              @default(PENDING)
+  park              Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  joinedAt          DateTime?
+  managedBy         Employee?           @relation("ManagedBy", fields: [managedById], references: [id])
+  managedById       Int?
+  managing          Employee[]          @relation("ManagedBy")
+  Customer          Customer[]
+  WelcomeLetter     WelcomeLetter[]
+  Icard             Icard[]
+  AppointmentSalary AppointmentSalary[]
 }
 
 enum Lane {
@@ -205,6 +206,21 @@ model Icard {
   agent      Employee @relation(fields: [employeeId], references: [id])
   employeeId Int
   profilepic String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model AppointmentSalary {
+  id         Int      @unique @default(autoincrement())
+  agent      Employee @relation(fields: [employeeId], references: [id])
+  employeeId Int
+  location   String
+  photo      String
+  address    String
+  salary     String
+  targetOne  Int
+  targetTwo  Int
+
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
