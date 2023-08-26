@@ -9,11 +9,26 @@ import { Method } from '@prisma/client';
 export class InvoiceService {
   constructor(private readonly prisma: PrismaService) { }
   async create(createInvoiceDto: CreateInvoiceDto) {
-    const _id = await this._invoiceId()
-
+    const latest_inovice = await this.prisma.invoice.findMany({
+      take: 1,
+      orderBy: {
+        id: "desc"
+      }
+    })
+    const last_invoice = latest_inovice[0]
+    let a_id = "GAINID"
+    if (!last_invoice?.invoiceId) {
+      a_id = "GAINID" + "0001"
+    } else {
+      const last_id = last_invoice?.invoiceId
+      const _id = last_id.split("GAINID")[1]
+      const id = parseInt(_id) + 1
+      a_id = a_id + id.toString().padStart(4, '0')
+      console.log(a_id)
+    }
     return await this.prisma.invoice.create({
       data: {
-        invoiceId: _id,
+        invoiceId:a_id,
         customerId: createInvoiceDto.customerId,
         desciption: createInvoiceDto.desciption,
         total: createInvoiceDto.total,
@@ -58,27 +73,5 @@ export class InvoiceService {
     return await this.prisma.invoice.delete({ where: { id } });
   }
 
-  private async _invoiceId() {
-    const latest_inovice = await this.prisma.invoice.findMany({
-      take: 1,
-      orderBy: {
-        id: "desc"
-      }
-    })
 
-    const last_invoice = latest_inovice[0]
-
-    let a_id = "GAINID"
-
-    if (!last_invoice.invoiceId) {
-      a_id = a_id + "0001"
-    } else {
-      const last_id = last_invoice.invoiceId
-      const _id = last_id.split("GAINID")[1]
-      const id = parseInt(_id)
-      a_id = a_id + id.toString().padStart(4, '0')
-    }
-
-    return a_id
-  }
 }

@@ -17,11 +17,6 @@ export class CreateInvoiceDto {
     @IsString()
     @IsNotEmpty()
     refence: string
-    @IsString()
-    @IsNotEmpty()
-    invoiceId: string
-
-
 
     @IsOptional()
     @IsInt()
@@ -34,6 +29,7 @@ export class CreateInvoiceDto {
     @IsOptional()
     @IsInt()
     subT: number
+
     @IsOptional()
     @IsInt()
     recived: number

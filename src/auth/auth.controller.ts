@@ -50,7 +50,7 @@ export class AuthController {
 
   @Post("/agent")
   async agentLogin(@Body() createAuthDto: AuthDto, @Res({ passthrough: true }) res: Response) {
-    try { 
+    try {
       return {
         success: true,
         message: 'Logged In Successfully',
@@ -66,6 +66,45 @@ export class AuthController {
       }
     }
   }
+  @Get("/dashboard")
+  async adminDash(@Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: 'data fetched In Successfully',
+        data: await this.authService.adminDash()
+      }
+    }
+    catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message || "Internal Server Error",
+        data: null
+      }
+    }
+  }
+  @Get("/profile/:id")
+  async profile(@Param('id') id: string,@Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: 'Profile fetched In Successfully',
+        data: await this.authService.profile(+id)
+      }
+    }
+    catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message || "Internal Server Error",
+        data: null
+      }
+    }
+  }
+
+
+
   @Post("/customer")
   async customerLogin(@Body() createAuthDto: AuthDto, @Res({ passthrough: true }) res: Response) {
     try { }
