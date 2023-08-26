@@ -94,6 +94,36 @@ export class AuthService {
     return `This action updates a #${id} auth`;
   }
 
+  async adminDash() {
+    return {
+      customers: await this.prisma.customer.count(),
+      agent: await this.prisma.employee.count({
+        where: {
+          role: {
+            not: "ADMIN"
+          }
+        }
+      }),
+      approvals: await this.prisma.approvalLetter.count(),
+      news: await this.prisma.news.count(),
+
+    };
+  }
+  async profile(id: number) {
+    return await this.prisma.employee.findFirst({
+      where: { id }, include: {
+        AppointmentSalary: true,
+        Customer: {
+          include: {
+            ApprovalLetter: true
+          }
+        },
+        WelcomeLetter: true,
+
+      }
+    })
+  }
+
   async remove(id: number) {
     return `This action removes a #${id} auth`;
   }

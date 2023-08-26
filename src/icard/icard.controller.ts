@@ -1,25 +1,25 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UseGuards } from '@nestjs/common';
-import { WelcomeLetterService } from './welcome-letter.service';
-import { CreateWelcomeLetterDto } from './dto/create-welcome-letter.dto';
-import { UpdateWelcomeLetterDto } from './dto/update-welcome-letter.dto';
+import { IcardService } from './icard.service';
+import { CreateIcardDto } from './dto/create-icard.dto';
+import { UpdateIcardDto } from './dto/update-icard.dto';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { ROLE } from '@prisma/client';
 import { Roles } from 'src/decoretors/role.decorator';
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Controller('welcome-letter')
-export class WelcomeLetterController {
-  constructor(private readonly welcomeLetterService: WelcomeLetterService) { }
-  @Roles(ROLE.ADMIN)
+@Roles(ROLE.ADMIN)
+@Controller('icard')
+export class IcardController {
+  constructor(private readonly icardService: IcardService) { }
 
   @Post()
-  async create(@Body() createWelcomeLetterDto: CreateWelcomeLetterDto, @Res({ passthrough: true }) res: Response) {
+  async create(@Body() createIcardDto: CreateIcardDto, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
-        message: "Welcome Letter Created Successfully",
-        data: await this.welcomeLetterService.create(createWelcomeLetterDto)
+        message: "Icard Created Successfully",
+        data: await this.icardService.create(createIcardDto)
       }
     } catch (error) {
       res.status(error.status || 500)
@@ -28,6 +28,7 @@ export class WelcomeLetterController {
         message: error.message,
         data: null
       }
+
     }
   }
 
@@ -36,8 +37,8 @@ export class WelcomeLetterController {
     try {
       return {
         success: true,
-        message: "Welcome Letted Fetched",
-        data: await this.welcomeLetterService.findAll()
+        message: "All Icards Fetched",
+        data: await this.icardService.findAll()
       }
     } catch (error) {
       res.status(error.status || 500)
@@ -46,18 +47,18 @@ export class WelcomeLetterController {
         message: error.message,
         data: null
       }
+
     }
   }
-
-  @Roles(ROLE.ADMIN, ROLE.AGENT, ROLE.CUSTOMER, ROLE.DEALERSHIP, ROLE.FEILDOFFICER)
 
   @Get(':id')
   async findOne(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
-        message: "One Welcome Letted Fetched",
-        data: await this.welcomeLetterService.findOne(+id)
+        message: "Icard Fetched",
+        data: await this.icardService.findOne(+id)
+
       }
     } catch (error) {
       res.status(error.status || 500)
@@ -66,41 +67,45 @@ export class WelcomeLetterController {
         message: error.message,
         data: null
       }
+
     }
   }
-  @Roles(ROLE.ADMIN)
+
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateWelcomeLetterDto: UpdateWelcomeLetterDto, @Res({ passthrough: true }) res: Response) {
+  async update(@Param('id',) id: string, @Body() updateIcardDto: UpdateIcardDto, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
-        message: "Welcome Letted Updated",
-        data: await this.welcomeLetterService.update(+id, updateWelcomeLetterDto)
+        message: "Icard Updated Successfully",
+        data: await this.icardService.update(+id, updateIcardDto)
       }
     } catch (error) {
-      res.status(error.status || 500)
+      res.status
       return {
         success: false,
         message: error.message,
         data: null
       }
+
     }
   }
-  @Roles(ROLE.ADMIN)
+
   @Delete(':id')
   async remove(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
-        message: "Welcome Letted Deleted",
+        message: "Icard Deleted Successfully",
+        data: await this.icardService.remove(+id)
       }
     } catch (error) {
-      res.status(error.status || 500)
+      res.status
       return {
         success: false,
         message: error.message,
         data: null
       }
+
     }
   }
 }
