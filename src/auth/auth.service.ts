@@ -115,10 +115,20 @@ export class AuthService {
         AppointmentSalary: true,
         Customer: {
           include: {
-            ApprovalLetter: true
+            ApprovalLetter: {
+              include:{
+                customer: true
+              }
+            }
           }
         },
-        WelcomeLetter: true,
+        WelcomeLetter: {
+          include:{
+            for:true
+          }
+        },
+        managing:true
+
 
       }
     })
