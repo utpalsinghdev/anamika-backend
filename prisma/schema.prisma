@@ -76,24 +76,22 @@ model EmployeeDocument {
 }
 
 model Employee {
-  id                Int                 @unique @default(autoincrement())
-  employeeCode      String              @unique
-  password          String
-  title             String?
-  firstName         String
-  LastName          String
-  role              ROLE
-  city              String?
-  phone             String?
-  email             String?
-  designation       String?
-  resume            EmployeeDocument[]
-  resumeId          Int?                @unique
-  status            Status              @default(PENDING)
-  park              Boolean             @default(false)
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  joinedAt          DateTime?
+  id           Int                @unique @default(autoincrement())
+  employeeCode String             @unique
+  password     String
+  title        String?
+  firstName    String
+  LastName     String
+  role         ROLE
+  city         String?
+  phone        String?
+  email        String?
+  designation  String?
+  resume       EmployeeDocument[]
+  resumeId     Int?               @unique
+  status       Status             @default(PENDING)
+  park         Boolean            @default(false)
+
   managedBy         Employee?           @relation("ManagedBy", fields: [managedById], references: [id])
   managedById       Int?
   managing          Employee[]          @relation("ManagedBy")
@@ -101,6 +99,11 @@ model Employee {
   WelcomeLetter     WelcomeLetter[]
   Icard             Icard[]
   AppointmentSalary AppointmentSalary[]
+  JointPercent      JointPercent[]
+
+  joinedAt  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 enum Lane {
@@ -261,6 +264,23 @@ model ApprovalLetter {
   permanentAddress String
   processingCharge String
   photo            String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model JointPercent {
+  id             Int      @unique @default(autoincrement())
+  agent          Employee @relation(fields: [employeeId], references: [id])
+  employeeId     Int
+  photo          String
+  address        String
+  location       String
+  file_charge    Int
+  loan_amount    Int
+  processing_fee Int
+  add_charge     Int
+  service_tax    Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

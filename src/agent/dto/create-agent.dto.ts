@@ -41,5 +41,5 @@ export class CreateAgentDto {
     @IsNotEmpty()
     @IsString()
     designation: string
-    
+
 }
