@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Res, Put } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -29,7 +29,23 @@ export class CustomerController {
       }
     }
   }
-
+  @Put(':id')
+  async manage(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "Customer Updated Successfully",
+        data: await this.newService.update(+id, updateCustomerDto)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+  }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
