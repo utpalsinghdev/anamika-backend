@@ -155,30 +155,30 @@ model Customer {
   guardian_relation GuardianRelation
   guardian_name     String
   phone             String
-  dob               DateTime
-  email             String
+  dob               DateTime?
+  email             String?
   loanInNumber      Int
   loanInWords       String
   loanYear          Int
-  address           String
-  district          String
-  State             String
-  pinCode           Int
+  address           String?
+  district          String?
+  State             String?
+  pinCode           Int?
   agent             Employee          @relation(fields: [employeeId], references: [id])
   employeeId        Int
-  bank              String
-  AccountNumber     String
-  ifsc              String
-  accountType       Type
+  bank              String?
+  AccountNumber     String?
+  ifsc              String?
+  accountType       Type?
   photo             CustomerDocument? @relation("photo", fields: [photoId], references: [id])
   photoId           Int?
   AdharCard         CustomerDocument? @relation("AdharCard", fields: [addharId], references: [id])
   addharId          Int?
-  adharNumber       String
-  panNumber         String
+  adharNumber       String?
+  panNumber         String?
   panCard           CustomerDocument? @relation("panCard", fields: [panId], references: [id])
   panId             Int?
-  bankProof         Proof
+  bankProof         Proof?
   proofDoc          CustomerDocument? @relation("bankProof", fields: [proofId], references: [id])
   proofId           Int?
   status            Status
@@ -195,7 +195,7 @@ model Customer {
 
 model WelcomeLetter {
   id         Int      @unique @default(autoincrement())
-  for        Customer @relation(fields: [customerId], references: [id])
+  for        Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId Int
   with       Employee @relation(fields: [employeeId], references: [id])
   employeeId Int

@@ -7,6 +7,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { ROLE } from '@prisma/client';
 import { Roles } from 'src/decoretors/role.decorator';
+import { CreateWelomeCustomerDto } from './dto/welcome-manual.dto';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('welcome-letter')
 export class WelcomeLetterController {
@@ -20,6 +21,23 @@ export class WelcomeLetterController {
         success: true,
         message: "Welcome Letter Created Successfully",
         data: await this.welcomeLetterService.create(createWelcomeLetterDto)
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+  }
+  @Post('/manual')
+  async manual(@Body() CreateWelomeCustomerDto: CreateWelomeCustomerDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "Welcome Letter Created Successfully",
+        data: await this.welcomeLetterService.createManual(CreateWelomeCustomerDto)
       }
     } catch (error) {
       res.status(error.status || 500)
