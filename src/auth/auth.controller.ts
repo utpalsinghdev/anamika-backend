@@ -85,7 +85,7 @@ export class AuthController {
     }
   }
   @Get("/profile/:id")
-  async profile(@Param('id') id: string,@Res({ passthrough: true }) res: Response) {
+  async profile(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
@@ -102,12 +102,15 @@ export class AuthController {
       }
     }
   }
-
-
-
-  @Post("/customer")
-  async customerLogin(@Body() createAuthDto: AuthDto, @Res({ passthrough: true }) res: Response) {
-    try { }
+  @Get("/customer-profile/:id")
+  async cprofile(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: 'Profile fetched In Successfully',
+        data: await this.authService.cprofile(+id)
+      }
+    }
     catch (error) {
       res.status(error.status || 500)
       return {
@@ -116,7 +119,27 @@ export class AuthController {
         data: null
       }
     }
-    return this.authService.create(createAuthDto);
+  }
+
+
+
+  @Post("/customer")
+  async customerLogin(@Body() createAuthDto: AuthDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: 'Logged In Successfully',
+        data: await this.authService.customer(createAuthDto)
+      }
+    }
+    catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message || "Internal Server Error",
+        data: null
+      }
+    }
   }
 
 }

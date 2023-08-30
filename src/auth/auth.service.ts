@@ -4,6 +4,7 @@ import { CreateAdminDto } from './dto/create-admin.dto';
 import { JwtService } from '@nestjs/jwt';
 import { hash, compare } from 'bcrypt';
 import { AuthDto } from './dto/admin-auth.dto';
+import { ROLE } from '@prisma/client';
 @Injectable()
 export class AuthService {
   constructor(private readonly prisma: PrismaService,
@@ -89,6 +90,40 @@ export class AuthService {
       user: rest,
     };
   }
+  async customer(userInfo: AuthDto) {
+    const find_em = await this.prisma.customer.findFirst({
+      where: {
+        customerId: userInfo.Id,
+        status: "APPROVED"
+      },
+      include: {
+        approval: true,
+        ApprovalLetter: true,
+        WelcomeLetter: true,
+      }
+    })
+    if (!find_em) {
+      throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
+    }
+    const hashPassword = await compare(userInfo.password, find_em.password)
+    if (!hashPassword) {
+      throw new HttpException("Password doesn't match", HttpStatus.NOT_ACCEPTABLE);
+    }
+    const { password, ...rest } = find_em;
+    const jwtPyalod = {
+      id: rest.id,
+      role: ROLE.CUSTOMER
+    }
+    const token = this._createToken(jwtPyalod);
+    const data = {
+      ...rest,
+      role: ROLE.CUSTOMER
+    }
+    return {
+      ...token,
+      user: data,
+    };
+  }
 
   async update(id: number, updateAuthDto: AuthDto) {
     return `This action updates a #${id} auth`;
@@ -116,20 +151,57 @@ export class AuthService {
         Customer: {
           include: {
             ApprovalLetter: {
-              include:{
+              include: {
                 customer: true
               }
             }
           }
         },
         WelcomeLetter: {
-          include:{
-            for:true
+          include: {
+            for: true,
+            with: true
           }
         },
-        managing:true
+        managing: true
 
 
+      }
+    })
+  }
+  async cprofile(id: number) {
+    return await this.prisma.customer.findFirst({
+      where: { id }, include: {
+        approval: { // Done
+          orderBy: { id: "desc" },
+          include: {
+            customer: {
+              include: {
+                agent: true
+              }
+            }
+          }
+        },
+        ApprovalLetter: { // Done
+          orderBy: { id: "desc" },
+          take: 1,
+          include: {
+            customer: {
+              include: {
+                agent: true,
+                photo: true
+              }
+            }
+          }
+        },
+        WelcomeLetter: { //Done
+          orderBy: { id: "desc" },
+          take: 1,
+          include: {
+            for: true,
+            with: true
+          }
+        },
       }
     })
   }
