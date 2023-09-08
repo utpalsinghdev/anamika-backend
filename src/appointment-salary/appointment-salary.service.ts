@@ -24,7 +24,7 @@ export class AppointmentSalaryService {
     return await this.prisma.appointmentSalary.findMany({
       include: {
         agent: {
-          include:{
+          include: {
             managedBy: true
           }
         }

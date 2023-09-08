@@ -1,4 +1,4 @@
-import { IsBase64, IsInt, IsNotEmpty, IsString } from "class-validator";
+import { IsBase64, IsInt, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateAppointmentSalaryDto {
     @IsNotEmpty()
@@ -21,6 +21,14 @@ export class CreateAppointmentSalaryDto {
     @IsNotEmpty()
     @IsString()
     salary: string
+
+    @IsOptional()
+    @IsString()
+    agentName: string
+
+    @IsOptional()
+    @IsString()
+    agentNumber: string
 
     @IsNotEmpty()
     @IsInt()
