@@ -71,9 +71,6 @@ export class AgentService {
   async createEmployee(body: CreateAgentDto) {
     const applicationId = await this.prisma.employee.findMany({
       take: 1,
-      where: {
-        park: false,
-      },
       orderBy: {
         id: 'desc'
       },
