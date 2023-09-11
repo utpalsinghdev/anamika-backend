@@ -5,11 +5,14 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Customer, Status } from '@prisma/client';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { hash } from 'bcrypt';
+import { MailService } from 'src/mail/mail.service';
+import { CreateMailDto } from 'src/mail/dto/create-mail.dto';
 
 @Injectable()
 export class CustomerService {
   constructor(private readonly prisma: PrismaService,
-    private readonly cloud: CloudinaryService
+    private readonly cloud: CloudinaryService,
+    private readonly mail:MailService,
   ) { }
   async create(CustomerDto: CreateCustomerDto): Promise<Customer> {
 
@@ -87,6 +90,13 @@ export class CustomerService {
 
       },
     });
+    const data : CreateMailDto = {
+      message : `Hi Mr. Pawan Kumar Welcome to Green Apple Financial Services Pvt Ltd.We have received your loan Application Your application No. is ${a_id} Team will Call You`,
+      numbers:CustomerDto.phone
+    }
+    
+    const sms = await this.mail.sendSms(data)
+    console.log(sms)
     return createdCustomer;
   }
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {
