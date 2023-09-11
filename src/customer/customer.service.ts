@@ -91,7 +91,7 @@ export class CustomerService {
       },
     });
     const data : CreateMailDto = {
-      message : `Hi Mr. Pawan Kumar Welcome to Green Apple Financial Services Pvt Ltd.We have received your loan Application Your application No. is ${a_id} Team will Call You`,
+      message : `Hi ${CustomerDto.name} Welcome to Green Apple Financial Services Pvt Ltd.We have received your loan Application Your application No. is ${a_id} Team will Call You`,
       numbers:CustomerDto.phone
     }
     
