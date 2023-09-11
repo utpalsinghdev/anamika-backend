@@ -4,10 +4,11 @@ import { UpdateAgentDto } from './dto/update-agent.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ROLE } from '@prisma/client';
 import { hash } from 'bcrypt';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AgentService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService, private readonly mail: MailService) { }
 
   async findAll() {
     const ag = await this.prisma.employee.findMany({
@@ -107,6 +108,12 @@ export class AgentService {
         managedById: Number(body.workUnder) || null
       }
     })
+    const data = {
+      message: `Congratulations! Welcome to Green Apple Financial Services Pvt. Ltd. Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${body.password}`,
+      numbers: body.Phone
+    }
+    const res = await this.mail.sendSms(data)
+    console.log(res)
     const { password, ...rest } = create_agent
     return rest;
   }

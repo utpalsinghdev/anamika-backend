@@ -10,7 +10,7 @@ import { MailService } from 'src/mail/mail.service';
 export class AuthService {
   constructor(private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-    private readonly mailService:MailService,
+    private readonly mailService: MailService,
   ) { }
   async create(createAuthDto: AuthDto) {
     return 'This action adds a new auth';
@@ -32,7 +32,7 @@ export class AuthService {
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
     }
-   
+
     const new_admin = await this.prisma.employee.create({
       data: {
         firstName: payload.firstName,
@@ -44,11 +44,12 @@ export class AuthService {
       },
 
     })
-    const data={
-      message: `Congratulations! Welcome to Green Apple Financial Services Pvt. Ltd. Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${payload.password}`,
-      numbers : "7645904853"
-    }
-  await this.mailService.sendSms(data)
+    // const data = {
+    //   message: `Congratulations! Welcome to Green Apple Financial Services Pvt. Ltd. Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${payload.password}`,
+    //   numbers: "6205909123"
+    // }
+    // const res = await this.mailService.sendSms(data)
+    // console.log(res)
     const { password, title, city, phone, email, resumeId, status, park, joinedAt, ...rest } = new_admin
     return rest
   }

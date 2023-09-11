@@ -15,6 +15,6 @@ import { MailService } from 'src/mail/mail.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [PrismaService, AuthService, JwtStrategy, MailService],
+  providers: [PrismaService, MailService, AuthService, JwtStrategy],
 })
 export class AuthModule { }

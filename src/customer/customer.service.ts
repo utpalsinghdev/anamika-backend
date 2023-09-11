@@ -246,14 +246,13 @@ export class CustomerService {
   }
 
   async findOne(id: number) {
-    const customer = await this.prisma.customer.findUnique({
-      where: { id },
-    });
-    return customer;
+   
   }
 
   async approve(id: number) {
-
+    const customer = await this.prisma.customer.findUnique({
+      where: { id },
+    });
     const cid = await this._customerId()
     const cpas = "123456"
     /**
@@ -265,9 +264,16 @@ export class CustomerService {
       data: {
         customerId: cid,
         status: Status.APPROVED,
-        password: await hash(cpas, 10),
+        password: await hash(customer.phone, 10),
       },
     });
+    const data ={
+      message : `Congratulations! ${customer.name} Your Loan Has Been Approved By Company Green Apple Financial Services Pvt. Ltd. your CustomerId ${cid} Team Will contact You. Thanks for Choose Us.`,
+      numbers: customer.phone
+    }
+
+    const res  = await this.mail.sendSms(data)
+    console.log(res)
     return updatedCustomer;
   }
 
