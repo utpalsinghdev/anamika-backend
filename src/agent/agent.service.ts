@@ -13,7 +13,9 @@ export class AgentService {
   async findAll() {
     const ag = await this.prisma.employee.findMany({
       where: {
-        role: "AGENT",
+        role: {
+          not: "ADMIN"
+        },
         park: false
       },
       orderBy: {
