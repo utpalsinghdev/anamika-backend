@@ -12,7 +12,7 @@ import { CreateMailDto } from 'src/mail/dto/create-mail.dto';
 export class CustomerService {
   constructor(private readonly prisma: PrismaService,
     private readonly cloud: CloudinaryService,
-    private readonly mail:MailService,
+    private readonly mail: MailService,
   ) { }
   async create(CustomerDto: CreateCustomerDto): Promise<Customer> {
 
@@ -90,17 +90,38 @@ export class CustomerService {
 
       },
     });
-    const data : CreateMailDto = {
-      message : `Hi ${CustomerDto.name} Welcome to Green Apple Financial Services Pvt Ltd.We have received your loan Application Your application No. is ${a_id} Team will Call You`,
-      numbers:CustomerDto.phone
+    const data: CreateMailDto = {
+      message: `Hi ${CustomerDto.name} Welcome to Green Apple Financial Services Pvt Ltd.We have received your loan Application Your application No. is ${a_id} Team will Call You`,
+      numbers: CustomerDto.phone
     }
-    
+
     const sms = await this.mail.sendSms(data)
     console.log(sms)
     return createdCustomer;
   }
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {
     const g_customer = await this.prisma.customer.findFirst({ where: { id } })
+
+
+    const promises = [];
+
+    if (updateCustomerDto.AdharCard) {
+      promises.push(this.cloud.uploadBase64File(updateCustomerDto.AdharCard));
+    }
+
+    if (updateCustomerDto.panCard) {
+      promises.push(this.cloud.uploadBase64File(updateCustomerDto.panCard));
+    }
+
+    if (updateCustomerDto.photo) {
+      promises.push(this.cloud.uploadBase64File(updateCustomerDto.photo));
+    }
+
+    if (updateCustomerDto.proofDoc) {
+      promises.push(this.cloud.uploadBase64File(updateCustomerDto.proofDoc));
+    }
+
+    const [_adhar, _bankProof, _photo, _pan] = await Promise.all(promises);
     const updatedData: any = {
       name: updateCustomerDto.name,
       guardian_relation: updateCustomerDto.guardian_relation,
@@ -121,61 +142,51 @@ export class CustomerService {
       adharNumber: updateCustomerDto.adharNumber,
       panNumber: updateCustomerDto.panNumber,
       bankProof: updateCustomerDto.bankProof,
+
     };
     if (updateCustomerDto.password) {
       updatedData.password = await hash(updateCustomerDto.password, 10)
     }
-    if (updateCustomerDto.AdharCard) {
-      const _adhar = await this.cloud.uploadBase64File(updateCustomerDto.AdharCard);
+    if (_adhar) {
       updatedData.AdharCard = {
-        update: {
-          where: { id: g_customer.addharId },
-          data: {
-            name: "Adhar Card",
-            url: _adhar.secure_url,
-          },
-        },
+        create: {
+          name: "Adhar Card",
+          url: _adhar.secure_url,
+          applicationId: g_customer.loanId || g_customer.customerId
+        }
       };
     }
 
-    if (updateCustomerDto.proofDoc) {
-      const _bankProof = await this.cloud.uploadBase64File(updateCustomerDto.proofDoc);
+    if (_bankProof) {
       updatedData.proofDoc = {
-        update: {
-          where: { id: g_customer.proofId },
-          data: {
-            name: updateCustomerDto.bankProof,
-            url: _bankProof.secure_url,
-          },
-        },
+        create: {
+          name: "Proof Doc",
+          url: _bankProof.secure_url,
+          applicationId: g_customer.loanId || g_customer.customerId
+        }
       };
     }
 
-    if (updateCustomerDto.photo) {
-      const _photo = await this.cloud.uploadBase64File(updateCustomerDto.photo);
+    if (_photo) {
       updatedData.photo = {
-        update: {
-          where: { id: g_customer.photoId },
-          data: {
-            name: "Photo",
-            url: _photo.secure_url,
-          },
-        },
+        create: {
+          name: "Photo",
+          applicationId: g_customer.loanId || g_customer.customerId,
+          url: _photo.secure_url
+        }
       };
     }
 
-    if (updateCustomerDto.panCard) {
-      const _pan = await this.cloud.uploadBase64File(updateCustomerDto.panCard);
+    if (_pan) {
       updatedData.panCard = {
-        update: {
-          where: { id: g_customer.panId },
-          data: {
-            name: "Pan Card",
-            url: _pan.secure_url,
-          },
-        },
+        create: {
+          name: "Pan Card",
+          applicationId: g_customer.loanId || g_customer.customerId,
+          url: _pan.secure_url
+        }
       };
-    }
+    };
+
 
     const updatedCustomer = await this.prisma.customer.update({
       where: { id },
@@ -246,7 +257,7 @@ export class CustomerService {
   }
 
   async findOne(id: number) {
-   
+
   }
 
   async approve(id: number) {
@@ -267,12 +278,12 @@ export class CustomerService {
         password: await hash(customer.phone, 10),
       },
     });
-    const data ={
-      message : `Congratulations! ${customer.name} Your Loan Has Been Approved By Company Green Apple Financial Services Pvt. Ltd. your CustomerId ${cid} Team Will contact You. Thanks for Choose Us.`,
+    const data = {
+      message: `Congratulations! ${customer.name} Your Loan Has Been Approved By Company Green Apple Financial Services Pvt. Ltd. your CustomerId ${cid} Team Will contact You. Thanks for Choose Us.`,
       numbers: customer.phone
     }
 
-    const res  = await this.mail.sendSms(data)
+    const res = await this.mail.sendSms(data)
     console.log(res)
     return updatedCustomer;
   }

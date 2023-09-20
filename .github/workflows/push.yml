@@ -16,9 +16,9 @@ jobs:
             git pull origin development
           ) &&
           (
-             npm install &&
+            #  npm install &&
 
-            #  npx prisma db push --accept-data-loss &&
+             npx prisma db push --accept-data-loss &&
 
             npm run build &&
             # sudo pm2 list &&

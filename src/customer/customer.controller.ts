@@ -32,6 +32,7 @@ export class CustomerController {
   @Put(':id')
   async manage(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto, @Res({ passthrough: true }) res: Response) {
     try {
+      console.log(id)
       return {
         success: true,
         message: "Customer Updated Successfully",
