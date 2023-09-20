@@ -133,7 +133,7 @@ enum Type {
 
 model CustomerDocument {
   id                 Int        @unique @default(autoincrement())
-  name               String
+  name               String?
   url                String
   applicationId      String
   photoCustomers     Customer[] @relation("photo")
