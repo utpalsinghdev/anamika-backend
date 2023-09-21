@@ -217,6 +217,9 @@ export class CustomerService {
         },
         photo: true,
         proofDoc: true
+      },
+      orderBy: {
+        id: "desc"
       }
     });
 
