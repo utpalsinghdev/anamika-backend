@@ -16,8 +16,8 @@ async function bootstrap() {
   app.setGlobalPrefix('/api')
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true })) //TODO: Fixing Pipe Issue
   const config = new DocumentBuilder()
-    .setTitle('Green Apple APIs')
-    .setDescription('All Apis for Green Apple Pvt. Ltd.')
+    .setTitle('Vandhnam APIs')
+    .setDescription('All Apis for Vandhnam Finance Pvt. Ltd.')
     .setVersion('0.0.1')
     .build()
 

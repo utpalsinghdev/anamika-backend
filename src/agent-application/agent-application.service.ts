@@ -101,7 +101,7 @@ export class AgentApplicationService {
     })
     const applicationId = await this.prisma.employee.findMany({
       take: 1,
-      where:{
+      where: {
         park: false,
       },
       orderBy: {
@@ -109,12 +109,12 @@ export class AgentApplicationService {
       }
     })
     const last_application = applicationId[0]
-    let a_id = "GAEID"
+    let a_id = "VFEID"
     if (!last_application?.employeeCode) {
       a_id = a_id + "0001"
     } else {
       const last_id = last_application.employeeCode
-      const _id = last_id.split("GAEID")[1]
+      const _id = last_id.split("VFEID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
     }
@@ -148,7 +148,7 @@ export class AgentApplicationService {
     const get_application = await this.prisma.careerApplication.findFirst({
       where: {
         id,
-        
+
         Status: {
           not: "APPROVED" || "REJECTED"
         }

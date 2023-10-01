@@ -11,7 +11,7 @@ export class MailService {
       method: 'POST',
       url: 'https://www.fast2sms.com/dev/bulkV2',
       headers: {
-            'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
         'User-Agent': 'insomnia/2023.5.8',
         Authorization: 'mk4UMJXesxFQ8fOhgT3wWcB1LG9bZu5oPpaVijH7nz2rAvYR0DItlfV6SWMbck0CPTNi7RD18EQhJsu3'
       },
@@ -23,8 +23,9 @@ export class MailService {
       }
     };
     try {
-      const response = await axios.request(options)
-      console.log(response.data);
+      // const response = await axios.request(options)
+      // console.log(response.data);
+      return true
     } catch (error) {
       console.error(error);
     }

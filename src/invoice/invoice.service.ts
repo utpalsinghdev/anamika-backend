@@ -16,19 +16,19 @@ export class InvoiceService {
       }
     })
     const last_invoice = latest_inovice[0]
-    let a_id = "GAINID"
+    let a_id = "VFINID"
     if (!last_invoice?.invoiceId) {
-      a_id = "GAINID" + "0001"
+      a_id = "VFINID" + "0001"
     } else {
       const last_id = last_invoice?.invoiceId
-      const _id = last_id.split("GAINID")[1]
+      const _id = last_id.split("VFINID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
       console.log(a_id)
     }
     return await this.prisma.invoice.create({
       data: {
-        invoiceId:a_id,
+        invoiceId: a_id,
         customerId: createInvoiceDto.customerId,
         desciption: createInvoiceDto.desciption,
         total: createInvoiceDto.total,

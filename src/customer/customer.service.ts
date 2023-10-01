@@ -320,14 +320,14 @@ export class CustomerService {
       },
     })
     const last_application = applicationId[0]
-    let a_id = "GAFAID"
+    let a_id = "VFAID"
     if (!last_application?.loanId) {
       a_id = a_id + "0001"
 
       return a_id
     } else {
       const last_id = last_application.loanId
-      const _id = last_id.split("GAFAID")[1]
+      const _id = last_id.split("VFAID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
 
@@ -347,14 +347,14 @@ export class CustomerService {
       }
     })
     const last_application = applicationId[0]
-    let a_id = "GAFLID"
+    let a_id = "VFLID"
     if (!last_application?.customerId) {
       a_id = a_id + "0001"
 
       return a_id
     } else {
       const last_id = last_application.customerId
-      const _id = last_id.split("GAFLID")[1]
+      const _id = last_id.split("VFLID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
 
