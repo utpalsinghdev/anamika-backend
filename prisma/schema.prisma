@@ -216,17 +216,21 @@ model Icard {
 }
 
 model AppointmentSalary {
-  id          Int      @unique @default(autoincrement())
-  agent       Employee @relation(fields: [employeeId], references: [id])
-  employeeId  Int
-  location    String
-  photo       String
-  address     String
-  salary      String
-  agentName   String?
-  agentNumber String?
-  targetOne   Int
-  targetTwo   Int
+  id                Int               @unique @default(autoincrement())
+  agent             Employee          @relation(fields: [employeeId], references: [id])
+  employeeId        Int
+  location          String
+  photo             String
+  guradian_relation GuardianRelation?
+  guardian_name     String?
+  incentive         Int?
+  salary_after_pf   String?
+  address           String
+  salary            String
+  agentName         String?
+  agentNumber       String?
+  targetOne         Int
+  targetTwo         Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

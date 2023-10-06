@@ -3,6 +3,7 @@ import { CreateAppointmentSalaryDto } from './dto/create-appointment-salary.dto'
 import { UpdateAppointmentSalaryDto } from './dto/update-appointment-salary.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { GuardianRelation } from '@prisma/client';
 
 @Injectable()
 export class AppointmentSalaryService {
@@ -13,7 +14,10 @@ export class AppointmentSalaryService {
     createAppointmentSalaryDto.photo = img.secure_url
 
     return await this.prisma.appointmentSalary.create({
-      data: createAppointmentSalaryDto,
+      data: {
+        ...createAppointmentSalaryDto,
+        guradian_relation: createAppointmentSalaryDto.guradian_relation ? createAppointmentSalaryDto.guradian_relation as GuardianRelation : null
+      },
       select: {
         agent: true
       }

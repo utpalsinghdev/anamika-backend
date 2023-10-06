@@ -37,4 +37,21 @@ export class CreateAppointmentSalaryDto {
     @IsNotEmpty()
     @IsInt()
     targetTwo: number;
+
+    @IsOptional()
+    @IsInt()
+    incentive: number;
+
+    @IsOptional()
+    @IsString()
+    salary_after_pf: string;
+
+    @IsOptional()
+    @IsString()
+    guradian_relation: string;
+
+
+    @IsOptional()
+    @IsString()
+    guardian_name: string;
 }
