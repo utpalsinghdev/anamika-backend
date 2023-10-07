@@ -4,6 +4,7 @@ import { AuthDto } from './dto/admin-auth.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { Response } from 'express';
+import { PassworddDto } from './dto/agent-pass.dto';
 
 @ApiTags("Authentication")
 @Controller('auth')
@@ -85,6 +86,24 @@ export class AuthController {
     }
   }
   @Get("/profile/:id")
+  async updateProfile(@Param('id') id: string, @Body() body: PassworddDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: 'Profile fetched In Successfully',
+        data: await this.authService.update(+id, body)
+      }
+    }
+    catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message || "Internal Server Error",
+        data: null
+      }
+    }
+  }
+  @Patch("/profile/:id")
   async profile(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {

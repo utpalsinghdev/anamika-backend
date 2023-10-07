@@ -6,6 +6,7 @@ import { hash, compare } from 'bcrypt';
 import { AuthDto } from './dto/admin-auth.dto';
 import { ROLE } from '@prisma/client';
 import { MailService } from 'src/mail/mail.service';
+import { PassworddDto } from './dto/agent-pass.dto';
 @Injectable()
 export class AuthService {
   constructor(private readonly prisma: PrismaService,
@@ -134,8 +135,28 @@ export class AuthService {
     };
   }
 
-  async update(id: number, updateAuthDto: AuthDto) {
-    return `This action updates a #${id} auth`;
+  async update(id: number, updateAuthDto: PassworddDto) {
+    const _checkPassword = await this.prisma.employee.findFirst({
+      where: {
+        id,
+        password: await hash(updateAuthDto.Oldpassword, 10),
+      }
+    })
+    if (!_checkPassword) {
+      throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
+    } else {
+      return await this.prisma.employee.update({
+        where: {
+          id,
+          role: {
+            not: ROLE.ADMIN
+          }
+        },
+        data: {
+          password: await hash(updateAuthDto.password, 10),
+        }
+      });
+    }
   }
 
   async adminDash() {
