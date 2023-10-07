@@ -85,12 +85,12 @@ export class AuthController {
       }
     }
   }
-  @Get("/profile/:id")
+  @Patch("/profile/:id")
   async updateProfile(@Param('id') id: string, @Body() body: PassworddDto, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
-        message: 'Profile fetched In Successfully',
+        message: 'Password Updated Successfully',
         data: await this.authService.update(+id, body)
       }
     }
@@ -103,7 +103,7 @@ export class AuthController {
       }
     }
   }
-  @Patch("/profile/:id")
+  @Get("/profile/:id")
   async profile(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
       return {
