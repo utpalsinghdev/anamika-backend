@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Res, Param, Delete, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Res, Put, Param, Delete, HttpCode } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/admin-auth.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -85,7 +85,7 @@ export class AuthController {
       }
     }
   }
-  @Patch("/profile/:id")
+  @Put("/profile/:id")
   async updateProfile(@Param('id') id: string, @Body() body: PassworddDto, @Res({ passthrough: true }) res: Response) {
     try {
       return {
