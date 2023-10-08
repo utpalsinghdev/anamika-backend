@@ -144,8 +144,7 @@ export class AuthService {
           id,
         }
       })
-      const hashPassword = await compare(_checkPassword.password, updateAuthDto.Oldpassword)
-
+      const hashPassword = await compare(updateAuthDto.Oldpassword, _checkPassword.password)
       if (!hashPassword) {
         throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
       } else {
