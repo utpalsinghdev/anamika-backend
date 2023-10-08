@@ -1,10 +1,10 @@
 import { IsBase64, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class PassworddDto {
-
+    @IsOptional()
     @IsString()
     password: string
-
+    @IsOptional()
     @IsString()
     Oldpassword: string
 
@@ -13,3 +13,4 @@ export class PassworddDto {
     @IsBase64()
     profilePic: string
 }
+
