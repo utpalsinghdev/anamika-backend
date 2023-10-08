@@ -142,10 +142,11 @@ export class AuthService {
       const _checkPassword = await this.prisma.employee.findFirst({
         where: {
           id,
-          password: await hash(updateAuthDto.Oldpassword, 10),
         }
       })
-      if (!_checkPassword) {
+      const hashPassword = await compare(_checkPassword.password, updateAuthDto.Oldpassword)
+
+      if (!hashPassword) {
         throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
       } else {
         return await this.prisma.employee.update({
