@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtStrategy } from './startegy/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { MailService } from 'src/mail/mail.service';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 @Module({
   imports: [
     JwtModule.register({
@@ -15,6 +16,6 @@ import { MailService } from 'src/mail/mail.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [PrismaService, MailService, AuthService, JwtStrategy],
+  providers: [PrismaService, MailService, AuthService, JwtStrategy, CloudinaryService],
 })
 export class AuthModule { }

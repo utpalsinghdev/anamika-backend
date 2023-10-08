@@ -80,6 +80,7 @@ model Employee {
   employeeCode String             @unique
   password     String
   title        String?
+  profilePic   String?
   firstName    String
   LastName     String
   role         ROLE

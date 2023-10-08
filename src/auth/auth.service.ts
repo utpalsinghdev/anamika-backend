@@ -7,11 +7,13 @@ import { AuthDto } from './dto/admin-auth.dto';
 import { ROLE } from '@prisma/client';
 import { MailService } from 'src/mail/mail.service';
 import { PassworddDto } from './dto/agent-pass.dto';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 @Injectable()
 export class AuthService {
   constructor(private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly mailService: MailService,
+    private readonly cloud: CloudinaryService,
   ) { }
   async create(createAuthDto: AuthDto) {
     return 'This action adds a new auth';
@@ -136,26 +138,37 @@ export class AuthService {
   }
 
   async update(id: number, updateAuthDto: PassworddDto) {
-    const _checkPassword = await this.prisma.employee.findFirst({
-      where: {
-        id,
-        password: await hash(updateAuthDto.Oldpassword, 10),
-      }
-    })
-    if (!_checkPassword) {
-      throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
-    } else {
-      return await this.prisma.employee.update({
+    if (updateAuthDto.password) {
+      const _checkPassword = await this.prisma.employee.findFirst({
         where: {
           id,
-          role: {
-            not: ROLE.ADMIN
-          }
-        },
-        data: {
-          password: await hash(updateAuthDto.password, 10),
+          password: await hash(updateAuthDto.Oldpassword, 10),
         }
-      });
+      })
+      if (!_checkPassword) {
+        throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
+      } else {
+        return await this.prisma.employee.update({
+          where: {
+            id,
+            role: {
+              not: ROLE.ADMIN
+            }
+          },
+          data: {
+            password: await hash(updateAuthDto.password, 10),
+          }
+        });
+      }
+    } else {
+      const _link = await this.cloud.uploadBase64File(updateAuthDto.profilePic)
+
+      const _update = await this.prisma.employee.update({
+        where: { id },
+        data: { profilePic: _link.secure_url }
+      })
+
+      return _update
     }
   }
 
