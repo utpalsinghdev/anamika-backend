@@ -24,7 +24,7 @@ export class AgentService {
 
     });
     return ag?.map((e) => {
-      let { password, ...rest } = e
+      let { password, phone, email, city, designation, resumeId, park, managedById, joinedAt, createdAt, updatedAt, ...rest } = e
       return rest
     })
   }
