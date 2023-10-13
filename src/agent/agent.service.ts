@@ -18,13 +18,19 @@ export class AgentService {
         },
         park: false
       },
+      include: {
+        AppointmentSalary: true
+      },
       orderBy: {
         id: "desc"
       },
 
     });
     return ag?.map((e) => {
-      let { password, phone, email, city, designation, resumeId, park, managedById, joinedAt, createdAt, updatedAt, ...rest } = e
+      let { password, email, city, designation, resumeId, park, managedById, joinedAt, createdAt, updatedAt, ...rest } = e
+      rest.profilePic = rest.profilePic ? rest.profilePic : rest.AppointmentSalary.length > 0 ? rest.AppointmentSalary?.[0].photo : null
+      rest.phone = this._numberMaster(rest.phone)
+      delete rest.AppointmentSalary
       return rest
     })
   }
@@ -187,5 +193,9 @@ export class AgentService {
     )
 
     return updatAl
+  }
+
+  private _numberMaster(number: string | undefined) {
+    return `${number?.slice(0, 3)}XXXX${number?.slice(7)}`
   }
 }
