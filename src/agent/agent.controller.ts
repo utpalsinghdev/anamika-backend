@@ -60,7 +60,7 @@ export class AgentController {
     try {
       return {
         success: true,
-        message: "All Employees Successfully",
+        message: "Employee Updated Successfully",
         data: await this.agentService.update(+id, updateAgentDto)
       }
     } catch (error) {

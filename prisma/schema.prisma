@@ -52,6 +52,7 @@ model CareerApplication {
   Status        Status                     @default(PENDING)
   ApplicationID String
   city          String
+  profilePic    String?
   docId         Int?                       @unique
   resume        CareerApplicationDocument? @relation(fields: [docId], references: [id])
   createdAt     DateTime                   @default(now())

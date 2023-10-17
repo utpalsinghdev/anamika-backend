@@ -33,4 +33,12 @@ export class CreateAgentApplicationDto {
     @IsBase64()
     @IsNotEmpty()
     resume: string;
+
+    @IsBase64()
+    @IsNotEmpty()
+    profilePic: string;
+
+    @IsString()
+    @IsNotEmpty()
+    fileType: string;
 }
