@@ -82,6 +82,7 @@ model Employee {
   password     String
   title        String?
   profilePic   String?
+  displayPic   String?
   firstName    String
   LastName     String
   role         ROLE

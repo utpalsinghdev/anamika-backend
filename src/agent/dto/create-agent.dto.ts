@@ -1,5 +1,5 @@
 import { ROLE } from '@prisma/client';
-import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBase64, IsIn, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 export class CreateAgentDto {
     @IsNotEmpty()
     @IsString()
@@ -41,5 +41,9 @@ export class CreateAgentDto {
     @IsNotEmpty()
     @IsString()
     designation: string
+
+    @IsNotEmpty()
+    profilePic: string
+
 
 }

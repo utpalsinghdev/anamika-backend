@@ -26,7 +26,8 @@ export class JointPrecentService {
           city: body.city,
           password: "123456",
           Phone: body.Phone,
-          workUnder: null
+          workUnder: null,
+          profilePic: null,
         }
       ),
       this.cloud.uploadBase64File(body.photo)

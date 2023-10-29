@@ -23,38 +23,26 @@ export class CloudinaryService {
             });
         });
     }
-    async saveBase64File(base64Data: string, fileExtension: string): Promise<string> {
-        const uploadsFolder = path.join(__dirname, '..', 'uploads');
-        const fileName = `${Date.now()}-${fileExtension}`;
-        const filePath = path.join(uploadsFolder, fileName);
-
-        // Create the uploads folder if it doesn't exist
-        if (!fs.existsSync(uploadsFolder)) {
-            fs.mkdirSync(uploadsFolder, { recursive: true });
-        }
-
-        const fileData = base64Data.replace(/^data:image\/\w+;base64,/, '');
-        const buffer = Buffer.from(fileData, 'base64');
-
+    
+    async uploadMultipartFile(file: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            fs.writeFile(filePath, buffer, (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(filePath);
-                }
+            const filePath = path.join(__dirname, '..', '..', 'uploads', file.originalname);
+            const fileStream = fs.createWriteStream(filePath);
+            fileStream.on('error', (error) => {
+                reject(error);
             });
-        });
-    }
-    async deleteFile(publicId: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            cloudinary.uploader.destroy(publicId, (error, result) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(result);
-                }
+            fileStream.on('finish', () => {
+                cloudinary.uploader.upload(filePath, (error, result) => {
+                    fs.unlinkSync(filePath);
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
             });
+            fileStream.write(file.buffer);
+            fileStream.end();
         });
     }
 }

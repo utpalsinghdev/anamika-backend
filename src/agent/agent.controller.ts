@@ -40,7 +40,6 @@ export class AgentController {
       data: await this.agentService.findAll()
     }
   }
-
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Get('/employee')

@@ -18,9 +18,10 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { ApprovalLetterModule } from './approval-letter/approval-letter.module';
 import { JointPrecentModule } from './joint-precent/joint-precent.module';
 import { MailModule } from './mail/mail.module';
+import { FileModule } from './file/file.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule, InvoiceModule, ApprovalLetterModule, JointPrecentModule, MailModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule, InvoiceModule, ApprovalLetterModule, JointPrecentModule, MailModule, FileModule],
   controllers: [AppController],
   providers: [PrismaService, AppService],
 })

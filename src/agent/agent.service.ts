@@ -5,10 +5,11 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { ROLE } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { MailService } from 'src/mail/mail.service';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @Injectable()
 export class AgentService {
-  constructor(private readonly prisma: PrismaService, private readonly mail: MailService) { }
+  constructor(private readonly prisma: PrismaService, private readonly mail: MailService, private readonly cloud: CloudinaryService) { }
 
   async findAll() {
     const ag = await this.prisma.employee.findMany({
@@ -98,7 +99,11 @@ export class AgentService {
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
     }
-
+    let img: string
+    if (body.profilePic) {
+      const _profile = await this.cloud.uploadBase64File(body.profilePic)
+      img = _profile.secure_url
+    }
     const create_agent = await this.prisma.employee.create({
       data: {
         title: body.title,
@@ -106,6 +111,8 @@ export class AgentService {
         LastName: body.LastName,
         role: body.role as ROLE,
         email: body.Email,
+        profilePic: img,
+        displayPic: img,
         status: "APPROVED",
         joinedAt: new Date().toISOString().slice(0, -1) + "Z",
         designation: body.designation,
@@ -130,6 +137,11 @@ export class AgentService {
     const Get_age = await this.prisma.employee.findFirst({
       where: { id }
     })
+    let img: string
+    if (updateAgentDto.profilePic) {
+      const _profile = await this.cloud.uploadBase64File(updateAgentDto.profilePic)
+      img = _profile.secure_url
+    }
     const update_agent = await this.prisma.employee.update({
       where: {
         id
@@ -140,6 +152,7 @@ export class AgentService {
         LastName: updateAgentDto.LastName || Get_age.LastName,
         role: updateAgentDto.role as ROLE || Get_age.role,
         email: updateAgentDto.Email || Get_age.email,
+        profilePic: img ? img : Get_age.profilePic,
         designation: updateAgentDto.designation || Get_age.designation,
         phone: updateAgentDto.Phone || Get_age.phone,
         city: updateAgentDto.city || Get_age.city,
