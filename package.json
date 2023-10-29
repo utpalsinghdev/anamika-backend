@@ -1,5 +1,5 @@
 {
-  "name": "caslon-api",
+  "name": "aradhya-api",
   "version": "0.0.1",
   "description": "",
   "author": "Utpal Singh <utpalsingh915@gmail.com>",
@@ -87,5 +87,5 @@
     "testEnvironment": "node"
   },
   "main": "dist/main.js",
-  "repository": "https://github.com/utpalsinghdev/caslon-api"
+  "repository": "https://github.com/utpalsinghdev"
 }

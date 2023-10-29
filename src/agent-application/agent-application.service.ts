@@ -100,12 +100,12 @@ export class AgentApplicationService {
       }
     })
     const last_application = applicationId[0]
-    let a_id = "CBEID"
+    let a_id = "AFEID"
     if (!last_application?.employeeCode) {
       a_id = a_id + "0001"
     } else {
       const last_id = last_application.employeeCode
-      const _id = last_id.split("CBEID")[1]
+      const _id = last_id.split("AFEID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
     }
