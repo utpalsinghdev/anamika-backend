@@ -13,10 +13,7 @@ export class CreateAppointmentSalaryDto {
     @IsString()
     address: string;
 
-    @IsNotEmpty()
-    @IsString()
-    @IsBase64()
-    photo: string;
+
 
     @IsNotEmpty()
     @IsString()

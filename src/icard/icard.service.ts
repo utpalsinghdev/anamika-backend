@@ -12,8 +12,7 @@ export class IcardService {
   ) { }
 
   async create(createIcardDto: CreateIcardDto) {
-    const photo = await this.cloudinary.uploadBase64File(createIcardDto.profilepic)
-    createIcardDto.profilepic = photo.secure_url
+
     return await this.prisma.icard.create({
       data: createIcardDto,
       include: {

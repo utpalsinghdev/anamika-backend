@@ -5,9 +5,7 @@ export class CreateIcardDto {
     @IsInt()
     employeeId: number
 
-    @IsNotEmpty()
-    @IsBase64()
-    profilepic: string;
+
 
     @IsNotEmpty()
     @IsString()

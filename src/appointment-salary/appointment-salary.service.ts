@@ -10,12 +10,12 @@ export class AppointmentSalaryService {
   constructor(private readonly prisma: PrismaService,
     private readonly cloud: CloudinaryService) { }
   async create(createAppointmentSalaryDto: CreateAppointmentSalaryDto) {
-    const img = await this.cloud.uploadBase64File(createAppointmentSalaryDto.photo)
-    createAppointmentSalaryDto.photo = img.secure_url
-
+    const _agent = await this.prisma.employee.findFirst({ where: { id: createAppointmentSalaryDto.employeeId } })
     return await this.prisma.appointmentSalary.create({
       data: {
         ...createAppointmentSalaryDto,
+        photo: _agent.profilePic,
+        employeeId: createAppointmentSalaryDto.employeeId,
         guradian_relation: createAppointmentSalaryDto.guradian_relation ? createAppointmentSalaryDto.guradian_relation as GuardianRelation : null
       },
       select: {

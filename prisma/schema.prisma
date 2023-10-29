@@ -223,7 +223,7 @@ model AppointmentSalary {
   agent             Employee          @relation(fields: [employeeId], references: [id])
   employeeId        Int
   location          String
-  photo             String
+  photo             String?
   guradian_relation GuardianRelation?
   guardian_name     String?
   incentive         Int?
