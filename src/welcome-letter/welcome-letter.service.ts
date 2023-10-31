@@ -39,7 +39,7 @@ export class WelcomeLetterService {
         loanId: l_id,
         status: "APPROVED",
         customerId: c_id,
-        password: await hash(password, 10),
+        password: await hash(body.phone, 10),
       }
     });
 
