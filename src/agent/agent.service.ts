@@ -209,6 +209,6 @@ export class AgentService {
   }
 
   private _numberMaster(number: string | undefined) {
-    return `${number?.slice(0, 3)}XXXX${number?.slice(7)}`
+    return `${number?.slice(0, 4)}XXXXX${number?.slice(6)}`
   }
 }

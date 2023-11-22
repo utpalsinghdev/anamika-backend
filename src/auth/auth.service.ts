@@ -206,9 +206,17 @@ export class AuthService {
             with: true
           }
         },
-        managing: true
+        managing: {
+          select: {
+            firstName: true,
+            LastName: true,
+            city: true,
+            designation: true,
+            profilePic: true,
+            employeeCode: true,
 
-
+          }
+        }
       }
     })
   }
