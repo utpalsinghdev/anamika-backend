@@ -117,15 +117,9 @@ export class AuthController {
   @Get("/profile/:id")
   async profile(@Param('id') id: string, @Res({ passthrough: true }) res: Response, @Req() req: Request) {
 
-    interface CustomRequest extends Request {
-      userId?: any;
-    }
+
 
     try {
-      console.log((req as CustomRequest).userId);
-      if ((req as CustomRequest).userId != +id) {
-        throw new Error("You are not allowed to access this profile")
-      }
 
       return {
         success: true,
