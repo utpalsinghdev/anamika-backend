@@ -79,26 +79,8 @@ export class AgentService {
   }
 
   async createEmployee(body: CreateAgentDto) {
-    const applicationId = await this.prisma.employee.findMany({
-      take: 1,
-      orderBy: {
-        id: 'desc'
-      },
-      include: {
-        managedBy: true
-      }
-    })
 
-    const last_application = applicationId[0]
-    let a_id = "AFEID"
-    if (!last_application?.employeeCode) {
-      a_id = a_id + "0001"
-    } else {
-      const last_id = last_application.employeeCode
-      const _id = last_id.split("AFEID")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
-    }
+    let a_id = await this._employeeCode()
     let img: string
     if (body.profilePic) {
       const _profile = await this.cloud.uploadBase64File(body.profilePic)
@@ -210,5 +192,28 @@ export class AgentService {
 
   private _numberMaster(number: string | undefined) {
     return `${number?.slice(0, 5) || ''}XXXXX${number?.slice(10)}`
+  }
+
+  private async _employeeCode(): Promise<string> {
+    let uniqueCode = '';
+    let isUnique = false;
+
+    while (!isUnique) {
+      const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
+      const employeeCode = `AFPVT${randomPin}`;
+
+      const agents = await this.prisma.employee.findUnique({
+        where: {
+          employeeCode,
+        },
+      });
+
+      if (!agents) {
+        uniqueCode = employeeCode;
+        isUnique = true;
+      }
+    }
+
+    return uniqueCode;
   }
 }

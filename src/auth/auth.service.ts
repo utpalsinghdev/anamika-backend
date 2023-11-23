@@ -19,22 +19,7 @@ export class AuthService {
     return 'This action adds a new auth';
   }
   async createAdmin(payload: CreateAdminDto) {
-    const applicationId = await this.prisma.employee.findMany({
-      take: 1,
-      orderBy: {
-        id: 'desc'
-      }
-    })
-    const last_application = applicationId[0]
-    let a_id = "AFEID"
-    if (!last_application?.employeeCode) {
-      a_id = a_id + "0001"
-    } else {
-      const last_id = last_application.employeeCode
-      const _id = last_id.split("AFEID")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
-    }
+    let a_id = await this._employeeCode()
 
     const new_admin = await this.prisma.employee.create({
       data: {
@@ -203,7 +188,16 @@ export class AuthService {
         WelcomeLetter: {
           include: {
             for: true,
-            with: true
+            with: {
+              select: {
+                firstName: true,
+                LastName: true,
+                city: true,
+                designation: true,
+                profilePic: true,
+                employeeCode: true,
+              }
+            }
           }
         },
         managing: {
@@ -267,5 +261,27 @@ export class AuthService {
       expiresIn: process.env.EXPIRESIN,
       Authorization,
     };
+  }
+  private async _employeeCode(): Promise<string> {
+    let uniqueCode = '';
+    let isUnique = false;
+
+    while (!isUnique) {
+      const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
+      const employeeCode = `AFPVT${randomPin}`;
+
+      const agents = await this.prisma.employee.findUnique({
+        where: {
+          employeeCode,
+        },
+      });
+
+      if (!agents) {
+        uniqueCode = employeeCode;
+        isUnique = true;
+      }
+    }
+
+    return uniqueCode;
   }
 }

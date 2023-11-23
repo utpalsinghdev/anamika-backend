@@ -12,22 +12,8 @@ export class AgentApplicationService {
     private readonly cloud: CloudinaryService) { }
   async create(createAgentApplicationDto: CreateAgentApplicationDto,) {
 
-    const applicationId = await this.prisma.careerApplication.findMany({
-      take: 1,
-      orderBy: {
-        id: 'desc'
-      }
-    })
-    const last_application = applicationId[0]
-    let a_id = "APID"
-    if (!last_application?.ApplicationID) {
-      a_id = a_id + "0001"
-    } else {
-      const last_id = last_application.ApplicationID
-      const _id = last_id.split("APID")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
-    }
+
+    let a_id = await this._employeeCode()
     const [uploadedFile, _profilePic] = await Promise.all([
       this.cloud.uploadBase64File(createAgentApplicationDto.resume),
       this.cloud.uploadBase64File(createAgentApplicationDto.profilePic)
@@ -90,25 +76,7 @@ export class AgentApplicationService {
       }
     })
     if (!get_application) throw new HttpException("Application not Found", HttpStatus.NOT_FOUND)
-    const applicationId = await this.prisma.employee.findMany({
-      take: 1,
-      where: {
-        park: false,
-      },
-      orderBy: {
-        id: 'desc'
-      }
-    })
-    const last_application = applicationId[0]
-    let a_id = "AFEID"
-    if (!last_application?.employeeCode) {
-      a_id = a_id + "0001"
-    } else {
-      const last_id = last_application.employeeCode
-      const _id = last_id.split("AFEID")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
-    }
+    let a_id = await this._employeeCode()
     const create_agent = await this.prisma.employee.create({
       data: {
         title: body.title,
@@ -169,5 +137,27 @@ export class AgentApplicationService {
       }
     })
 
+  }
+  private async _employeeCode(): Promise<string> {
+    let uniqueCode = '';
+    let isUnique = false;
+
+    while (!isUnique) {
+      const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
+      const employeeCode = `AFPVT${randomPin}`;
+
+      const agents = await this.prisma.employee.findUnique({
+        where: {
+          employeeCode,
+        },
+      });
+
+      if (!agents) {
+        uniqueCode = employeeCode;
+        isUnique = true;
+      }
+    }
+
+    return uniqueCode;
   }
 }
