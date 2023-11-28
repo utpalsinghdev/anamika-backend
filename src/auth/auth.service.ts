@@ -174,7 +174,11 @@ export class AuthService {
   }
   async profile(id: number) {
     return await this.prisma.employee.findFirst({
-      where: { id }, include: {
+      where: {
+        id, role: {
+          not: "ADMIN"
+        }
+      }, include: {
         AppointmentSalary: true,
         Customer: {
           include: {

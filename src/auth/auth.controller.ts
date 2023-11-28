@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Res, Put, Param, UseGuards, Delete, HttpCode, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Res, Put, Param, UseGuards, Delete, HttpCode, Req, Headers, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/admin-auth.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -10,13 +10,13 @@ import { RolesGuard } from './guards/role.guard';
 import { Roles } from 'src/decoretors/role.decorator';
 import { ROLE } from '@prisma/client';
 import { Request } from 'express';
-
+import { jwtDecode } from "jwt-decode";
 @ApiTags("Authentication")
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(ROLE.ADMIN)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(ROLE.ADMIN)
   @Post("/add/admin")
   async CreateAdmin(@Body() body: CreateAdminDto, @Res({ passthrough: true }) res: Response) {
     try {
@@ -113,13 +113,16 @@ export class AuthController {
     }
   }
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(ROLE.AGENT, ROLE.DEALERSHIP, ROLE.FEILDOFFICER)
+  @Roles(ROLE.AGENT, ROLE.DEALERSHIP, ROLE.ADMIN, ROLE.FEILDOFFICER)
   @Get("/profile/:id")
-  async profile(@Param('id') id: string, @Res({ passthrough: true }) res: Response, @Req() req: Request) {
+  async profile(@Param('id') id: string, @Res({ passthrough: true }) res: Response, @Req() req: Request, @Headers() headers: Record<any, any>) {
 
-
-
+    const token = headers.authorization.split(' ')[1];
+    const decoded: any = jwtDecode(token);
     try {
+      if (decoded.id != id) {
+        throw new HttpException('Chutiya smjha hai kya gandu', HttpStatus.UNAUTHORIZED);
+      }
 
       return {
         success: true,
