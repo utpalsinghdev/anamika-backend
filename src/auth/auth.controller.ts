@@ -121,6 +121,10 @@ export class AuthController {
     const decoded: any = jwtDecode(token);
     try {
       if (decoded.id != id) {
+        console.log({
+          decoded,
+          id
+        })
         throw new HttpException('Chutiya smjha hai kya gandu', HttpStatus.UNAUTHORIZED);
       }
 
