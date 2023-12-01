@@ -15,21 +15,14 @@ async function bootstrap() {
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
   app.setGlobalPrefix('/api')
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true })) //TODO: Fixing Pipe Issue
-  const config = new DocumentBuilder()
-    .setTitle('Vandhnam APIs')
-    .setDescription('All Apis for Vandhnam Finance Pvt. Ltd.')
-    .setVersion('0.0.1')
-    .build()
 
-  const document = SwaggerModule.createDocument(app, config)
   app.use(morgan('dev'))
   cloudinary.config({
     cloud_name: "dedbpyhmr",
     api_key: "735616525684875",
     api_secret: "fu26Y1WSxB20E3V4-c2Z3KNqZrk",
   });
-  SwaggerModule.setup('/api-docs', app, document)
   // console.log();
-  await app.listen(7002)
+  await app.listen(7005)
 }
 bootstrap()
