@@ -1,5 +1,5 @@
 {
-  "name": "aradhya-api",
+  "name": "future-financial-api",
   "version": "0.0.1",
   "description": "",
   "author": "Utpal Singh <utpalsingh915@gmail.com>",
@@ -88,5 +88,5 @@
     "testEnvironment": "node"
   },
   "main": "dist/main.js",
-  "repository": "https://github.com/utpalsinghdev"
+  "repository": "https://github.com/utpalsinghdev/future-financial-api.git"
 }
