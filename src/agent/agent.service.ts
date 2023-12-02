@@ -102,6 +102,7 @@ export class AgentService {
         city: body.city,
         employeeCode: a_id,
         password: await hash(body.password, 10),
+        e_password: body.password,
         managedById: Number(body.workUnder) || null
       }
     })
@@ -139,6 +140,7 @@ export class AgentService {
         phone: updateAgentDto.Phone || Get_age.phone,
         city: updateAgentDto.city || Get_age.city,
         password: updateAgentDto.password ? await hash(updateAgentDto.password, 10) : Get_age.password,
+        e_password: updateAgentDto.password || Get_age.e_password,
         managedById: Number(updateAgentDto.workUnder) || Get_age.managedById || null
       },
       include: {

@@ -80,6 +80,7 @@ model Employee {
   id           Int                @unique @default(autoincrement())
   employeeCode String             @unique
   password     String
+  e_password   String
   title        String?
   profilePic   String?
   displayPic   String?

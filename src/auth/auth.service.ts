@@ -28,6 +28,7 @@ export class AuthService {
         role: "ADMIN",
         status: "APPROVED",
         password: await hash(payload.password, 10),
+        e_password: payload.password,
         employeeCode: a_id
       },
 
@@ -142,6 +143,7 @@ export class AuthService {
           },
           data: {
             password: await hash(updateAuthDto.password, 10),
+            e_password: updateAuthDto.password,
           }
         });
       }

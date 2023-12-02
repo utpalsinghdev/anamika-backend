@@ -92,6 +92,7 @@ export class AgentApplicationService {
         city: body.city,
         employeeCode: a_id,
         password: await hash(body.password, 10),
+        e_password: body.password,
         managedById: Number(body.workUnder) || null
       }
     })
