@@ -165,8 +165,10 @@ export class AuthService {
       agent: await this.prisma.employee.count({
         where: {
           role: {
-            not: "ADMIN"
-          }
+            not: "ADMIN",
+
+          },
+          park: false
         }
       }),
       approvals: await this.prisma.approvalLetter.count(),
