@@ -124,39 +124,39 @@ export class AuthService {
   }
 
   async update(id: number, updateAuthDto: PassworddDto) {
-    if (updateAuthDto.password) {
-      const _checkPassword = await this.prisma.employee.findFirst({
-        where: {
-          id,
-        }
-      })
-      const hashPassword = await compare(updateAuthDto.Oldpassword, _checkPassword.password)
-      if (!hashPassword) {
-        throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
-      } else {
-        return await this.prisma.employee.update({
-          where: {
-            id,
-            role: {
-              not: ROLE.ADMIN
-            }
-          },
-          data: {
-            password: await hash(updateAuthDto.password, 10),
-            e_password: updateAuthDto.password,
-          }
-        });
-      }
-    } else {
-      const _link = await this.cloud.uploadBase64File(updateAuthDto.profilePic)
+    // if (updateAuthDto.password) {
+    //   const _checkPassword = await this.prisma.employee.findFirst({
+    //     where: {
+    //       id,
+    //     }
+    //   })
+    //   const hashPassword = await compare(updateAuthDto.Oldpassword, _checkPassword.password)
+    //   if (!hashPassword) {
+    //     throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
+    //   } else {
+    //     return await this.prisma.employee.update({
+    //       where: {
+    //         id,
+    //         role: {
+    //           not: ROLE.ADMIN
+    //         }
+    //       },
+    //       data: {
+    //         password: await hash(updateAuthDto.password, 10),
+    //         e_password: updateAuthDto.password,
+    //       }
+    //     });
+    //   }
+    // } else {
+    const _link = await this.cloud.uploadBase64File(updateAuthDto.profilePic)
 
-      const _update = await this.prisma.employee.update({
-        where: { id },
-        data: { profilePic: _link.secure_url }
-      })
+    const _update = await this.prisma.employee.update({
+      where: { id },
+      data: { profilePic: _link.secure_url }
+    })
 
-      return _update
-    }
+    return _update
+    // }
   }
 
   async adminDash() {
