@@ -39,7 +39,7 @@ export class AuthService {
     // }
     // const res = await this.mailService.sendSms(data)
     // console.log(res)
-    const { password, title, city, phone, email, resumeId, status, park, joinedAt, ...rest } = new_admin
+    const { title, city, phone, email, resumeId, status, park, joinedAt, ...rest } = new_admin
     return rest
   }
 

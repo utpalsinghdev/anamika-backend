@@ -1,6 +1,7 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { DocumentBuilder } from '@nestjs/swagger'
+
 import { SwaggerModule } from '@nestjs/swagger/dist'
 import { ValidationPipe } from '@nestjs/common/pipes'
 import * as morgan from 'morgan'
@@ -23,6 +24,6 @@ async function bootstrap() {
     api_secret: "fu26Y1WSxB20E3V4-c2Z3KNqZrk",
   });
   // console.log();
-  await app.listen(7005)
+  await app.listen(7001)
 }
 bootstrap()
