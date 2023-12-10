@@ -145,7 +145,7 @@ export class AgentApplicationService {
 
     while (!isUnique) {
       const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
-      const employeeCode = `MFPVT${randomPin}`;
+      const employeeCode = `MFEID${randomPin}`;
 
       const agents = await this.prisma.employee.findUnique({
         where: {
