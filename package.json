@@ -1,5 +1,5 @@
 {
-  "name": "future-financial-api",
+  "name": "mahadev-financial-api",
   "version": "0.0.1",
   "description": "",
   "author": "Utpal Singh <utpalsingh915@gmail.com>",
@@ -88,5 +88,5 @@
     "testEnvironment": "node"
   },
   "main": "dist/main.js",
-  "repository": "https://github.com/utpalsinghdev/future-financial-api.git"
+  "repository": "https://github.com/utpalsinghdev/mahadev-financial-api.git"
 }

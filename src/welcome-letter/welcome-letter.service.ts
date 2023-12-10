@@ -89,14 +89,14 @@ export class WelcomeLetterService {
       },
     })
     const last_application = applicationId[0]
-    let a_id = "FFAID"
+    let a_id = "MFAID"
     if (!last_application?.loanId) {
       a_id = a_id + "0001"
 
       return a_id
     } else {
       const last_id = last_application.loanId
-      const _id = last_id.split("FFAID")[1]
+      const _id = last_id.split("MFAID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
 
@@ -116,14 +116,14 @@ export class WelcomeLetterService {
       }
     })
     const last_application = applicationId[0]
-    let a_id = "FFLID"
+    let a_id = "MFLID"
     if (!last_application?.customerId) {
       a_id = a_id + "0001"
 
       return a_id
     } else {
       const last_id = last_application.customerId
-      const _id = last_id.split("FFLID")[1]
+      const _id = last_id.split("MFLID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
 
