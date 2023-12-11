@@ -294,3 +294,10 @@ model JointPercent {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Paymentqr {
+  id        String   @unique @default(uuid())
+  url       String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
