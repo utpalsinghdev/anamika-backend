@@ -103,25 +103,28 @@ export class CustomerService {
     const g_customer = await this.prisma.customer.findFirst({ where: { id } })
 
 
-    const promises = [];
+    const adharPromise = updateCustomerDto.AdharCard
+      ? this.cloud.uploadBase64File(updateCustomerDto.AdharCard)
+      : null;
 
-    if (updateCustomerDto.AdharCard) {
-      promises.push(this.cloud.uploadBase64File(updateCustomerDto.AdharCard));
-    }
+    const proofPromise = updateCustomerDto.proofDoc
+      ? this.cloud.uploadBase64File(updateCustomerDto.proofDoc)
+      : null;
 
-    if (updateCustomerDto.panCard) {
-      promises.push(this.cloud.uploadBase64File(updateCustomerDto.panCard));
-    }
+    const photoPromise = updateCustomerDto.photo
+      ? this.cloud.uploadBase64File(updateCustomerDto.photo)
+      : null;
 
-    if (updateCustomerDto.photo) {
-      promises.push(this.cloud.uploadBase64File(updateCustomerDto.photo));
-    }
+    const panPromise = updateCustomerDto.panCard
+      ? this.cloud.uploadBase64File(updateCustomerDto.panCard)
+      : null;
 
-    if (updateCustomerDto.proofDoc) {
-      promises.push(this.cloud.uploadBase64File(updateCustomerDto.proofDoc));
-    }
-
-    const [_adhar, _bankProof, _photo, _pan] = await Promise.all(promises);
+    const [adhar, proof, photo, pan] = await Promise.all([
+      adharPromise,
+      proofPromise,
+      photoPromise,
+      panPromise,
+    ]);
     const updatedData: any = {
       name: updateCustomerDto.name,
       guardian_relation: updateCustomerDto.guardian_relation,
@@ -146,47 +149,49 @@ export class CustomerService {
     };
     if (updateCustomerDto.password) {
       updatedData.password = await hash(updateCustomerDto.password, 10)
+
     }
-    if (_adhar) {
+    // console.log(_adhar)
+
+    if (adhar) {
       updatedData.AdharCard = {
         create: {
           name: "Adhar Card",
-          url: _adhar.secure_url,
-          applicationId: g_customer.loanId || g_customer.customerId
-        }
+          url: adhar.secure_url,
+          applicationId: g_customer.loanId || g_customer.customerId,
+        },
       };
     }
 
-    if (_bankProof) {
+    if (proof) {
       updatedData.proofDoc = {
         create: {
           name: "Proof Doc",
-          url: _bankProof.secure_url,
-          applicationId: g_customer.loanId || g_customer.customerId
-        }
+          url: proof.secure_url,
+          applicationId: g_customer.loanId || g_customer.customerId,
+        },
       };
     }
 
-    if (_photo) {
+    if (photo) {
       updatedData.photo = {
         create: {
           name: "Photo",
           applicationId: g_customer.loanId || g_customer.customerId,
-          url: _photo.secure_url
-        }
+          url: photo.secure_url,
+        },
       };
     }
 
-    if (_pan) {
+    if (pan) {
       updatedData.panCard = {
         create: {
           name: "Pan Card",
           applicationId: g_customer.loanId || g_customer.customerId,
-          url: _pan.secure_url
-        }
+          url: pan.secure_url,
+        },
       };
-    };
-
+    }
 
     const updatedCustomer = await this.prisma.customer.update({
       where: { id },
