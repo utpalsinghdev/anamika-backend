@@ -11,7 +11,9 @@ import { Response } from 'express';
 @Controller('payment-qr')
 export class PaymentqrController {
   constructor(private readonly paymentqrService: PaymentqrService) { }
-
+  data
+    :
+    {}
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Post()
@@ -33,12 +35,12 @@ export class PaymentqrController {
   }
 
   @Get()
-  findAll(@Res({ passthrough: true }) res: Response) {
+  async findAll(@Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
         message: "All News Fetched",
-        data: this.paymentqrService.getQR()
+        data: await this.paymentqrService.getQR()
       }
     } catch (error) {
       res.status(error.status || 500)
