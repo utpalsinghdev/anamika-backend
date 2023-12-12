@@ -52,7 +52,7 @@ export class AgentService {
 
     if (!ag) throw new Error("No Agent Found")
 
-    const { password, city, designation, resumeId, park, managedById, joinedAt, createdAt, updatedAt, ...rest } = ag
+    const { password, resumeId, park, managedById, joinedAt, createdAt, updatedAt, ...rest } = ag
     rest.profilePic = rest.profilePic ? rest.profilePic : rest.AppointmentSalary.length > 0 ? rest.AppointmentSalary?.[0].photo : null
     delete rest.AppointmentSalary
     return rest
