@@ -40,7 +40,7 @@ export class AgentController {
       data: await this.agentService.findAll()
     }
   }
-  @Get("/verify")
+  @Get("/verify:phone")
   async verify(@Param('phone') phone: string, @Res({ passthrough: true }) res: Response) {
     return {
       success: true,
