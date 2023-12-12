@@ -35,6 +35,28 @@ export class AgentService {
       return rest
     })
   }
+  async verify(number: string) {
+    const ag = await this.prisma.employee.findFirst({
+      where: {
+        phone: number,
+        park: false
+      },
+      include: {
+        AppointmentSalary: true
+      },
+      orderBy: {
+        id: "desc"
+      },
+
+    });
+
+    if (!ag) throw new Error("No Agent Found")
+
+    const { password, city, designation, resumeId, park, managedById, joinedAt, createdAt, updatedAt, ...rest } = ag
+    rest.profilePic = rest.profilePic ? rest.profilePic : rest.AppointmentSalary.length > 0 ? rest.AppointmentSalary?.[0].photo : null
+    delete rest.AppointmentSalary
+    return rest
+  }
 
   async findAllEmployee() {
     const em = await this.prisma.employee.findMany({

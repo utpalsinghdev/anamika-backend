@@ -40,6 +40,14 @@ export class AgentController {
       data: await this.agentService.findAll()
     }
   }
+  @Get("/verify")
+  async verify(@Param('phone') phone: string, @Res({ passthrough: true }) res: Response) {
+    return {
+      success: true,
+      message: "Agents Verified Successfully",
+      data: await this.agentService.verify(phone)
+    }
+  }
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Get('/employee')
