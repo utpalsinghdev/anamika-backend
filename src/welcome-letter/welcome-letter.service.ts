@@ -5,11 +5,23 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Status } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { CreateWelomeCustomerDto } from './dto/welcome-manual.dto';
+import { MailService } from 'src/mail/mail.service';
+import mailEnums from 'src/utils/mailEnumbs';
 
 @Injectable()
 export class WelcomeLetterService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService, private readonly mail: MailService) { }
   async create(createWelcomeLetterDto: CreateWelcomeLetterDto) {
+    const _customer = await this.prisma.customer.findFirst({
+      where: {
+        id: createWelcomeLetterDto.customerId
+      }
+    })
+    await this.mail.sendSms({
+      numbers: _customer.phone,
+      type: mailEnums.WELCOME.toString(),
+      value: `${_customer.name}|${_customer.customerId}|${_customer.phone}`
+    })
     return await this.prisma.welcomeLetter.create({
       data: createWelcomeLetterDto,
       include: {
@@ -42,7 +54,11 @@ export class WelcomeLetterService {
         password: await hash(body.phone, 10),
       }
     });
-
+    await this.mail.sendSms({
+      numbers: body.phone,
+      type: mailEnums.WELCOME.toString(),
+      value: `${body.name}|${c_id}|${body.phone}`
+    })
     return await this.create({
       customerId: n_customer.id,
       employeeId: body.employeeId,

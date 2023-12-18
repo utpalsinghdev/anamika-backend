@@ -2,7 +2,13 @@ import { IsNotEmpty } from "class-validator"
 
 export class CreateMailDto {
     @IsNotEmpty()
-    numbers:string
+    numbers: string
+
     @IsNotEmpty()
-    message: string
+    value: string
+
+
+
+    @IsNotEmpty()
+    type: string
 }

@@ -4,9 +4,10 @@ import { AgentApplicationController } from './agent-application.controller';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Utils } from 'src/utils/utils.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { MailService } from 'src/mail/mail.service';
 
 @Module({
   controllers: [AgentApplicationController],
-  providers: [AgentApplicationService, PrismaService, Utils, CloudinaryService],
+  providers: [AgentApplicationService, PrismaService, Utils, CloudinaryService, MailService],
 })
-export class AgentApplicationModule {}
+export class AgentApplicationModule { }

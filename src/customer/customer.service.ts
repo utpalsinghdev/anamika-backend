@@ -90,13 +90,8 @@ export class CustomerService {
 
       },
     });
-    const data: CreateMailDto = {
-      message: `Hi ${CustomerDto.name} Welcome to Green Apple Financial Services Pvt Ltd.We have received your loan Application Your application No. is ${a_id} Team will Call You`,
-      numbers: CustomerDto.phone
-    }
 
-    const sms = await this.mail.sendSms(data)
-    console.log(sms)
+
     return createdCustomer;
   }
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {
@@ -134,6 +129,7 @@ export class CustomerService {
       loanInNumber: updateCustomerDto.loanInNumber,
       loanInWords: updateCustomerDto.loanInWords,
       loanYear: updateCustomerDto.loanYear,
+      phone: updateCustomerDto.phone,
       address: updateCustomerDto.address,
       district: updateCustomerDto.district,
       State: updateCustomerDto.State,
@@ -286,13 +282,10 @@ export class CustomerService {
         password: await hash(customer.phone, 10),
       },
     });
-    const data = {
-      message: `Congratulations! ${customer.name} Your Loan Has Been Approved By Company Green Apple Financial Services Pvt. Ltd. your CustomerId ${cid} Team Will contact You. Thanks for Choose Us.`,
-      numbers: customer.phone
-    }
 
-    const res = await this.mail.sendSms(data)
-    console.log(res)
+
+    // const res = await this.mail.sendSms(data)
+    // console.log(res)
     return updatedCustomer;
   }
 

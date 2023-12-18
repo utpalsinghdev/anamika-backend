@@ -6,6 +6,7 @@ import { ROLE } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { MailService } from 'src/mail/mail.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import mailEnums from 'src/utils/mailEnumbs';
 
 @Injectable()
 export class AgentService {
@@ -132,8 +133,11 @@ export class AgentService {
       message: `Congratulations! Welcome to Green Apple Financial Services Pvt. Ltd. Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${body.password}`,
       numbers: body.Phone
     }
-    const res = await this.mail.sendSms(data)
-    console.log(res)
+    await this.mail.sendSms({
+      numbers: body.Phone,
+      type: mailEnums.JOINING.toString(),
+      value: `${body.title} ${body.firstName} ${body.LastName}|${a_id}|${body.password}`
+    })
     const { password, ...rest } = create_agent
     return rest;
   }

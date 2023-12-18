@@ -5,11 +5,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { ROLE, Status } from '@prisma/client';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { hash } from 'bcrypt';
+import { MailService } from 'src/mail/mail.service';
+import mailEnums from 'src/utils/mailEnumbs';
 
 @Injectable()
 export class AgentApplicationService {
   constructor(private readonly prisma: PrismaService,
-    private readonly cloud: CloudinaryService) { }
+    private readonly cloud: CloudinaryService, private readonly mail: MailService) { }
   async create(createAgentApplicationDto: CreateAgentApplicationDto,) {
 
 
@@ -111,6 +113,11 @@ export class AgentApplicationService {
     * 
     *? And Need to Send EmployeeCode and Their Password
     */
+    await this.mail.sendSms({
+      numbers: body.Phone,
+      type: mailEnums.JOINING.toString(),
+      value: `${body.title} ${body.firstName} ${body.LastName}|${a_id}|${body.password}`
+    })
     const { password, status, ...rest } = create_agent
     return rest;
   }
