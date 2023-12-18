@@ -24,15 +24,15 @@ export class MailService {
         break;
       // case mailEnums.LOAN_APPLICATION.toString():
       //   message = `Congratulations ${createMailDto.value?.split("|")[0]} Welcome to Caslon Business Services Pvt Ltd.We have received your Application.Your application No.is ${createMailDto.value?.split("|")[1]}. Team will Call You soon Thank you for Choose us.Caslon business Services Private Limited &templateid=1707169995602526224`;
-      //   break;
+      //   break;b
       case mailEnums.LOAN_APPROVED.toString():
         message = `Congratulations! ${createMailDto.value?.split("|")[0]} Your Documents Has Been Approved and generated your Approval Latter Loan Amount ${createMailDto.value?.split("|")[1]} Rs Sanction by Company ${company} Thanks for Choose Us. ${company_full}& templateid=1607100000000293169`;
         break;
       case mailEnums.INVOICE.toString():
-        message = `Dear Customer ${createMailDto.value?.split("|")[0]} Your Processing Fee ${createMailDto.value?.split("|")[1]} has be received your Application in process thank you for Choose us.${company_full}& templateid=1607100000000293861`;
+        message = `Dear Customer ${createMailDto.value?.split("|")[0]} Your Processing Fee RS ${createMailDto.value?.split("|")[1]} has be received your Application in process thank you for Choose us.${company_full}& templateid=1607100000000293861`;
         break;
       case mailEnums.WELCOME_INVOICE.toString():
-        message = `Dear Customer ${createMailDto.value?.split("|")[0]} Your file charge Payment ${createMailDto.value?.split("|")[1]} has be received your Case File in process thank you for Choose us. ${company_full}& templateid=1607100000000293860`;
+        message = `Dear Customer ${createMailDto.value?.split("|")[0]} Your file charge Payment RS ${createMailDto.value?.split("|")[1]} has be received your Case File in process thank you for Choose us. ${company_full}& templateid=1607100000000293860`;
         break;
     }
     try {
