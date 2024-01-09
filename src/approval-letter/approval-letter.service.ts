@@ -132,6 +132,9 @@ export class ApprovalLetterService {
             photo: true
           }
         }
+      },
+      orderBy: {
+        createdAt: 'desc'
       }
     });
 
