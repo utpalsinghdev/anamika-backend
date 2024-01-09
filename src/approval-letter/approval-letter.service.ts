@@ -23,11 +23,11 @@ export class ApprovalLetterService {
         id: createApprovalLetterDto.customerId
       }
     })
-    const res = await this.mail.sendSms({
-      numbers: _customer.phone,
-      type: mailEnums.LOAN_APPROVED.toString(),
-      value: `${_customer.name}|${_customer.loanInNumber}`
-    })
+    // const res = await this.mail.sendSms({
+    //   numbers: _customer.phone,
+    //   type: mailEnums.LOAN_APPROVED.toString(),
+    //   value: `${_customer.name}|${_customer.loanInNumber}`
+    // })
     const { originalPdfPath, encryptedPdfPath, password, pdfName } = await this.pdfLink();
     // console.log(originalPdfPath, encryptedPdfPath, password, pdfName)
     return await this.prisma.approvalLetter.create({
