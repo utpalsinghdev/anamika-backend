@@ -112,7 +112,7 @@ export class ApprovalLetterService {
     // add two min pause here
 
     setTimeout(() => {
-      execSync(`qpdf --encrypt ${password} ${password} 128 -- "${originalPdfPath}" "${encryptedPdfPath}"`);
+      execSync(`qpdf --encrypt ${password} ${password} 256 -- "${originalPdfPath}" "${encryptedPdfPath}"`);
       fs.unlinkSync(originalPdfPath);
     }
       , 3000);
