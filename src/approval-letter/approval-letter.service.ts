@@ -141,7 +141,7 @@ export class ApprovalLetterService {
     return all_approvals.map((approval) => {
       return {
         ...approval,
-        url: approval.url ? approval.url.split("/uploads")[1] : null
+        url: approval.url ? "/uploads" + approval.url.split("/uploads")[1] : null
       }
     })
   }
