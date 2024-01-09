@@ -270,6 +270,8 @@ model ApprovalLetter {
   id               Int      @unique @default(autoincrement())
   customer         Customer @relation(fields: [customerId], references: [id])
   customerId       Int
+  url              String?
+  pdfPassword      String?
   address          String
   permanentAddress String
   processingCharge String
