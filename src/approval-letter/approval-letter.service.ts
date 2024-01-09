@@ -124,7 +124,7 @@ export class ApprovalLetterService {
   }
 
   async findAll() {
-    return await this.prisma.approvalLetter.findMany({
+    const all_approvals = await this.prisma.approvalLetter.findMany({
       include: {
         customer: {
           include: {
@@ -134,6 +134,13 @@ export class ApprovalLetterService {
         }
       }
     });
+
+    return all_approvals.map((approval) => {
+      return {
+        ...approval,
+        url: approval.url ? approval.url.split("/uploads")[1] : null
+      }
+    })
   }
 
   async findOne(id: number) {
