@@ -34,7 +34,7 @@ export class ApprovalLetterService {
       data: {
         ...createApprovalLetterDto,
         pdfPassword: password.toLocaleString(),
-        url: encryptedPdfPath,
+        url: encryptedPdfPath.split('/uploads/')[1],
       },
       include: {
         customer: {
