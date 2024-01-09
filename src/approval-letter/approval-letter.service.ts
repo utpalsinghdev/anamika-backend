@@ -98,12 +98,9 @@ export class ApprovalLetterService {
     const populatedHtml = populateTemplate(html, dynamicData);
 
     (async () => {
-      const browser = await puppeteer.launch(
-        {
-          args: ["--no-sandbox", "--disable-setuid-sandbox"],
-          headless: 'new',
-        }
-      );
+      const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium-browser'
+      })
       const page = await browser.newPage();
       await page.setContent(populatedHtml);
       await page.pdf({ path: outputPath });
