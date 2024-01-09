@@ -109,15 +109,15 @@ export class ApprovalLetterService {
       const { originalPdfPath, encryptedPdfPath, password, pdfName } = await this.pdfLink(dynamicData)
 
       console.log(password)
-      // await this.prisma.approvalLetter.update({
-      //   where: {
-      //     id: n_approval.id
-      //   },
-      //   data: {
-      //     pdfPassword: password.toLocaleString(),
-      //     url: encryptedPdfPath.split('uploads')[1],
-      //   }
-      // })
+      await this.prisma.approvalLetter.update({
+        where: {
+          id: n_approval.id
+        },
+        data: {
+          pdfPassword: password.toLocaleString(),
+          url: encryptedPdfPath,
+        }
+      })
     }
 
     return n_approval;
@@ -188,7 +188,7 @@ export class ApprovalLetterService {
       execSync(`qpdf --encrypt ${password} ${password} 256 -- --allow-weak-crypto "${originalPdfPath}" "${encryptedPdfPath}"`);
       fs.unlinkSync(originalPdfPath);
     }
-      , 3000);
+      , 2000);
 
 
 
