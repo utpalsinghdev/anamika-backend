@@ -40,8 +40,8 @@
     }
 
     .usr-photo {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
         margin-left: 10px;
         z-index: 0;
     }
@@ -121,38 +121,36 @@
             </div>
             <div>
                 <span style="margin-right: 89px;">Mob</span>
-                <span>Shubham Kumar</span>
+                <span>{{mob}}</span>
             </div>
             <div>
                 <span style="margin-right: 96px;">Ref</span>
-                <span>Account of LOAN from Mahadev Financial Services Pvt. Ltd.</span>
+                <span>Account of LOAN from {{company}}</span>
             </div>
             <div>
                 <span style="margin-right: 30px;">Case file No</span>
-                <span>MFLID0001 | Application No MFAID0001</span>
+                <span>{{cfn}}</span>
             </div>
             <div>
                 <span style="margin-right: 86px;">Date</span>
-                <span>10/12/2023</span>
+                <span>{{date}}</span>
             </div>
         </div>
         <div style="position: relative;">
 
-            <img class="usr-photo"
-                src="https://res.cloudinary.com/dedbpyhmr/image/upload/v1702276548/fkw7e3469d384aenu2t7.jpg"
-                alt="profile-pic">
+            <img class="usr-photo" src="{{photoUrl}}">
             <img class="frst-stmp" src="https://www.mahadevfinancial.in/stamp2.png" alt="stamp-img">
         </div>
 
     </div>
     <div class="container">
-        <p style="margin-top: 40;">Based on your application no. <span style="color: #5FBDFF;">MFAID0001</span> acting
+        <p style="margin-top: 20px;">Based on your application no. <span style="color: #5FBDFF;">{{cfnId}}</span> acting
             under the constitution of
             <span style="font-weight: bold;">Mahadev Financial Services Pvt. Ltd.</span> is pleased to provide
             provisional sanction the loan request submitted by
         </p>
-        <p style="border-bottom: 2px solid black; margin-top: 5px;"><span style="color: #F98F13">Mr./Mrs./Ms.Miss Mr.
-                Pawan Singh </span> accepting the terms and conditions for the progress of loan. This is in
+        <p style="border-bottom: 2px solid black; margin-top: 5px;"><span style="color: #F98F13">Mr./Mrs./Ms.Miss
+                {{name}} </span> accepting the terms and conditions for the progress of loan. This is in
         </p>
         <p style="margin-top: 5px;">subject to the execution of loan agreement and the other documents between our
             selves:
@@ -170,7 +168,7 @@
                 gap: 4px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Date of Application</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">10/12/23</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{doa}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -182,7 +180,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Name</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{name}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -194,7 +192,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Guardian Name</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{guardian_name}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -206,7 +204,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Address</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{address}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -218,7 +216,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Mobile No</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{mob}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -230,7 +228,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Email</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{email}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -242,7 +240,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Aadhar</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{aadhar}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -254,7 +252,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Pan</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{pan}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -266,7 +264,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Loan Amount</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{loan_amount}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -278,7 +276,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Loan Details</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{loan_details}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -290,7 +288,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Bank Name &A/CNo./IFSCCODE A/C</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{bank_detailis}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -302,7 +300,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Executive Details</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{agent_details}}</div>
             </div>
             <div style="display: flex;
                 justify-content: flex-start;
@@ -314,7 +312,7 @@
                 margin-top: 2px;
                 ">
                 <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Processing Charges + 18% GST</div>
-                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Utpal Singh</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{processing_fee}}</div>
             </div>
 
         </div>
@@ -323,23 +321,22 @@
     </div>
     <div class="container">
         <p style="margin-top: 80px;">
-            You are intimated that <span style="color: #F98F13; font-weight: bold;">Rs.200000/- (Two Lakh Rupees
-                Only)</span> has been approved by the approving committee of the company, after the validation of the
-            submitted documents for loan. We are pleased to informyou that the company is issuing the offer letter to
-            you so that we can further
-            initiate your lone process as early as possible. This offer letter is valid for 25 days. Where company will
-            keep you are submitted to documents safe only for 30 days, otherwise your file will stand closed. Kindly
-            deposit your process fees
-            of <span style="color: #F98F13; font-weight: bold;">Rs.
-                10000 + Rs. 1800 = Rs.
-                11800
-                (18% Gst Tax Of Agreement Fees)by Bank (NEFT or RTGS) infavor of Mahadev Financial Services Pvt.</span>
-            Ltd.for issuing advisory report and to meet other expenses, along with required reports as per company terms
-            & conditions Mentioned
-            at the end of the letter WITHIN 10 DAYS (TEN DAYS)after receiving the offer letter, kindly submit the D.D
-            (demand draft) of processing fee failing to which the offer letterwill not be valid. The advisory reports
-            shall comprise of title, valuation,
-            investigation report of property etc. As per line mark on search report.
+            You are intimated that <span style="color: #F98F13; font-weight: bold;">Rs.{{loan_amount}}</span> has been
+            approved by the approving committee of the company, after the validation of the submitted documents for
+            loan. We are pleased to inform
+            you that the company is issuing the offer letter to you so that we can further initiate your lone process as
+            early as possible. This offer letter is valid for 25 days. Where company will keep you are submitted to
+            documents safe only for 30
+            days, otherwise your file will stand closed. Kindly deposit your process fees of <span
+                style="color: #F98F13; font-weight: bold;">Rs.
+                {{processing_fee}}
+                (18% Gst Tax Of Agreement Fees)by Bank (NEFT or RTGS) infavor of {{company}}</span> Ltd.for issuing
+            advisory report and to meet other expenses, along with required reports as per company terms & conditions
+            Mentioned at the end of the letter
+            WITHIN 10 DAYS (TEN DAYS)after receiving the offer letter, kindly submit the D.D (demand draft) of
+            processing fee failing to which the offer letterwill not be valid. The advisory reports shall comprise of
+            title, valuation, investigation report
+            of property etc. As per line mark on search report.
         </p>
         <h4 style="color: #F98F13;">
             SPECIAL CONDITIONS FOR LOAN (Important Terms & Conditions)

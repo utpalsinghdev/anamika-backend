@@ -21,6 +21,13 @@ export class ApprovalLetterService {
     const _customer = await this.prisma.customer.findUnique({
       where: {
         id: createApprovalLetterDto.customerId
+      },
+      include: {
+        AdharCard: true,
+        panCard: true,
+        agent: true,
+        photo: true
+
       }
     })
     // const res = await this.mail.sendSms({
@@ -28,13 +35,11 @@ export class ApprovalLetterService {
     //   type: mailEnums.LOAN_APPROVED.toString(),
     //   value: `${_customer.name}|${_customer.loanInNumber}`
     // })
-    const { originalPdfPath, encryptedPdfPath, password, pdfName } = await this.pdfLink();
+
     // console.log(originalPdfPath, encryptedPdfPath, password, pdfName)
-    return await this.prisma.approvalLetter.create({
+    const n_approval = await this.prisma.approvalLetter.create({
       data: {
         ...createApprovalLetterDto,
-        pdfPassword: password.toLocaleString(),
-        url: encryptedPdfPath.split('/uploads/')[1],
       },
       include: {
         customer: {
@@ -44,6 +49,78 @@ export class ApprovalLetterService {
         }
       }
     });
+
+    if (n_approval) {
+      // const { originalPdfPath, encryptedPdfPath, password, pdfName } = await this.pdfLink();
+      function calculateEMI(principal: number, interestRate: number, years: number) {
+        if (principal && interestRate && years) {
+          interestRate = interestRate / 100;
+          const totalMonths = years * 12;
+          const totalInterest = principal * interestRate * years;
+          const totalLoanAmount = principal + totalInterest;
+          const emi = totalLoanAmount / totalMonths;
+          return {
+            emi: Math.round(emi),
+            totalLoanAmount: totalLoanAmount,
+            totalMonths,
+          };
+        } else {
+          return null;
+        }
+      }
+      const _loanAmount = _customer.loanInNumber;
+      const costWithoutGst =
+        (_loanAmount > 100000 && _loanAmount < 300000) ||
+          _loanAmount == 100000 ||
+          _loanAmount === 300000
+          ? 10000
+          : _loanAmount * 0.03;
+      const gst = costWithoutGst * 0.18;
+      const totalCost = costWithoutGst + gst;
+      const dynamicData = {
+        company: 'Mahadev Financial Services Pvt. Ltd.',
+        name: _customer.name,
+        mob: _customer.phone,
+        photoUrl: createApprovalLetterDto.photo ? createApprovalLetterDto.photo : _customer.photo.url,
+        cfn: `${_customer.customerId} | Application No. ${_customer.loanId}`,
+        date: new Date().toLocaleDateString(),
+        cfnId: _customer.customerId,
+        doa: _customer.createdAt.toLocaleDateString(),
+        guardian_name: _customer.guardian_name,
+        address: _customer.address,
+        email: _customer.email,
+        aadhar: _customer.adharNumber,
+        pan: _customer.panNumber,
+        loan_amount: `${_customer.loanInNumber} /- (${_customer.loanInWords})`,
+        loan_details: _customer.loanInNumber ? `Periods ${_customer.loanYear} Years at Intrest Rate-5% EMI RS. ${calculateEMI(
+          _customer?.loanInNumber,
+          5,
+          _customer?.loanYear
+        ).emi
+          }/Month` : 'NA'
+        ,
+        bank_detailis: `${_customer.bank} / ${_customer.AccountNumber} / ${_customer.ifsc} / ${_customer.accountType}`,
+        agent_details: _customer.agent ? `${_customer.agent.employeeCode}-${_customer.agent.firstName} ${_customer.agent.LastName} / ${_customer.agent.phone}` : 'NA',
+        processing_fee: `Rs. ${costWithoutGst} + Rs. ${gst} = Rs. ${totalCost}`,
+
+
+      }
+
+      const { originalPdfPath, encryptedPdfPath, password, pdfName } = await this.pdfLink(dynamicData)
+
+      console.log(password)
+      // await this.prisma.approvalLetter.update({
+      //   where: {
+      //     id: n_approval.id
+      //   },
+      //   data: {
+      //     pdfPassword: password.toLocaleString(),
+      //     url: encryptedPdfPath.split('uploads')[1],
+      //   }
+      // })
+    }
+
+    return n_approval;
   }
 
   async findAll() {
@@ -71,14 +148,11 @@ export class ApprovalLetterService {
     return await this.prisma.approvalLetter.delete({ where: { id } });
   }
 
-  private async pdfLink() {
-    const dynamicData = {
-      name: "Utpal Singh",
-    };
+  private async pdfLink(dynamicData: any) {
 
     const htmlPath = path.resolve('uploads', "template", "approval.html")
 
-    const pdfName = `approval-${Date.now()}.pdf` //TODO: change name with customer name
+    const pdfName = `${dynamicData.name}-${dynamicData.cfnId}.pdf` //TODO: change name with customer name
 
     const outputPath = path.resolve('uploads', "original", pdfName)
 
@@ -108,7 +182,6 @@ export class ApprovalLetterService {
     })();
 
 
-    console.log(originalPdfPath)
     // add two min pause here
 
     setTimeout(() => {
