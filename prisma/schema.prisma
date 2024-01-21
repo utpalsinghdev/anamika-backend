@@ -268,7 +268,7 @@ model invoice {
 
 model ApprovalLetter {
   id               Int      @unique @default(autoincrement())
-  customer         Customer @relation(fields: [customerId], references: [id])
+  customer         Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId       Int
   url              String?
   pdfPassword      String?
