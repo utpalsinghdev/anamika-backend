@@ -251,7 +251,7 @@ enum Method {
 model invoice {
   id            Int      @unique @default(autoincrement())
   invoiceId     String   @unique
-  customer      Customer @relation(fields: [customerId], references: [id])
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId    Int
   desciption    String
   total         Int
