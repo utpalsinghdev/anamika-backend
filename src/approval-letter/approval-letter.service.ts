@@ -10,7 +10,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import puppeteer from 'puppeteer';
-import moment from 'moment';
+import * as dayjs from 'dayjs';
 @Injectable()
 export class ApprovalLetterService {
   constructor(private readonly prisma: PrismaService, private readonly cloud: CloudinaryService, private readonly mail: MailService) { }
@@ -84,9 +84,10 @@ export class ApprovalLetterService {
         mob: _customer.phone,
         photoUrl: createApprovalLetterDto.photo ? createApprovalLetterDto.photo : _customer.photo.url,
         cfn: `${_customer.customerId} | Application No. ${_customer.loanId}`,
-        date: moment(new Date().toLocaleDateString()).format('DD-MM-YYYY'),
+        date: dayjs().format('DD-MM-YYYY'),
+        doa: dayjs(_customer.createdAt).format('DD-MM-YYYY'),
         cfnId: _customer.customerId,
-        doa: moment(_customer.createdAt).format('DD-MM-YYYY'),
+        // doa: moment(_customer.createdAt).format('DD-MM-YYYY'),
         guardian_name: _customer.guardian_name,
         address: _customer.address,
         email: _customer.email,
