@@ -25,10 +25,9 @@ async function bootstrap() {
     api_secret: "fu26Y1WSxB20E3V4-c2Z3KNqZrk",
   });
 
-  // Serve static files from the 'uploads/protected' folder
   app.use('/uploads/protected', express.static(path.join(__dirname, '..', 'uploads', 'protected')));
 
 
-  await app.listen(7001)
+  await app.listen(7009)
 }
 bootstrap()

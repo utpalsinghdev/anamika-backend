@@ -78,8 +78,10 @@ export class ApprovalLetterService {
           : _loanAmount * 0.03;
       const gst = costWithoutGst * 0.18;
       const totalCost = costWithoutGst + gst;
+      const paymnt = await this.prisma.paymentqr.findMany({})
+
       const dynamicData = {
-        company: 'Mahadev Financial Services Pvt. Ltd.',
+        company: 'Captial Group Business Solution Pvt. Ltd.',
         name: _customer.name,
         mob: _customer.phone,
         photoUrl: createApprovalLetterDto.photo ? createApprovalLetterDto.photo : _customer.photo.url,
@@ -105,6 +107,7 @@ export class ApprovalLetterService {
         agent_details: _customer.agent ? `${_customer.agent.employeeCode}-${_customer.agent.firstName} ${_customer.agent.LastName} / ${_customer.agent.phone}` : 'NA',
         processing_fee: `Rs. ${costWithoutGst} + Rs. ${gst} = Rs. ${totalCost}`,
 
+        payLink: paymnt[0].url,
 
       }
 
