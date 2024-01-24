@@ -144,7 +144,7 @@ export class AuthController {
   }
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.CUSTOMER)
-  @Put("/profile/:id")
+  // @Put("/profile/:id")
   @Get("/customer-profile/:id")
   async cprofile(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
     try {
