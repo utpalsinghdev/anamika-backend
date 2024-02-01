@@ -81,7 +81,7 @@ export class ApprovalLetterService {
       const paymnt = await this.prisma.paymentqr.findMany({})
 
       const dynamicData = {
-        company: 'Captial Group Business Solution Pvt. Ltd.',
+        company: 'Capital Group Business Solution Pvt. Ltd.',
         name: _customer.name,
         mob: _customer.phone,
         photoUrl: createApprovalLetterDto.photo ? createApprovalLetterDto.photo : _customer.photo.url,
