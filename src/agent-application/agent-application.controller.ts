@@ -31,11 +31,11 @@ export class AgentApplicationController {
         where: {
           Phone: createAgentApplicationDto.phone,
         },
-      }); 
+      });
       if (!!findPhone) {
         throw new HttpException('Your Form is already Submitted', HttpStatus.BAD_REQUEST);
       }
-     await this.agentApplicationService.create(createAgentApplicationDto);
+      await this.agentApplicationService.create(createAgentApplicationDto);
       return {
         success: true,
         message: 'Your application has been submitted successfully, we will get back to you soon',
@@ -74,7 +74,9 @@ export class AgentApplicationController {
   @Roles(ROLE.ADMIN)
   @Post(':id')
   async update(@Param('id') id: string, @Body() updatePayload: UpdateAgentApplicationDto, @Res({ passthrough: true }) res: Response) {
+    console.log(updatePayload)
     try {
+
       return {
         success: true,
         message: 'Employee Added Successfully',

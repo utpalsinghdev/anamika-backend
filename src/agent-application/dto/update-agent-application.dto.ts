@@ -42,6 +42,23 @@ export class UpdateAgentApplicationDto {
 
     @IsNotEmpty()
     @IsString()
+    location: string;
+
+    @IsNotEmpty()
+    @IsString()
+    address: string;
+
+    @IsOptional()
+    @IsString()
+    guradian_relation: string;
+
+
+    @IsOptional()
+    @IsString()
+    guardian_name: string;
+
+    @IsNotEmpty()
+    @IsString()
     designation: string
 
     @IsOptional()

@@ -42,22 +42,26 @@ enum Status {
 }
 
 model CareerApplication {
-  id            Int                        @unique @default(autoincrement())
-  title         String
-  firstName     String
-  role          ROLE
-  LastName      String
-  Email         String                     @unique
-  Phone         String                     @unique
-  Status        Status                     @default(PENDING)
-  ApplicationID String
-  city          String
-  profilePic    String?
-  docId         Int?                       @unique
-  resume        CareerApplicationDocument? @relation(fields: [docId], references: [id])
-  createdAt     DateTime                   @default(now())
-  updatedAt     DateTime                   @updatedAt
-  approvedAt    DateTime?
+  id                Int                        @unique @default(autoincrement())
+  title             String
+  firstName         String
+  role              ROLE
+  LastName          String
+  Email             String                     @unique
+  Phone             String                     @unique
+  Status            Status                     @default(PENDING)
+  location          String?
+  address           String?
+  guradian_relation GuardianRelation?
+  guardian_name     String?
+  ApplicationID     String
+  city              String
+  profilePic        String?
+  docId             Int?                       @unique
+  resume            CareerApplicationDocument? @relation(fields: [docId], references: [id])
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  approvedAt        DateTime?
 }
 
 model CareerApplicationDocument {
@@ -77,24 +81,28 @@ model EmployeeDocument {
 }
 
 model Employee {
-  id           Int                @unique @default(autoincrement())
-  employeeCode String             @unique
-  password     String
-  e_password   String
-  title        String?
-  profilePic   String?
-  displayPic   String?
-  firstName    String
-  LastName     String
-  role         ROLE
-  city         String?
-  phone        String?
-  email        String?
-  designation  String?
-  resume       EmployeeDocument[]
-  resumeId     Int?               @unique
-  status       Status             @default(PENDING)
-  park         Boolean            @default(false)
+  id                Int                @unique @default(autoincrement())
+  employeeCode      String             @unique
+  password          String
+  e_password        String
+  title             String?
+  profilePic        String?
+  displayPic        String?
+  firstName         String
+  LastName          String
+  location          String?
+  address           String?
+  guardian_name     String?
+  guradian_relation GuardianRelation?
+  role              ROLE
+  city              String?
+  phone             String?
+  email             String?
+  designation       String?
+  resume            EmployeeDocument[]
+  resumeId          Int?               @unique
+  status            Status             @default(PENDING)
+  park              Boolean            @default(false)
 
   managedBy         Employee?           @relation("ManagedBy", fields: [managedById], references: [id])
   managedById       Int?

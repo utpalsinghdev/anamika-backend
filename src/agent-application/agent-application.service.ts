@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAgentApplicationDto } from './dto/create-agent-application.dto';
 import { UpdateAgentApplicationDto } from './dto/update-agent-application.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ROLE, Status } from '@prisma/client';
+import { GuardianRelation, ROLE, Status } from '@prisma/client';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { hash } from 'bcrypt';
 import { MailService } from 'src/mail/mail.service';
@@ -27,6 +27,10 @@ export class AgentApplicationService {
         LastName: createAgentApplicationDto.lastName,
         Email: createAgentApplicationDto.email,
         Phone: createAgentApplicationDto.phone,
+        location: createAgentApplicationDto.location,
+        guardian_name: createAgentApplicationDto.guardian_name,
+        address: createAgentApplicationDto.address,
+        guradian_relation: createAgentApplicationDto.guradian_relation as GuardianRelation,
         city: createAgentApplicationDto.city,
         profilePic: _profilePic?.secure_url,
         Status: Status.PENDING,
@@ -93,6 +97,10 @@ export class AgentApplicationService {
         profilePic: body.profilePic ? body.profilePic : get_application.profilePic,
         city: body.city,
         employeeCode: a_id,
+        location: body.location || "",
+        address: body.address || "",
+        guardian_name: body.guardian_name || null,
+        guradian_relation: body.guradian_relation as GuardianRelation || null,
         password: await hash(body.password, 10),
         e_password: body.password,
         managedById: Number(body.workUnder) || null

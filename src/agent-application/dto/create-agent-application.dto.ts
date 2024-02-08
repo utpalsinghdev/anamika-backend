@@ -17,6 +17,23 @@ export class CreateAgentApplicationDto {
     @IsString()
     email: string;
 
+    @IsNotEmpty()
+    @IsString()
+    location: string;
+
+    @IsNotEmpty()
+    @IsString()
+    address: string;
+
+    @IsNotEmpty()
+    @IsString()
+    guradian_relation: string;
+
+
+    @IsNotEmpty()
+    @IsString()
+    guardian_name: string;
+
     @IsString()
     @IsNotEmpty()
     phone: string;
@@ -38,7 +55,5 @@ export class CreateAgentApplicationDto {
     @IsNotEmpty()
     profilePic: string;
 
-    @IsString()
-    @IsNotEmpty()
-    fileType: string;
+
 }
