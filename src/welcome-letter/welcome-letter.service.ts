@@ -132,14 +132,14 @@ export class WelcomeLetterService {
       }
     })
     const last_application = applicationId[0]
-    let a_id = "CBGSLID"
+    let a_id = "CFN"
     if (!last_application?.customerId) {
       a_id = a_id + "0001"
 
       return a_id
     } else {
       const last_id = last_application.customerId
-      const _id = last_id.split("CBGSLID")[1]
+      const _id = last_id.split("CFN")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
 
