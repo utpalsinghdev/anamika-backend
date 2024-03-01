@@ -70,6 +70,9 @@ export class WelcomeLetterService {
       include: {
         for: true,
         with: true
+      },
+      orderBy: {
+        createdAt: "desc"
       }
     });
   }

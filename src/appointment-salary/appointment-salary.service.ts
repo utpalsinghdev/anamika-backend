@@ -32,6 +32,9 @@ export class AppointmentSalaryService {
             managedBy: true
           }
         }
+      },
+      orderBy: {
+        createdAt: "desc"
       }
     });
   }
