@@ -79,6 +79,9 @@ export class InvoiceService {
             agent: true
           }
         }
+      },
+      orderBy: {
+        id: 'desc'
       }
     });
   }
