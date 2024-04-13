@@ -26,15 +26,34 @@ export class PaymentqrService {
       delete data.qr;
     }
 
-    const allPaymentqr = await this.prisma.paymentqr.findMany();
-    if (allPaymentqr.length > 0) {
-      await this.prisma.paymentqr.deleteMany({});
-    }
-    return await this.prisma.paymentqr.create({
-      data: {
-        ...data
-      }
+    const lastCreated = await this.prisma.paymentqr.findMany({
+      orderBy: {
+        id: 'desc'
+      },
+      take: 1
     });
+    if (lastCreated) {
+      return await this.prisma.paymentqr.update({
+        where: {
+          id: lastCreated[0].id
+        },
+        data: {
+          url: data.url || lastCreated[0].url,
+          bankName: data.bankName || lastCreated[0].bankName,
+          accountNo: data.accountNo || lastCreated[0].accountNo,
+          ifsc: data.ifsc || lastCreated[0].ifsc,
+          holderName: data.holderName || lastCreated[0].holderName,
+          fileCharge: data.fileCharge || lastCreated[0].fileCharge
+        }
+      });
+    } else {
+      return await this.prisma.paymentqr.create({
+        data: {
+          ...data
+        }
+      });
+    }
+
   }
 
   getQR() {
