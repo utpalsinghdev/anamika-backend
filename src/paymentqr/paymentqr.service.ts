@@ -9,8 +9,22 @@ export class PaymentqrService {
   constructor(private prisma: PrismaService, private cloud: CloudinaryService) { }
 
   async create(createPaymentqrDto: CreatePaymentqrDto) {
-    // const { qr } = createPaymentqrDto;x
-    const _qr = await this.cloud.uploadBase64File(createPaymentqrDto.qr.toString());
+    let data = {
+      ...createPaymentqrDto as any
+    };
+    if (createPaymentqrDto.qr) {
+      const _qr = await this.cloud.uploadBase64File(createPaymentqrDto.qr.toString());
+      data = {
+        url: _qr.secure_url,
+        bankName: createPaymentqrDto.bankName,
+        accountNo: createPaymentqrDto.accountNo,
+        ifsc: createPaymentqrDto.ifsc,
+        holderName: createPaymentqrDto.holderName,
+        fileCharge: createPaymentqrDto.fileCharge
+      }
+    } else {
+      delete data.qr;
+    }
 
     const allPaymentqr = await this.prisma.paymentqr.findMany();
     if (allPaymentqr.length > 0) {
@@ -18,7 +32,7 @@ export class PaymentqrService {
     }
     return await this.prisma.paymentqr.create({
       data: {
-        url: _qr.secure_url,
+        ...data
       }
     });
   }

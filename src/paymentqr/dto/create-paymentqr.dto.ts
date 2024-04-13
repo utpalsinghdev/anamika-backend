@@ -1,8 +1,29 @@
-import { IsBase64, IsNotEmpty, IsString } from "class-validator";
+import { IsBase64, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreatePaymentqrDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsBase64()
     @IsString()
     qr: String;
+
+    @IsOptional()
+    @IsString()
+    bankName: String;
+
+    @IsOptional()
+    @IsString()
+    accountNo: String;
+
+    @IsOptional()
+    @IsString()
+    ifsc: String;
+
+    @IsOptional()
+    @IsString()
+    holderName: String;
+
+    @IsOptional()
+    @IsString()
+    fileCharge: String;
+
 }
