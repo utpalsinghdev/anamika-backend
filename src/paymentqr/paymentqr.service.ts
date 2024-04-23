@@ -13,15 +13,16 @@ export class PaymentqrService {
       ...createPaymentqrDto as any
     };
     if (createPaymentqrDto.qr) {
-      const _qr = await this.cloud.uploadBase64File(createPaymentqrDto.qr.toString());
-      data = {
-        url: _qr.secure_url,
-        bankName: createPaymentqrDto.bankName,
-        accountNo: createPaymentqrDto.accountNo,
-        ifsc: createPaymentqrDto.ifsc,
-        holderName: createPaymentqrDto.holderName,
-        fileCharge: createPaymentqrDto.fileCharge
-      }
+      // const _qr = await this.cloud.uploadBase64File(createPaymentqrDto.qr.toString());
+      // data = {
+      //   url: _qr.secure_url,
+      //   bankName: createPaymentqrDto.bankName,
+      //   accountNo: createPaymentqrDto.accountNo,
+      //   ifsc: createPaymentqrDto.ifsc,
+      //   holderName: createPaymentqrDto.holderName,
+      //   fileCharge: createPaymentqrDto.fileCharge
+      // }
+      data.url = createPaymentqrDto.qr;
     } else {
       delete data.qr;
     }
