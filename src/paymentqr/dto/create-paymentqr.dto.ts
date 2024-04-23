@@ -2,7 +2,6 @@ import { IsBase64, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreatePaymentqrDto {
     @IsOptional()
-    @IsBase64()
     @IsString()
     qr: String;
 
