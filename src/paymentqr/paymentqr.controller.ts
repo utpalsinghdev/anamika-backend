@@ -16,7 +16,8 @@ export class PaymentqrController {
   data
     :
     {}
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
   @Post()
   async create(@Body() createPaymentqrDto: CreatePaymentqrDto, @Res({ passthrough: true }) res: Response) {
     try {
