@@ -261,7 +261,21 @@ export class CustomerService {
   }
 
   async findOne(id: number) {
+    return await this.prisma.customer.findUnique({
+      where: { id },
+      include: {
+        AdharCard: true,
+        agent: true,
+        approval: true,
+        ApprovalLetter: true,
+        photo: true,
+        panCard: true,
+        proofDoc: true,
+        WelcomeLetter: true,
+        events: true
 
+      }
+    });
   }
 
   async approve(id: number) {

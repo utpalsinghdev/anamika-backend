@@ -203,6 +203,7 @@ model Customer {
   WelcomeLetter  WelcomeLetter[]
   approval       invoice[]
   ApprovalLetter ApprovalLetter[]
+  Event          Event[]
 }
 
 model WelcomeLetter {
@@ -315,4 +316,30 @@ model Paymentqr {
   fileCharge String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+enum EventType {
+  EMI
+  PAYMENT
+  SUBSIDY
+  login_fee
+  Disburse
+  Emi_date
+  Closed
+  Disburse_verify
+  sanction
+  bank_verification
+  sing_kit
+}
+
+model Event {
+  id         Int       @unique @default(autoincrement())
+  name       EventType
+  date       DateTime?
+  amount     String?
+  status     String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId Int?
 }

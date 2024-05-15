@@ -20,9 +20,10 @@ import { JointPrecentModule } from './joint-precent/joint-precent.module';
 import { MailModule } from './mail/mail.module';
 import { FileModule } from './file/file.module';
 import { PaymentqrModule } from './paymentqr/paymentqr.module';
+import { EventModule } from './event/event.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule, InvoiceModule, ApprovalLetterModule, JointPrecentModule, MailModule, FileModule, PaymentqrModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule, InvoiceModule, ApprovalLetterModule, JointPrecentModule, MailModule, FileModule, PaymentqrModule, EventModule],
   controllers: [AppController],
   providers: [PrismaService, AppService],
 })
