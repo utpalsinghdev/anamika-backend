@@ -203,7 +203,7 @@ model Customer {
   WelcomeLetter  WelcomeLetter[]
   approval       invoice[]
   ApprovalLetter ApprovalLetter[]
-  Event          Event[]
+  events         Event[]
 }
 
 model WelcomeLetter {
