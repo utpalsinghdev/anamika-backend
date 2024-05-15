@@ -16,7 +16,9 @@ export class EventService {
         date: createEventDto.date || null,
         amount: createEventDto.amount || null,
         status: createEventDto.status,
-        customerId: Number(createEventDto.customerId)
+        customerId: Number(createEventDto.customerId),
+        pending: createEventDto.pending || null,
+        total: createEventDto.total || null
       }
     });
   }
@@ -42,6 +44,8 @@ export class EventService {
         date: updateEventDto.date || _event.date,
         amount: updateEventDto.amount || _event.amount,
         status: updateEventDto.status,
+        pending: updateEventDto.pending || _event.pending,
+        total: updateEventDto.total || _event.total,
       }
     });
   }

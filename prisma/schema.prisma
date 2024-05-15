@@ -337,6 +337,8 @@ model Event {
   name       EventType
   date       DateTime?
   amount     String?
+  pending    String?
+  total      String?
   status     String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt

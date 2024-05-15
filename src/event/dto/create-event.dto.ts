@@ -31,6 +31,14 @@ export class CreateEventDto {
     @IsString()
     amount: string
 
+    @IsOptional()
+    @IsString()
+    pending: string
+
+    @IsOptional()
+    @IsString()
+    total: string
+
     @IsNotEmpty()
     @IsNumber()
     customerId: number
