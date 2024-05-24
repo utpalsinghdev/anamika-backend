@@ -325,28 +325,25 @@ export class CustomerService {
   }
 
   private async _loanId() {
-    const applicationId = await this.prisma.customer.findMany({
-      take: 1,
-      orderBy: {
-        id: 'desc'
-      },
-    })
-    const last_application = applicationId[0]
-    let a_id = "RFAID"
-    if (!last_application?.loanId) {
-      a_id = a_id + "0001"
+    let uniqueCode = '';
+    let isUnique = false;
+    while (!isUnique) {
+      const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
+      const loanId = `RFAID${randomPin}`;
 
-      return a_id
-    } else {
-      const last_id = last_application.loanId
-      const _id = last_id.split("RFAID")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
+      const agents = await this.prisma.customer.findUnique({
+        where: {
+          loanId: loanId,
+        },
+      });
 
-      return a_id
+      if (!agents) {
+        uniqueCode = loanId;
+        isUnique = true;
+      }
     }
 
-
+    return uniqueCode;
   }
   private async _customerId() {
     const applicationId = await this.prisma.customer.findMany({
