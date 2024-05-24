@@ -33,10 +33,10 @@ export class AttendenceService {
   }
 
   async markPresent(userId: number) {
-    return await this.prisma.attendance.updateMany(
+    return await this.prisma.attendance.update(
       {
         where: {
-          employeeId: userId
+          id: userId
         },
         data: {
           status: ATTENDANCE.PRESENT
@@ -46,10 +46,10 @@ export class AttendenceService {
   }
 
   async markAbsent(userId: number) {
-    return await this.prisma.attendance.updateMany(
+    return await this.prisma.attendance.update(
       {
         where: {
-          employeeId: userId
+          id: userId
         },
         data: {
           status: ATTENDANCE.ABSENT
