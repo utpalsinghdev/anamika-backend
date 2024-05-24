@@ -3,6 +3,7 @@ import { CreateAttendenceDto } from './dto/create-attendence.dto';
 import { UpdateAttendenceDto } from './dto/update-attendence.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ATTENDANCE } from '@prisma/client';
+import moment from 'moment';
 
 @Injectable()
 export class AttendenceService {
@@ -25,7 +26,22 @@ export class AttendenceService {
   }
 
   async punchIn(userId: number) {
-    return await this.prisma.attendance.create(
+    const isAlreadyForToday = await this.prisma.attendance.findFirst(
+      {
+        where: {
+          employeeId: userId,
+          createdAt: {
+            gte: moment().startOf('day').toDate(),
+          }
+        }
+      }
+    )
+    if (isAlreadyForToday) {
+      throw {
+        status: 400,
+        message: "Already punched in for today"
+      }
+    } else return await this.prisma.attendance.create(
       {
         data: {
           employeeId: userId,
