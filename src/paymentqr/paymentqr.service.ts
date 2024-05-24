@@ -33,7 +33,7 @@ export class PaymentqrService {
       },
       take: 1
     });
-    if (lastCreated) {
+    if (lastCreated.length) {
       return await this.prisma.paymentqr.update({
         where: {
           id: lastCreated[0].id
@@ -50,7 +50,12 @@ export class PaymentqrService {
     } else {
       return await this.prisma.paymentqr.create({
         data: {
-          ...data
+          url: data.url || '',
+          bankName: data.bankName || '',
+          accountNo: data.accountNo || '',
+          ifsc: data.ifsc || '',
+          holderName: data.holderName || '',
+          fileCharge: data.fileCharge || 0
         }
       });
     }
