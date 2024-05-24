@@ -113,9 +113,10 @@ model Employee {
   AppointmentSalary AppointmentSalary[]
   JointPercent      JointPercent[]
 
-  joinedAt  DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  joinedAt   DateTime?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Attendance Attendance[]
 }
 
 enum Lane {
@@ -344,4 +345,20 @@ model Event {
   updatedAt  DateTime  @updatedAt
   Customer   Customer? @relation(fields: [customerId], references: [id])
   customerId Int?
+}
+
+enum ATTENDANCE {
+  PRESENT
+  ABSENT
+  PENDING
+  LEAVE
+}
+
+model Attendance {
+  id         Int        @unique @default(autoincrement())
+  status     ATTENDANCE @default(PENDING)
+  employee   Employee   @relation(fields: [employeeId], references: [id])
+  employeeId Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }

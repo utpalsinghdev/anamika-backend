@@ -21,9 +21,10 @@ import { MailModule } from './mail/mail.module';
 import { FileModule } from './file/file.module';
 import { PaymentqrModule } from './paymentqr/paymentqr.module';
 import { EventModule } from './event/event.module';
+import { AttendenceModule } from './attendence/attendence.module';
 
 @Module({
-  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule, InvoiceModule, ApprovalLetterModule, JointPrecentModule, MailModule, FileModule, PaymentqrModule, EventModule],
+  imports: [UserModule, MessageModule, AgentModule, AgentApplicationModule, CloudinaryModule, NewModule, AuthModule, CustomerModule, WelcomeLetterModule, IcardModule, AppointmentSalaryModule, InvoiceModule, ApprovalLetterModule, JointPrecentModule, MailModule, FileModule, PaymentqrModule, EventModule, AttendenceModule],
   controllers: [AppController],
   providers: [PrismaService, AppService],
 })
