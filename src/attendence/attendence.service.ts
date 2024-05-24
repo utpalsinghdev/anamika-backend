@@ -16,6 +16,9 @@ export class AttendenceService {
       {
         include: {
           employee: true
+        },
+        orderBy: {
+          createdAt: 'desc'
         }
       }
     )
