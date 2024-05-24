@@ -26,12 +26,18 @@ export class AttendenceService {
   }
 
   async punchIn(userId: number) {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
     const isAlreadyForToday = await this.prisma.attendance.findFirst(
       {
         where: {
           employeeId: userId,
           createdAt: {
-            gte: moment().format('YYYY-MM-DD 00:00:00'),
+            gte: startOfDay,
+            lte: endOfDay
           }
         }
       }
