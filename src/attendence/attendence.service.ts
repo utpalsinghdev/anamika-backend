@@ -31,7 +31,7 @@ export class AttendenceService {
         where: {
           employeeId: userId,
           createdAt: {
-            gte: moment().startOf('day').toDate(),
+            gte: moment().format('YYYY-MM-DD 00:00:00'),
           }
         }
       }
