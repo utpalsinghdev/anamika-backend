@@ -346,30 +346,25 @@ export class CustomerService {
     return uniqueCode;
   }
   private async _customerId() {
-    const applicationId = await this.prisma.customer.findMany({
-      take: 1,
-      orderBy: {
-        id: 'desc'
-      },
-      where: {
-        status: Status.APPROVED
+    let uniqueCode = '';
+    let isUnique = false;
+    while (!isUnique) {
+      const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
+      const customerId = `CFN${randomPin}`;
+
+      const agents = await this.prisma.customer.findFirst({
+        where: {
+          customerId,
+        },
+      });
+
+      if (!agents) {
+        uniqueCode = customerId;
+        isUnique = true;
       }
-    })
-    const last_application = applicationId[0]
-    let a_id = "CFN"
-    if (!last_application?.customerId) {
-      a_id = a_id + "0001"
-
-      return a_id
-    } else {
-      const last_id = last_application.customerId
-      const _id = last_id.split("CFN")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
-
-      return a_id
     }
 
+    return uniqueCode;
 
   }
 }
