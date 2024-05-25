@@ -20,13 +20,13 @@ export class MailService {
 
 
     try {
-      await axios.get(`http://sms.smsindori.com/http-api.php?username=Caslon&password=123456&authentic-key=33304361736c6f6e3130301700970207&senderid=CASBUS&route=12&number=${createMailDto.numbers}&message=${message}`);
-      console.log({
-        message,
-        value: createMailDto.value,
-        numbers: createMailDto.numbers,
-        date: new Date().toISOString()
-      })
+      // await axios.get(`http://sms.smsindori.com/http-api.php?username=Caslon&password=123456&authentic-key=33304361736c6f6e3130301700970207&senderid=CASBUS&route=12&number=${createMailDto.numbers}&message=${message}`);
+      // console.log({
+      //   message,
+      //   value: createMailDto.value,
+      //   numbers: createMailDto.numbers,
+      //   date: new Date().toISOString()
+      // })
     } catch (error) {
       return true;
     }
