@@ -108,14 +108,14 @@ export class WelcomeLetterService {
       },
     })
     const last_application = applicationId[0]
-    let a_id = "RFAID"
+    let a_id = "LFAID"
     if (!last_application?.loanId) {
       a_id = a_id + "0001"
 
       return a_id
     } else {
       const last_id = last_application.loanId
-      const _id = last_id.split("RFAID")[1]
+      const _id = last_id.split("LFAID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
 
