@@ -27,6 +27,7 @@ export class MailService {
       //   numbers: createMailDto.numbers,
       //   date: new Date().toISOString()
       // })
+      return true
     } catch (error) {
       return true;
     }
