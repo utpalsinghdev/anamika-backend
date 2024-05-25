@@ -29,6 +29,6 @@ async function bootstrap() {
   app.use('/uploads/protected', express.static(path.join(__dirname, '..', 'uploads', 'protected')));
   app.use('/uploads/qr', express.static(path.join(__dirname, '..', 'uploads', 'qr')));
 
-  await app.listen(7004)
+  await app.listen(7001)
 }
 bootstrap()
