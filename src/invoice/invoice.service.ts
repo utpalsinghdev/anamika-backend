@@ -18,12 +18,12 @@ export class InvoiceService {
       }
     })
     const last_invoice = latest_inovice[0]
-    let a_id = "LFINID"
+    let a_id = "SFINID"
     if (!last_invoice?.invoiceId) {
-      a_id = "LFINID" + "0001"
+      a_id = "SFINID" + "0001"
     } else {
       const last_id = last_invoice?.invoiceId
-      const _id = last_id.split("LFINID")[1]
+      const _id = last_id.split("SFINID")[1]
       const id = parseInt(_id) + 1
       a_id = a_id + id.toString().padStart(4, '0')
       console.log(a_id)
