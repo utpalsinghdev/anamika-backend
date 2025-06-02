@@ -76,9 +76,7 @@ export class AgentApplicationService {
     const get_application = await this.prisma.careerApplication.findFirst({
       where: {
         id,
-        Status: {
-          not: "APPROVED" || "REJECTED"
-        }
+        Status: "PENDING"
       }
     })
     if (!get_application) throw new HttpException("Application not Found", HttpStatus.NOT_FOUND)
@@ -135,9 +133,7 @@ export class AgentApplicationService {
       where: {
         id,
 
-        Status: {
-          not: "APPROVED" || "REJECTED"
-        }
+        Status: "PENDING"
       }
     })
     if (!get_application) throw new HttpException("Application not Found", HttpStatus.NOT_FOUND)
