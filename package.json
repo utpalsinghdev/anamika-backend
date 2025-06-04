@@ -8,8 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "kill": "sudo fuser -k 5003/tcp",
-    "start": "npm run kill && nest start",
+    "start": "fuser -k 5003/tcp || true && nest start",
     "dev": "nest start --watch",
     "db": "npx prisma generate && npx prisma db push",
     "studio": "npx prisma studio",
