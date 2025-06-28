@@ -67,7 +67,7 @@ export class PaymentqrController {
       }),
     }),
   )
-  async uploadQr(@UploadedFile() file: Express.Multer.File, @Res({ passthrough: true }) res: Response) {
+  async uploadQr(@UploadedFile() file: any, @Res({ passthrough: true }) res: Response) {
     try {
       return {
         success: true,
