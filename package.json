@@ -1,6 +1,6 @@
 {
-  "name": "lakshmi-finance-api",
-  "version": "0.0.1",
+  "name": "credit-loan-api",
+  "version": "0.0.2",
   "description": "",
   "author": "Utpal Singh <utpalsingh915@gmail.com>",
   "private": true,
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "fuser -k 5003/tcp || true && nest start",
+    "start": "fuser -k 9005/tcp || true && nest start",
     "dev": "nest start --watch",
     "db": "npx prisma generate && npx prisma db push",
     "studio": "npx prisma studio",
@@ -40,9 +40,9 @@
     "moment": "^2.29.4",
     "momment": "^0.0.1",
     "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
+    "puppeteer": "^21.7.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.0"
@@ -55,7 +55,6 @@
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
     "@types/morgan": "^1.9.4",
-    "@types/multer": "^1.4.11",
     "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -91,5 +90,6 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "main": "dist/main.js"
+  "main": "dist/main.js",
+  "repository": "https://github.com/utpalsinghdev/mahadev-financial-api.git"
 }

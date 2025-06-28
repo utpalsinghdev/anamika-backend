@@ -24,7 +24,43 @@ export class ApprovalLetterController {
     }
 
   }
+  @Get("/automation")
+  async buildAll(@Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "All Approval Letter Fetched Successfully !!",
+        data: await this.approvalLetterService.automation()
+      }
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message || "Internal Server error !!"
+      }
+    }
 
+  }
+
+  @Get('/re-generate/:id')
+  async regenerate(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
+    try {
+      return {
+        success: true,
+        message: "Approval Letter Regenerated Successfully !!",
+        data: await this.approvalLetterService.reGenerate(+id)
+      }
+
+
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message || "Internal Server error !!"
+      }
+    }
+
+  }
   @Get()
   async findAll(@Res({ passthrough: true }) res: Response) {
     try {
