@@ -7,62 +7,53 @@
     <title>Document</title>
 </head>
 <style>
-    @page {
-        size: A4;
-        margin: 0;
-    }
-
     body {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Arial, sans-serif;
-        font-size: 11px;
-        line-height: 1.3;
-        color: #000;
-        background: white;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: relative;
     }
 
     div {
         box-sizing: border-box;
         margin: 0;
-        padding: 0;
     }
 
     p {
         margin: 0;
         padding: 0;
-        line-height: 1.3;
     }
 
     .bannerImg {
         width: 100%;
-        height: auto;
-        max-height: 120px;
     }
 
     .letter-heading {
         text-align: center;
-        margin: 8px 0;
-        font-size: 18px;
+        margin-top: 10px;
+        font-size: 25px;
         font-weight: 600;
         color: #FF0000;
     }
 
     .usr-photo {
-        width: 80px;
-        height: 80px;
-        margin-left: 8px;
+        width: 130px;
+        height: 130px;
+        margin-left: 10px;
         z-index: 0;
     }
 
     .hero-div {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        margin: 0 15px;
+        align-items: center;
+        /* margin: 40px 40px; */
+        margin-left: 40px;
+        margin-right: 40px;
         position: relative;
-        margin-bottom: 15px;
     }
 
     .profile-details-div {
@@ -70,557 +61,646 @@
         justify-content: start;
         flex-direction: column;
         align-items: start;
-        font-size: 11px;
+        font-size: large;
         color: #5FBDFF;
         font-weight: bold;
         width: 100%;
-        gap: 2px;
+        /* border: 1px solid #5FBDFF; */
+        gap: 4px;
     }
 
     .frst-stmp {
-        height: 60px;
+        height: 80px;
         position: absolute;
         z-index: 1000;
-        top: 50px;
-        right: 70px;
+        top: 70px;
+        right: 90px;
     }
 
     .container {
-        margin: 0 15px;
-        margin-top: 15px;
-        font-size: 11px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20px;
+        font-size: 18px;
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 0
     }
 
     .container-2 {
-        margin: 0 15px;
-        margin-top: 15px;
-        font-size: 11px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 80px;
+        font-size: 18px;
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 2
     }
 
     .container-3 {
-        margin: 0 15px;
-        margin-top: 15px;
-        font-size: 11px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 80px;
+        font-size: 18px;
         display: flex;
         flex-direction: column;
-        gap: 0;
-        padding-bottom: 15px;
-    }
-
-    .table-row {
-        display: flex;
-        border-bottom: 1px solid black;
-        min-height: 20px;
-    }
-
-    .table-cell {
-        padding: 3px 5px;
-        display: flex;
-        align-items: center;
-    }
-
-    .table-cell-label {
-        width: 40%;
-        border-right: 1px solid black;
-        font-weight: bold;
-        font-size: 10px;
-    }
-
-    .table-cell-value {
-        width: 60%;
-        font-size: 10px;
-    }
-
-    .page-break {
-        page-break-before: always;
-    }
-
-    .signature-section {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        gap: 20px;
-    }
-
-    .signature-box {
-        border-top: 1px solid black;
-        padding-top: 5px;
-        text-align: center;
-        font-size: 10px;
-        font-weight: bold;
-    }
-
-    .ecs-form {
-        margin-top: 15px;
-        padding: 5px;
-    }
-
-    .ecs-header {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .ecs-title {
-        font-size: 12px;
-        font-weight: bold;
-        margin: 0 0 5px 0;
-    }
-
-    .ecs-subtitle {
-        font-size: 10px;
-        font-weight: bold;
-        margin: 0;
-    }
-
-    .ecs-table {
-        border: 1px solid black;
-        width: 100%;
-        margin-top: 8px;
-    }
-
-    .ecs-table-row {
-        display: flex;
-        border-bottom: 1px solid black;
-        min-height: 18px;
-    }
-
-    .ecs-table-row:last-child {
-        border-bottom: none;
-    }
-
-    .ecs-table-cell {
-        padding: 2px 4px;
-        display: flex;
-        align-items: center;
-        font-size: 9px;
-    }
-
-    .ecs-table-cell-label {
-        width: 40%;
-        border-right: 1px solid black;
-        font-weight: bold;
-    }
-
-    .ecs-table-cell-value {
-        width: 60%;
-    }
-
-    .photo-section {
-        margin-top: 15px;
-    }
-
-    .photo-placeholder {
-        height: 60px;
-        border: 1px dashed #ccc;
-        margin: 5px 0 10px 0;
-    }
-
-    .stamp-section {
-        margin-top: 20px;
-        text-align: right;
-    }
-
-    .stamp-placeholder {
-        width: 80px;
-        height: 40px;
-        border: 1px dashed #ccc;
-        margin-left: auto;
-        margin-top: 5px;
-    }
-
-    .footer-img {
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .page-number {
-        border-top: 1px solid black;
-        text-align: right;
-        margin-top: 10px;
-        padding-top: 5px;
-        font-size: 10px;
-        font-weight: bold;
-    }
-
-    .important-notice {
-        margin-top: 15px;
-    }
-
-    .important-notice h4 {
-        color: #FF0000;
-        font-size: 12px;
-        margin: 10px 0 8px 0;
-    }
-
-    .important-notice ol {
-        margin: 8px 0;
-        padding-left: 20px;
-    }
-
-    .important-notice li {
-        margin-bottom: 3px;
-        font-size: 10px;
-        line-height: 1.2;
-    }
-
-    .guarantor-section {
-        margin-top: 15px;
-    }
-
-    .guarantor-section h4 {
-        color: #FF0000;
-        font-size: 12px;
-        margin: 10px 0 8px 0;
-    }
-
-    .guarantor-content {
-        font-size: 10px;
-        line-height: 1.2;
-    }
-
-    .guarantor-content p {
-        margin-bottom: 4px;
-    }
-
-    .guarantor-list {
-        margin: 8px 0;
-        padding-left: 15px;
-    }
-
-    .guarantor-list li {
-        margin-bottom: 2px;
-        font-size: 9px;
+        gap: 2;
+        padding-bottom: 5px;
     }
 </style>
 
-<body style="border-left: 3px solid #2001ff; border-right: 3px solid #2001ff;">
+<body style="border-left: 4px solid #2001ff;border-right: 4px solid #2001ff;">
     <img class="bannerImg" src="https://creditlfs.com/pdfBanner.png" alt="">
     <h3 class="letter-heading">Letter Of Approval</h3>
     <div class="hero-div">
         <div class="profile-details-div">
-            <div style="display: flex; gap: 8px; margin-bottom: 2px;">
-                <span style="width: 70px;">Name</span>
+
+            <div>
+                <span style="margin-right: 80px;">Name</span>
                 <span>{{name}}</span>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 2px;">
-                <span style="width: 70px;">Mob</span>
+            <div>
+                <span style="margin-right: 89px;">Mob</span>
                 <span>{{mob}}</span>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 2px;">
-                <span style="width: 70px;">Ref</span>
-                <span>Account of LOAN from {{company}}</span>
+            <div style="display: flex; flex-direction: row; justify-content: start; align-items: center; width: 100%;">
+                <span style="margin-right: 96px;">Ref</span>
+                <span style="width: '90%'; ">Account of LOAN from {{company}}</span>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 2px;">
-                <span style="width: 70px;">Case file No</span>
+            <div>
+                <span style="margin-right: 30px;">Case file No</span>
                 <span>{{cfn}}</span>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 2px;">
-                <span style="width: 70px;">Date</span>
+            <div>
+                <span style="margin-right: 86px;">Date</span>
                 <span>{{date}}</span>
             </div>
         </div>
         <div style="position: relative;">
+
             <img class="usr-photo" src="{{photoUrl}}">
             <img class="frst-stmp" src="https://creditlfs.com/stamp.png" alt="stamp-img">
         </div>
-    </div>
 
+    </div>
     <div class="container">
-        <p style="margin-bottom: 8px;">
-            Based on your application no. <span style="color: #5FBDFF;">{{cfnId}}</span> acting under the constitution
-            of
+        <p style="margin-top: 8px;">Based on your application no. <span style="color: #5FBDFF;">{{cfnId}}</span> acting
+            under the constitution of
             <span style="font-weight: bold;">{{company}}</span> is pleased to provide provisional sanction the loan
             request submitted by
         </p>
-        <p style="border-bottom: 2px solid black; margin-bottom: 8px; padding-bottom: 3px;">
-            <span style="color: #FF0000">Mr./Mrs./Ms.Miss {{name}}</span> accepting the terms and conditions for the
-            progress of loan. This is in subject to the execution of loan agreement and the other documents between our
-            selves:
+        <p style="border-bottom: 2px solid black; margin-top: 5px;"><span style="color: #FF0000">Mr./Mrs./Ms.Miss
+                {{name}} </span> accepting the terms and conditions for the progress of loan. This is in subject to the
+            execution of loan agreement and the other documents between our selves:
         </p>
-
-        <h3 style="margin: 8px 0 5px 0; font-size: 14px; font-weight: bold;">Customer Application Details</h3>
-
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Date of Application</div>
-            <div class="table-cell table-cell-value">{{doa}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Name</div>
-            <div class="table-cell table-cell-value">{{name}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Guardian Name</div>
-            <div class="table-cell table-cell-value">{{guardian_name}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Address</div>
-            <div class="table-cell table-cell-value">{{address}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Mobile No</div>
-            <div class="table-cell table-cell-value">{{mob}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Email</div>
-            <div class="table-cell table-cell-value">{{email}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Aadhar</div>
-            <div class="table-cell table-cell-value">{{aadhar}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Pan</div>
-            <div class="table-cell table-cell-value">{{pan}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Loan Amount</div>
-            <div class="table-cell table-cell-value">{{loan_amount}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Loan Details</div>
-            <div class="table-cell table-cell-value">{{loan_details}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Bank Name &A/CNo./IFSCCODE A/C</div>
-            <div class="table-cell table-cell-value">{{bank_detailis}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Executive Details</div>
-            <div class="table-cell table-cell-value">{{agent_details}}</div>
-        </div>
-        <div class="table-row">
-            <div class="table-cell table-cell-label">Processing Charges + 18% GST</div>
-            <div class="table-cell table-cell-value">{{processing_fee}}</div>
-        </div>
-
-        <p class="page-number">SIGNATURE & THUMB IMPRESSION PAGE-1</p>
-    </div>
-
-    <div class="container">
-        <p style="margin-bottom: 8px;">
-            You are intimated that <span style="color: #FF0000; font-weight: bold;">Rs.{{loan_amount}}</span> has been
-            approved by the approving committee of the company, after the validation of the submitted documents for
-            loan. We are pleased to inform you that the company is issuing the offer letter to you so that we can
-            further initiate your lone process as early as possible. This offer letter is valid for 25 days. Where
-            company will keep you are submitted to documents safe only for 30 days, otherwise your file will stand
-            closed. Kindly deposit your process fees of <span style="color: #FF0000; font-weight: bold;">Rs.
-                {{processing_fee}} (18% Gst Tax Of Agreement Fees)by Bank (NEFT or RTGS) infavor of {{company}}</span>
-            Ltd.for issuing advisory report and to meet other expenses, along with required reports as per company terms
-            & conditions Mentioned at the end of the letter WITHIN 10 DAYS (TEN DAYS)after receiving the offer letter,
-            kindly submit the D.D (demand draft) of processing fee failing to which the offer letterwill not be valid.
-            The advisory reports shall comprise of title, valuation, investigation report of property etc. As per line
-            mark on search report.
-        </p>
-
-        <div class="important-notice">
-            <h4>SPECIAL CONDITIONS FOR LOAN (Important Terms & Conditions)</h4>
-            <ol>
-                <li>Disbursement of loan will be subject to the condition at the time of disbursement</li>
-                <li>Final approval sanction will be issued subject to fulfillment of existing terms & conditions of
-                    apply</li>
-                <li>Only 50% of net salary of govt. guarantor can be treated as EMI</li>
-                <li>Net salary of govt. Guarantor must be doubled from the EMI of loanee if salary of govt. Guarantor is
-                    less than double the amount will be reduced</li>
-                <li>Advance EMI installment will be recovered from all theapplicants /loanee if applicant depositing
-                    their M.I.Without bouncing till completion of loan on demand, company can provide loan equal to
-                    double in future in case a single bouncing. This facility will not be applicable to them</li>
-                <li>Company will accept only those applicant & guarantor whose age should be18 to 60 years</li>
-                <li>In case of property guarantor the property of any blood relative will not be accepted SC caste
-                    guarantor is not acceptable.</li>
-                <li>In case if the document requested by the company is not completed by the applicant shall be rejected
-                </li>
-                <li>File charges of company is <span style="font-weight: bold;">Rs.{{file_charge}}/-</span> paid</li>
-                <li>Property guarantor search report compulsory & all family member permission is compulsory</li>
-                <li>File fees will not refundable after is suing the offer letter</li>
-                <li>If your payment goes on hold, you may be required to pay the first EMI.</li>
-            </ol>
-        </div>
-
-        <p style="margin: 15px 0 8px 0;">
-            I accept that after verification of my records and my guarantors Govt. Records, of any discrepancies traced,
-            I will ful fill the same with in due course of time. If I cannot complete the required terms &
-            conditions/Legal formalities within due course of time or paper found fake during investigation, then
-            finance company is fully competent to refuse refunding the process fees, which has already deposited with
-            the company and I will not request to company to refund the process fees in any circumstances as the same
-            has been spend during investigation of loan case. Except the amount mentioned at page no.1 and no other
-            amount is payable to the company, for which I am fully responsible if paid to any person.
-        </p>
-
-        <p class="page-number">SIGNATURE & THUMB IMPRESSION PAGE-2</p>
-    </div>
-
-    <div class="container-2">
-        <div class="guarantor-section">
-            <h4>QUESTIONAIRE FOR GUARANTOR</h4>
-            <div class="guarantor-content">
-                <p>GOVERNMENT GUARANTOR [ ] PVT.LTD.GUARANTOR [ ] PROPERTY GUARANTOR [ ]</p>
-                <p>Name:...............................................................................................................
-                </p>
-                <p>S/o, W/o, D/o:.....................................Date of
-                    Birth:........................................</p>
-                <p>Age:.........Residence
-                    Address.....................................................................Office</p>
-                <p>Phone:........................................</p>
-                <p>Mobile:........................................</p>
-                <p>Office/Property Address:........................................</p>
-                <p>Department Name:........................................</p>
-                <p>Official Designation/Post:........................................</p>
-                <p>Remaining Service Period till Retirement:........................................</p>
-                <p>Job Transferble Yes / No:........................................</p>
-                <p>Willing to Ful fil All Legal Requirement for surety of guarantee of loan : Yes/No:
-                    ........................................</p>
-                <p>Previously stood as a surety is given any guarantee :Yes /No :
-                    ........................................</p>
-                <p>Will Your successors agreed with you as have stand as a Guarantor for Mr./Mrs./Ms :
-                    ........................................</p>
-                <p>Amount of net carry home salary per month: ........................................</p>
-                <p>Distt: .......................................... Nagar Panchayat:
-                    ................................................</p>
-                <p>Tehsil: ........................................Mohalla:
-                    ...............................................................</p>
-                <p>Police station: .................................Chokee:
-                    ............................................................</p>
-                <p>Check Post: .....................................Pin Code:
-                    .........................................................</p>
-
-                <p style="margin-top: 15px; font-weight: bold;">Guarantor Required document:-</p>
-                <p style="margin: 8px 0;">=> 5photo => Address Proof => I.D Proof => 7 stampaper 50-50Rs/- =>Bankdetail
-                </p>
-                <ul class="guarantor-list">
-                    <li>Property documents (in case of property guarantor)</li>
-                    <li>Last two months payslip & last six months bank statement (incase of Govt/pvt.)</li>
-                    <li>Last two year statement of I.T.Rb(in case of I.T.R Guarantor)</li>
-                </ul>
+        <h3 style="margin-top: 5px; font-size: 23px; font-weight: bold;  text-align: left; margin-bottom:
+        5px;">Customer Application Details</h3>
+        <div style="margin-top: 5px; font-size: 16px;">
+            <div style="display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: large;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Date of Application</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{doa}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Name</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{name}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Guardian Name</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{guardian_name}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Address</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{address}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Mobile No</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{mob}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Email</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{email}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Aadhar</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{aadhar}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Pan</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{pan}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Loan Amount</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{loan_amount}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Loan Details</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{loan_details}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Bank Name &A/CNo./IFSCCODE A/C</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{bank_detailis}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Executive Details</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{agent_details}}</div>
+            </div>
+            <div style="display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                font-size: medium;
+                font-weight: bold;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+                ">
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">Processing Charges + 18% GST</div>
+                <div style="width:50%; border-bottom: 2px solid #5FBDFF;">{{processing_fee}}</div>
             </div>
         </div>
-
-        <p class="page-number">SIGNATURE & THUMB IMPRESSION PAGE-3</p>
+        <p style="border-top: 1px solid black; text-align: right; margin-top: 10px;">SIGNATURE & THUMB IMPRESSION PAGE-1
+        </p>
     </div>
-
+    <div class="container">
+        <p style="margin-top: 20px;">
+            You are intimated that <span style="color: #FF0000; font-weight: bold;">Rs.{{loan_amount}}</span> has been
+            approved by the approving committee of the company, after the validation of the submitted documents for
+            loan. We are pleased to inform
+            you that the company is issuing the offer letter to you so that we can further initiate your lone process as
+            early as possible. This offer letter is valid for 25 days. Where company will keep you are submitted to
+            documents safe only for 30
+            days, otherwise your file will stand closed. Kindly deposit your process fees of <span
+                style="color: #FF0000; font-weight: bold;">Rs.
+                {{processing_fee}}
+                (18% Gst Tax Of Agreement Fees)by Bank (NEFT or RTGS) infavor of {{company}}</span> Ltd.for issuing
+            advisory report and to meet other expenses, along with required reports as per company terms & conditions
+            Mentioned at the end of the letter
+            WITHIN 10 DAYS (TEN DAYS)after receiving the offer letter, kindly submit the D.D (demand draft) of
+            processing fee failing to which the offer letterwill not be valid. The advisory reports shall comprise of
+            title, valuation, investigation report
+            of property etc. As per line mark on search report.
+        </p>
+        <h4 style="color: #FF0000;">
+            SPECIAL CONDITIONS FOR LOAN (Important Terms & Conditions)
+        </h4>
+        <ol>
+            <li>
+                Disbursement of loan will be subject to the condition at the time of disbursement
+            </li>
+            <li>Final approval sanction will be issued subject to fulfillment of existing terms & conditions of apply
+            </li>
+            <li>
+                Only 50% of net salary of govt. guarantor can be treated as EMI
+            </li>
+            <li>
+                Net salary of govt. Guarantor must be doubled from the EMI of loanee if salary of govt. Guarantor is
+                less than double the amount will be reduced
+            </li>
+            <li>
+                Advance EMI installment will be recovered from all theapplicants /loanee if applicant depositing their
+                M.I.Without bouncing till completion of loan on demand, company can provide loan equal to double in
+                future in case a single bouncing. This facility
+                will not be applicable to them
+            </li>
+            <li>
+                Company will accept only those applicant & guarantor whose age should be18 to 60 years
+            </li>
+            <li>
+                In case of property guarantor the property of any blood relative will not be accepted SC caste guarantor
+                is not acceptable.
+            </li>
+            <li>
+                In case if the document requested by the company is not completed by the applicant shall be rejected
+            </li>
+            <li>
+                File charges of company is <span style="font-weight: bold;">Rs.{{file_charge}}/-</span> paid
+            </li>
+            <li>
+                Property guarantor search report compulsory & all family member permission is compulsory
+            </li>
+            <li>
+                File fees will not refundable after is suing the offer letter
+            </li>
+            <li>
+                If your payment goes on hold, you may be required to pay the first EMI.
+            </li>
+        </ol>
+        <p>
+            I accept that after verification of my records and my guarantors Govt. Records, of any discrepancies traced,
+            I will ful fill the same with in due course of time. If I cannot complete the required terms &
+            conditions/Legal formalities within due course
+            of time or paper found fake during investigation, then finance company is fully competent to refuse
+            refunding the process fees, which has already deposited with the company and I will not request to company
+            to refund the process fees in any
+            circumstances as the same has been spend during investigation of loan case. Except the amount mentioned at
+            page no.1 and no other amount is payable to the company, for which I am fully responsible if paid to any
+            person.
+        </p>
+        <p style="border-top: 1px solid black; text-align: right; margin-top: 10px;">SIGNATURE & THUMB IMPRESSION PAGE-2
+        </p>
+    </div>
+    <div class="container-2">
+        <h4 style="color: #FF0000;">
+            QUESTIONAIRE FOR GUARANTOR </h4>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;  padding: 10px;">
+            <p>
+                GOVERNMENT GUARANTOR [ ] PVT.LTD.GUARANTOR [ ] PROPERTY GUARANTOR [ ]
+            </p>
+            <p>
+                Name:...............................................................................................................
+            </p>
+            <p>
+                S/o, W/o, D/o:.....................................Date of
+                Birth:........................................
+            </p>
+            <p>
+                Age:.........Residence
+                Address.....................................................................Office
+            </p>
+            <p>
+                Phone:........................................
+            </p>
+            <p>
+                Mobile:........................................
+            </p>
+            <p>
+                Office/Property Address:........................................
+            </p>
+            <p>
+                Department Name:........................................
+            </p>
+            <p>
+                Official Designation/Post:........................................
+            </p>
+            <p>
+                Remaining Service Period till Retirement:........................................
+            </p>
+            <p>
+                Job Transferble Yes / No:........................................
+            </p>
+            <p>
+                Willing to Ful fil All Legal Requirement for surety of guarantee of loan : Yes/No:
+                .................................
+            </p>
+            <p>
+                Previously stood as a surety is given any guarantee :Yes /No : ........................................
+            </p>
+            <p>
+                Will Your successors agreed with you as have stand as a Guarantor for Mr./Mrs./Ms :
+                ........................................
+            </p>
+            <p>
+                Amount of net carry home salary per month: ........................................
+            </p>
+            <p>
+                Distt: .......................................... Nagar Panchayat:
+                ................................................
+            </p>
+            <p>
+                Tehsil: ........................................Mohalla:
+                ...............................................................
+            </p>
+            <p>
+                Police station: .................................Chokee:
+                ............................................................
+            </p>
+            <p>
+                Check Post: .....................................Pin Code:
+                .........................................................
+            </p>
+            <p style="margin-top: 20px;">
+                Guarantor Required document:-
+            </p>
+            <p>
+                => 5photo => Address Proof => I.D Proof => 7 stampaper 50-50Rs/- =>Bankdetail
+            </p>
+            <ul style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;  padding: 10px;">
+                <li>
+                    Property documents (in case of property guarantor)
+                </li>
+                <li>
+                    Last two months payslip & last six months bank statement (incase of Govt/pvt.)
+                </li>
+                <li>Last two year statement of I.T.Rb(in case of I.T.R Guarantor)</li>
+            </ul>
+            <p style="border-top: 1px solid black; text-align: right; margin-top: 10px;">SIGNATURE & THUMB IMPRESSION
+                PAGE-3
+            </p>
+        </div>
+    </div>
     <div class="container-3">
-        <div class="important-notice">
-            <h4>Important Notice of {{company}}</h4>
-            <ol>
-                <li>Applicant should not deposit money in any of these following working (person lawyer, agent) or else
-                    company would not be responsible for it.</li>
-                <li>After receiving the offer letter you have to submit the process charge fees if not you have to pay
-                    for file reopen charge after10days.</li>
-                <li>Every signed paper of the offer letter as well as required paper processing fees has to be send to
-                    the company</li>
-                <li>The payment of the process fees has to be deposit in company account.</li>
-                <li>Immediately send your personal mobile number to the company so that you may not face any problems
-                    during upcoming forward proceeding</li>
+        <h4 style="color: #FF0000;">
+            Important Notice of {{company}}</h4>
+        <div>
+            <ol style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;  padding: 10px;">
+                <li>
+                    Applicant should not deposit money in any of these following working (person lawyer, agent) or else
+                    company would not be responsible for it.
+                </li>
+                <li>
+                    After receiving the offer letter you have to submit the process charge fees if not you have to pay
+                    for file reopen charge after10days.
+                </li>
+                <li>
+                    Every signed paper of the offer letter as well as required paper processing fees has to be send to
+                    the company
+                </li>
+                <li>
+                    The payment of the process fees has to be deposit in company account.
+                </li>
+                <li>
+                    Immediately send your personal mobile number to the company so that you may not face any problems
+                    during upcoming forward proceeding
+                </li>
                 <li>Immediately send the cash deposit slip at company emailI.D- <span
                         style="font-weight: bold;">info@creditlfs.com</span></li>
-                <li>The process charge should not be returned after the offer letter is ready</li>
+                <li>
+                    The process charge should not be returned after the offer letter is ready
+                </li>
             </ol>
+        </div>
+        <div style="height: 300px;">
+            <p style="color: white;">.</p>
         </div>
 
         <!-- ECS MANDATE FORM -->
-        <div class="ecs-form">
-            <div class="ecs-header">
-                <p class="ecs-title">ECS MANDATE FORM</p>
-                <p class="ecs-subtitle">CREDIT LOAN FINANCIAL SERVICE</p>
+        <div style="padding: 5px;">
+            <!-- Header -->
+            <div style="margin-bottom: 5px;">
+                <p style="font-size: 14px; font-weight: bold; text-align: center; margin-bottom: 10px; margin: 0;">
+                    ECS MANDATE FORM
+                </p>
+                <p style="font-size: 12px; font-weight: bold; text-align: center; margin: 0;">
+                    CREDIT LOAN FINANCIAL SERVICE
+                </p>
             </div>
 
-            <div class="ecs-table">
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Bank Name</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+            <!-- Table -->
+            <div style="border: 1px solid black; width: 100%; margin-top: 10px;">
+                <!-- Table Rows -->
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Bank Name</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Bank Address</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Bank Address</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Account Holder Name</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Account Holder Name</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Bank Account Number</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Bank Account Number</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">IFSC Code</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">IFSC Code</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">MICR Code</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">MICR Code</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Bank Opening Date (DD/MM/YYYY)</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Bank Opening Date (DD/MM/YYYY)</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Last Transaction Date (DD/MM/YYYY)</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Last Transaction Date (DD/MM/YYYY)</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Loan Amount (INR)</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Loan Amount (INR)</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">EMI Amount (INR)</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">EMI Amount (INR)</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">EMI Tenure (in Months)</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">EMI Tenure (in Months)</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Aadhaar Number</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Aadhaar Number</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">PAN Number</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex; border-bottom: 1px solid black;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">PAN Number</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
-                <div class="ecs-table-row">
-                    <div class="ecs-table-cell ecs-table-cell-label">Registered Phone Number</div>
-                    <div class="ecs-table-cell ecs-table-cell-value"></div>
+
+                <div style="display: flex;">
+                    <div style="width: 40%; padding: 5px; border-right: 1px solid black;">
+                        <p style="font-weight: bold; margin: 0;">Registered Phone Number</p>
+                    </div>
+                    <div style="width: 60%; padding: 5px;">
+                        <p style="margin: 0;"></p>
+                    </div>
                 </div>
             </div>
 
-            <div class="photo-section">
-                <p style="margin-bottom: 3px; font-size: 9px;">Photo (Paste Here):</p>
-                <div class="photo-placeholder"></div>
+            <!-- Photo Section -->
+            <div style="margin-top: 25px;">
+                <p style="margin-bottom: 5px; margin: 0;">Photo (Paste Here):</p>
+                <div style="height: 100px; margin-bottom: 20px; border: 1px dashed #ccc;"></div>
             </div>
 
-            <div style="margin-top: 8px;">
-                <p style="margin: 0; font-size: 9px;">Signature & Thumb Impression!</p>
+            <!-- Signature Section -->
+            <div style="margin-top: 10px;">
+                <p style="margin: 0;">Signature & Thumb Impression!</p>
             </div>
 
-            <div class="stamp-section">
-                <p style="margin: 0; font-size: 9px;">Company Stamp:</p>
-                <div class="stamp-placeholder"></div>
+            <!-- Company Stamp -->
+            <div style="margin-top: 40px; text-align: right;">
+                <p style="margin: 0;">Company Stamp:</p>
+                <div style="width: 100px; height: 50px; margin-left: auto; border: 1px dashed #ccc;"></div>
             </div>
         </div>
 
-        <div class="signature-section">
-            <div class="signature-box">
-                <span>SIGNATURE OF GAURANTER</span><br>
-                <span>& THUMB-IMPRESSION</span>
-            </div>
-            <div class="signature-box">
-                <span>SIGNATURE OF APPLICANT</span><br>
-                <span>& THUMB-IMPRESSION</span>
-            </div>
-            <img style="position: absolute; height: 120px; z-index: 1000; top: 10px; right: -10px;"
-                src="https://creditlfs.com/stamp.png" alt="stamp-img">
-        </div>
+        <div
+            style="display: flex;  flex-direction: row; justify-content: space-between; margin-top: 20px; width: 100%; gap: 20px; position: relative;">
+            <span
+                style="display: flex; flex-direction: column; gap:0 ; border-top: 1px solid black; margin-top: 20px; width: max-content;">
 
-        <p class="page-number">SIGNATURE & THUMB IMPRESSION PAGE-4</p>
+                <span>SIGNATURE OF GAURANTER</span>
+                <span>& THUMB-IMPRESSION</span>
+            </span>
+            <span
+                style="display: flex; flex-direction: column; gap:0 ; border-top: 1px solid black; margin-top: 20px; width: max-content;">
+
+                <span>SIGNATURE OF APPLICANT</span>
+                <span>& THUMB-IMPRESSION</span>
+            </span>
+            <img style="position: absolute;height: 150px;
+            position: absolute;
+            z-index: 1000;
+            top: 10px;
+            right: -10px;" src="https://creditlfs.com/stamp.png" alt="stamp-img">
+        </div>
+        <p style="border-top: 1px solid black; text-align: right; ">SIGNATURE & THUMB IMPRESSION PAGE-4
+        </p>
     </div>
-
-    <img class="footer-img" src="https://creditlfs.com/pdfFooter.png" alt="">
+    <img style="width: 100%; margin-top: 30px; " src="https://creditlfs.com/pdfFooter.png" alt="">
 </body>
 
 </html>
