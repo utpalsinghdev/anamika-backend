@@ -329,7 +329,7 @@ export class CustomerService {
     let isUnique = false;
     while (!isUnique) {
       const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
-      const loanId = `CLAID${randomPin}`;
+      const loanId = `SFAID${randomPin}`;
 
       const agents = await this.prisma.customer.findUnique({
         where: {
