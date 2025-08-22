@@ -40,22 +40,32 @@ export class PaymentqrService {
         },
         data: {
           url: data.url || lastCreated[0].url,
+          title: data.title || lastCreated[0].title,
+          email: data.email || lastCreated[0].email,
           bankName: data.bankName || lastCreated[0].bankName,
           accountNo: data.accountNo || lastCreated[0].accountNo,
           ifsc: data.ifsc || lastCreated[0].ifsc,
           holderName: data.holderName || lastCreated[0].holderName,
-          fileCharge: data.fileCharge || lastCreated[0].fileCharge
+          fileCharge: data.fileCharge || lastCreated[0].fileCharge,
+          phoneNumbers: data.phoneNumbers || lastCreated[0].phoneNumbers,
+          addresses: data.addresses || lastCreated[0].addresses,
+          icardIsPdf: data.icardIsPdf !== undefined ? data.icardIsPdf : lastCreated[0].icardIsPdf
         }
       });
     } else {
       return await this.prisma.paymentqr.create({
         data: {
           url: data.url || '',
+          title: data.title || 'Saraswati Financial Services Private Limited',
+          email: data.email || 'Info@Saraswatifinance.live',
           bankName: data.bankName || '',
           accountNo: data.accountNo || '',
           ifsc: data.ifsc || '',
           holderName: data.holderName || '',
-          fileCharge: data.fileCharge || 0
+          fileCharge: data.fileCharge || '4550',
+          phoneNumbers: data.phoneNumbers || [],
+          addresses: data.addresses || [],
+          icardIsPdf: data.icardIsPdf !== undefined ? data.icardIsPdf : true
         }
       });
     }

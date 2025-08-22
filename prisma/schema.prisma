@@ -308,15 +308,20 @@ model JointPercent {
 }
 
 model Paymentqr {
-  id         String   @unique @default(uuid())
-  url        String   @unique
-  bankName   String
-  accountNo  String
-  holderName String
-  ifsc       String
-  fileCharge String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           String   @unique @default(uuid())
+  url          String?  @unique
+  title        String?  @default("Saraswati Financial Services Private Limited")
+  email        String?  @default("Info@Saraswatifinance.live")
+  bankName     String?
+  accountNo    String?
+  holderName   String?
+  ifsc         String?
+  fileCharge   String?  @default("4550")
+  phoneNumbers String[] @default([])
+  addresses    String[] @default([])
+  icardIsPdf   Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 enum EventType {

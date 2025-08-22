@@ -1,9 +1,17 @@
-import { IsBase64, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsBase64, IsNotEmpty, IsOptional, IsString, IsArray, IsEmail, IsBoolean } from "class-validator";
 
 export class CreatePaymentqrDto {
     @IsOptional()
     @IsString()
     qr: String;
+
+    @IsOptional()
+    @IsString()
+    title: String;
+
+    @IsOptional()
+    @IsEmail()
+    email: String;
 
     @IsOptional()
     @IsString()
@@ -25,4 +33,17 @@ export class CreatePaymentqrDto {
     @IsString()
     fileCharge: String;
 
+    @IsOptional()
+    @IsArray()
+    @IsString({ each: true })
+    phoneNumbers: String[];
+
+    @IsOptional()
+    @IsArray()
+    @IsString({ each: true })
+    addresses: String[];
+
+    @IsOptional()
+    @IsBoolean()
+    icardIsPdf: Boolean;
 }
