@@ -69,7 +69,21 @@ export class AttendenceService {
       }
     )
   }
-
+  async findOne(id: number) {
+    return await this.prisma.attendance.findMany(
+      {
+        include: {
+          employee: true
+        },
+        where: {
+          employeeId: id
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      }
+    )
+  }
   async markAbsent(userId: number) {
     return await this.prisma.attendance.update(
       {

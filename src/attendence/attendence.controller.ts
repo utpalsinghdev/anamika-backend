@@ -1,10 +1,11 @@
-import { Controller, Get, Res, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Res, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { AttendenceService } from './attendence.service';
-import { Response, response } from 'express';
+import { Response, Request } from 'express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { Roles } from 'src/decoretors/role.decorator';
 import { ROLE } from '@prisma/client';
+import { jwtDecode } from 'jwt-decode';
 
 @Controller('attendence')
 export class AttendenceController {
@@ -69,6 +70,29 @@ export class AttendenceController {
       }
     }
   }
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.AGENT, ROLE.DEALERSHIP, ROLE.FEILDOFFICER)
+  @Get("/one")
+  async findOne(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
+    try {
+      const token = req.headers.authorization.split(" ")[1]
+      const user: any = await jwtDecode(token)
+      return {
+        success: true,
+        message: "Attendence Fetched",
+        data: await this.attendenceService.findOne(+user.id)
+      }
+
+    } catch (error) {
+      res.status(error.status || 500)
+      return {
+        success: false,
+        message: error.message,
+        data: null
+      }
+    }
+  }
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Get("/mark-absent/:userId")
