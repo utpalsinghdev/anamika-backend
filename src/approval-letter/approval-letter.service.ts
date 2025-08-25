@@ -80,7 +80,7 @@ export class ApprovalLetterService {
       const paymnt = await this.prisma.paymentqr.findMany({})
 
       const dynamicData = {
-        company: 'Credit loan Financial Services PVT. LTD',
+        company: 'Saraswati Financial Services  Services PVT. LTD',
         name: _customer.name,
         mob: _customer.phone,
         photoUrl: createApprovalLetterDto.photo ? createApprovalLetterDto.photo : _customer.photo.url,
@@ -180,7 +180,7 @@ export class ApprovalLetterService {
       const gst = costWithoutGst * 0.18;
       const totalCost = costWithoutGst + gst;
       const dynamicData = {
-        company: 'Credit loan Financial Services PVT. LTD',
+        company: 'Saraswati Financial Services  Services PVT. LTD',
         name: _customer.name,
         mob: _customer.phone,
         file_charge: _approval.processingCharge,
