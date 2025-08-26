@@ -179,6 +179,8 @@ export class ApprovalLetterService {
           : _loanAmount * 0.03;
       const gst = costWithoutGst * 0.18;
       const totalCost = costWithoutGst + gst;
+      const paymnt = await this.prisma.paymentqr.findMany({})
+
       const dynamicData = {
         company: 'Saraswati Financial Services  Services PVT. LTD',
         name: _customer.name,
@@ -203,6 +205,7 @@ export class ApprovalLetterService {
         ).emi
           }/Month` : 'NA'
         ,
+        payLink: paymnt[0].url,
         bank_detailis: `${_customer.bank} / ${_customer.AccountNumber} / ${_customer.ifsc} / ${_customer.accountType}`,
         agent_details: _customer.agent ? `${_customer.agent.employeeCode}-${_customer.agent.firstName} ${_customer.agent.LastName} / ${_customer.agent.phone}` : 'NA',
         processing_fee: `Rs. ${costWithoutGst} + Rs. ${gst} = Rs. ${totalCost}`,
