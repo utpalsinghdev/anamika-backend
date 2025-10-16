@@ -56,8 +56,8 @@ export class PaymentqrService {
       return await this.prisma.paymentqr.create({
         data: {
           url: data.url || '',
-          title: data.title || 'Saraswati Financial Services Private Limited',
-          email: data.email || 'Info@Saraswatifinance.live',
+          title: data.title || "",
+          email: data.email || '',
           bankName: data.bankName || '',
           accountNo: data.accountNo || '',
           ifsc: data.ifsc || '',

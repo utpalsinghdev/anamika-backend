@@ -310,8 +310,8 @@ model JointPercent {
 model Paymentqr {
   id           String   @unique @default(uuid())
   url          String?  @unique
-  title        String?  @default("Saraswati Financial Services Private Limited")
-  email        String?  @default("Info@Saraswatifinance.live")
+  title        String?  @default("")
+  email        String?  @default("")
   bankName     String?
   accountNo    String?
   holderName   String?
