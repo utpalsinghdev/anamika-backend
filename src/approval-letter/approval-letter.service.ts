@@ -293,7 +293,7 @@ export class ApprovalLetterService {
 
     const htmlPath = path.resolve('uploads', "template", "approval.html")
 
-    const pdfName = `${dynamicData.name}-${dynamicData.cfnId}.pdf` //TODO: change name with customer name
+    const pdfName = `${dynamicData.name}-${dynamicData.cfnId}.pdf` 
 
     const outputPath = path.resolve('uploads', "original", pdfName)
 
@@ -310,7 +310,10 @@ export class ApprovalLetterService {
     };
 
     const html = fs.readFileSync(htmlPath, "utf8");
-    const populatedHtml = populateTemplate(html, dynamicData);
+    const populatedHtml = populateTemplate(html, {
+      ...dynamicData,
+      FRONTEND_DOMAIN: process.env.FRONTEND_DOMAIN
+    });
 
     (async () => {
       const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
