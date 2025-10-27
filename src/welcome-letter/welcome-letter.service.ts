@@ -31,39 +31,47 @@ export class WelcomeLetterService {
     });
   }
   async createManual(body: CreateWelomeCustomerDto) {
-    const l_id = await this._loanId();
-    const c_id = await this._customerId();
-    console.log("l", l_id)
-    console.log("c", c_id)
-    const generatePassword = (length: number) => Array.from({ length }, () => Math.random().toString(36).charAt(2)).join('');
-    const password = generatePassword(6);
-    console.log(password)
-    const n_customer = await this.prisma.customer.create({
-      data: {
-        name: body.name,
-        phone: body.phone,
-        guardian_relation: body.guardian_relation,
-        guardian_name: body.guardian_name,
-        loanInNumber: body.loanInNumber,
-        loanInWords: body.loanInWords,
-        agent: { connect: { id: body.employeeId } },
-        loanYear: body.loanYear,
-        loanId: l_id,
-        status: "APPROVED",
-        customerId: c_id,
-        password: await hash(body.phone, 10),
-      }
-    });
-    await this.mail.sendSms({
-      numbers: body.phone,
-      type: mailEnums.WELCOME.toString(),
-      value: `${body.name}|${c_id}|${body.phone}`
-    })
-    return await this.create({
-      customerId: n_customer.id,
-      employeeId: body.employeeId,
-      charge: body.charge,
-    })
+    try {
+      const l_id = await this._loanId();
+      const c_id = await this._customerId();
+      console.log("l", l_id)
+      console.log("c", c_id)
+      const generatePassword = (length: number) => Array.from({ length }, () => Math.random().toString(36).charAt(2)).join('');
+      const password = generatePassword(6);
+      console.log(password)
+      
+      const n_customer = await this.prisma.customer.create({
+        data: {
+          name: body.name,
+          phone: body.phone,
+          guardian_relation: body.guardian_relation,
+          guardian_name: body.guardian_name,
+          loanInNumber: body.loanInNumber,
+          loanInWords: body.loanInWords,
+          agent: { connect: { id: body.employeeId } },
+          loanYear: body.loanYear,
+          loanId: l_id,
+          status: "APPROVED",
+          customerId: c_id,
+          password: await hash(body.phone, 10),
+        }
+      });
+      
+      await this.mail.sendSms({
+        numbers: body.phone,
+        type: mailEnums.WELCOME.toString(),
+        value: `${body.name}|${c_id}|${body.phone}`
+      })
+      
+      return await this.create({
+        customerId: n_customer.id,
+        employeeId: body.employeeId,
+        charge: body.charge,
+      })
+    } catch (error) {
+      console.error('Error creating manual customer:', error);
+      throw new Error(`Failed to create customer: ${error.message}`);
+    }
   }
   async findAll() {
     return await this.prisma.welcomeLetter.findMany({
@@ -101,54 +109,86 @@ export class WelcomeLetterService {
     return await this.prisma.welcomeLetter.delete({ where: { id } });
   }
   private async _loanId() {
-    const applicationId = await this.prisma.customer.findMany({
-      take: 1,
-      orderBy: {
-        id: 'desc'
-      },
-    })
-    const last_application = applicationId[0]
-    let a_id = "SFAID"
-    if (!last_application?.loanId) {
-      a_id = a_id + "0001"
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    while (attempts < maxAttempts) {
+      const applicationId = await this.prisma.customer.findMany({
+        take: 1,
+        orderBy: {
+          id: 'desc'
+        },
+      })
+      const last_application = applicationId[0]
+      let a_id = "SFAID"
+      
+      if (!last_application?.loanId) {
+        a_id = a_id + "0001"
+      } else {
+        const last_id = last_application.loanId
+        const _id = last_id.split("SFAID")[1]
+        const id = parseInt(_id) + 1
+        a_id = a_id + id.toString().padStart(4, '0')
+      }
 
-      return a_id
-    } else {
-      const last_id = last_application.loanId
-      const _id = last_id.split("SFAID")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
+      // Check if this loan ID already exists
+      const existingCustomer = await this.prisma.customer.findFirst({
+        where: {
+          loanId: a_id
+        }
+      });
 
-      return a_id
+      if (!existingCustomer) {
+        return a_id;
+      }
+
+      attempts++;
     }
 
-
+    // If we still can't find a unique ID, throw an error
+    throw new Error('Unable to generate unique loan ID after multiple attempts');
   }
   private async _customerId() {
-    const applicationId = await this.prisma.customer.findMany({
-      take: 1,
-      orderBy: {
-        id: 'desc'
-      },
-      where: {
-        status: Status.APPROVED
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    while (attempts < maxAttempts) {
+      const applicationId = await this.prisma.customer.findMany({
+        take: 1,
+        orderBy: {
+          id: 'desc'
+        },
+        where: {
+          status: Status.APPROVED
+        }
+      })
+      const last_application = applicationId[0]
+      let a_id = "CFN"
+      
+      if (!last_application?.customerId) {
+        a_id = a_id + "0001"
+      } else {
+        const last_id = last_application.customerId
+        const _id = last_id.split("CFN")[1]
+        const id = parseInt(_id) + 1
+        a_id = a_id + id.toString().padStart(4, '0')
       }
-    })
-    const last_application = applicationId[0]
-    let a_id = "CFN"
-    if (!last_application?.customerId) {
-      a_id = a_id + "0001"
 
-      return a_id
-    } else {
-      const last_id = last_application.customerId
-      const _id = last_id.split("CFN")[1]
-      const id = parseInt(_id) + 1
-      a_id = a_id + id.toString().padStart(4, '0')
+      // Check if this customer ID already exists
+      const existingCustomer = await this.prisma.customer.findFirst({
+        where: {
+          customerId: a_id
+        }
+      });
 
-      return a_id
+      if (!existingCustomer) {
+        return a_id;
+      }
+
+      attempts++;
     }
 
-
+    // If we still can't find a unique ID, throw an error
+    throw new Error('Unable to generate unique customer ID after multiple attempts');
   }
 }
