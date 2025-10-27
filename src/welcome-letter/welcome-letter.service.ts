@@ -32,13 +32,14 @@ export class WelcomeLetterService {
   }
   async createManual(body: CreateWelomeCustomerDto) {
     try {
+      console.log("Starting customer creation process...");
       const l_id = await this._loanId();
       const c_id = await this._customerId();
-      console.log("l", l_id)
-      console.log("c", c_id)
+      console.log("Generated loan ID:", l_id);
+      console.log("Generated customer ID:", c_id);
       const generatePassword = (length: number) => Array.from({ length }, () => Math.random().toString(36).charAt(2)).join('');
       const password = generatePassword(6);
-      console.log(password)
+      console.log("Generated password:", password);
       
       const n_customer = await this.prisma.customer.create({
         data: {
@@ -109,86 +110,123 @@ export class WelcomeLetterService {
     return await this.prisma.welcomeLetter.delete({ where: { id } });
   }
   private async _loanId() {
+    let uniqueCode = '';
+    let isUnique = false;
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 50; // Increased attempts for random generation
     
-    while (attempts < maxAttempts) {
-      const applicationId = await this.prisma.customer.findMany({
-        take: 1,
-        orderBy: {
-          id: 'desc'
-        },
-      })
-      const last_application = applicationId[0]
-      let a_id = "SFAID"
-      
-      if (!last_application?.loanId) {
-        a_id = a_id + "0001"
+    while (!isUnique && attempts < maxAttempts) {
+      // Try sequential approach first
+      if (attempts < 10) {
+        const applicationId = await this.prisma.customer.findMany({
+          take: 1,
+          orderBy: {
+            id: 'desc'
+          },
+        })
+        const last_application = applicationId[0]
+        let a_id = "SFAID"
+        
+        if (!last_application?.loanId) {
+          a_id = a_id + "0001"
+        } else {
+          const last_id = last_application.loanId
+          // Handle both SFAID and EFAID prefixes
+          if (last_id.startsWith("SFAID")) {
+            const _id = last_id.split("SFAID")[1]
+            const id = parseInt(_id) + 1
+            a_id = a_id + id.toString().padStart(4, '0')
+          } else {
+            // If last ID is not SFAID format, start from 0001
+            a_id = a_id + "0001"
+          }
+        }
+        uniqueCode = a_id;
       } else {
-        const last_id = last_application.loanId
-        const _id = last_id.split("SFAID")[1]
-        const id = parseInt(_id) + 1
-        a_id = a_id + id.toString().padStart(4, '0')
+        // Fall back to random generation like customer service
+        const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
+        uniqueCode = `SFAID${randomPin}`;
       }
 
       // Check if this loan ID already exists
       const existingCustomer = await this.prisma.customer.findFirst({
         where: {
-          loanId: a_id
+          loanId: uniqueCode
         }
       });
 
       if (!existingCustomer) {
-        return a_id;
+        isUnique = true;
+      } else {
+        attempts++;
       }
-
-      attempts++;
     }
 
-    // If we still can't find a unique ID, throw an error
-    throw new Error('Unable to generate unique loan ID after multiple attempts');
+    if (!isUnique) {
+      throw new Error('Unable to generate unique loan ID after multiple attempts');
+    }
+
+    return uniqueCode;
   }
   private async _customerId() {
+    let uniqueCode = '';
+    let isUnique = false;
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 50; // Increased attempts for random generation
     
-    while (attempts < maxAttempts) {
-      const applicationId = await this.prisma.customer.findMany({
-        take: 1,
-        orderBy: {
-          id: 'desc'
-        },
-        where: {
-          status: Status.APPROVED
+    while (!isUnique && attempts < maxAttempts) {
+      // Try sequential approach first
+      if (attempts < 10) {
+        const applicationId = await this.prisma.customer.findMany({
+          take: 1,
+          orderBy: {
+            id: 'desc'
+          },
+          where: {
+            status: Status.APPROVED
+          }
+        })
+        const last_application = applicationId[0]
+        let a_id = "CFN"
+        
+        if (!last_application?.customerId) {
+          a_id = a_id + "0001"
+        } else {
+          const last_id = last_application.customerId
+          if (last_id.startsWith("CFN")) {
+            const _id = last_id.split("CFN")[1]
+            const id = parseInt(_id) + 1
+            a_id = a_id + id.toString().padStart(4, '0')
+          } else {
+            // If last ID is not CFN format, start from 0001
+            a_id = a_id + "0001"
+          }
         }
-      })
-      const last_application = applicationId[0]
-      let a_id = "CFN"
-      
-      if (!last_application?.customerId) {
-        a_id = a_id + "0001"
+        uniqueCode = a_id;
       } else {
-        const last_id = last_application.customerId
-        const _id = last_id.split("CFN")[1]
-        const id = parseInt(_id) + 1
-        a_id = a_id + id.toString().padStart(4, '0')
+        // Fall back to random generation
+        const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
+        uniqueCode = `CFN${randomPin}`;
       }
 
       // Check if this customer ID already exists
       const existingCustomer = await this.prisma.customer.findFirst({
         where: {
-          customerId: a_id
+          customerId: uniqueCode
         }
       });
 
       if (!existingCustomer) {
-        return a_id;
+        isUnique = true;
+      } else {
+        attempts++;
       }
-
-      attempts++;
     }
 
-    // If we still can't find a unique ID, throw an error
-    throw new Error('Unable to generate unique customer ID after multiple attempts');
+    if (!isUnique) {
+      throw new Error('Unable to generate unique customer ID after multiple attempts');
+    }
+
+    return uniqueCode;
   }
 }
