@@ -312,7 +312,7 @@ export class ApprovalLetterService {
     const html = fs.readFileSync(htmlPath, "utf8");
     const populatedHtml = populateTemplate(html, {
       ...dynamicData,
-      FRONTEND_DOMAIN: process.env.FRONTEND_DOMAIN
+      FRONTEND_DOMAIN: "https://elfin.live"
     });
 
     (async () => {
