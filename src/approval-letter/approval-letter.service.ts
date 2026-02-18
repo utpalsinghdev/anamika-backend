@@ -80,7 +80,7 @@ export class ApprovalLetterService {
       const paymnt = await this.prisma.paymentqr.findMany({})
 
       const dynamicData = {
-        company: 'Elfin Financial Services  Services PVT. LTD',
+        company: 'Bhavya Financial Services Private Limited',
         name: _customer.name,
         mob: _customer.phone,
         photoUrl: createApprovalLetterDto.photo ? createApprovalLetterDto.photo : _customer.photo.url,
@@ -96,7 +96,7 @@ export class ApprovalLetterService {
         aadhar: _customer.adharNumber,
         pan: _customer.panNumber,
         loan_amount: `${_customer.loanInNumber} /- (${_customer.loanInWords})`,
-        loan_details: _customer.loanInNumber ? `Periods ${_customer.loanYear} Years at Intrest Rate-5% EMI RS. ${calculateEMI(
+        loan_details: _customer.loanInNumber ? `Periods ${_customer.loanYear} Years at Interest Rate-5% EMI RS. ${calculateEMI(
           _customer?.loanInNumber,
           5,
           _customer?.loanYear
@@ -107,7 +107,7 @@ export class ApprovalLetterService {
         agent_details: _customer.agent ? `${_customer.agent.employeeCode}-${_customer.agent.firstName} ${_customer.agent.LastName} / ${_customer.agent.phone}` : 'NA',
         processing_fee: `Rs. ${costWithoutGst} + Rs. ${gst} = Rs. ${totalCost}`,
 
-        payLink: paymnt[0].url,
+        payLink: paymnt[0]?.url ?? '',
 
       }
       const { originalPdfPath, encryptedPdfPath, password, pdfName } = await this.pdfLink(dynamicData)
@@ -182,7 +182,7 @@ export class ApprovalLetterService {
       const paymnt = await this.prisma.paymentqr.findMany({})
 
       const dynamicData = {
-        company: 'Elfin Financial Services  Services PVT. LTD',
+        company: 'Bhavya Financial Services Private Limited',
         name: _customer.name,
         mob: _customer.phone,
         file_charge: _approval.processingCharge,
@@ -198,14 +198,14 @@ export class ApprovalLetterService {
         aadhar: _customer.adharNumber,
         pan: _customer.panNumber,
         loan_amount: `${_customer.loanInNumber} /- (${_customer.loanInWords})`,
-        loan_details: _customer.loanInNumber ? `Periods ${_customer.loanYear} Years at Intrest Rate-5% EMI RS. ${calculateEMI(
+        loan_details: _customer.loanInNumber ? `Periods ${_customer.loanYear} Years at Interest Rate-5% EMI RS. ${calculateEMI(
           _customer?.loanInNumber,
           5,
           _customer?.loanYear
         ).emi
           }/Month` : 'NA'
         ,
-        payLink: paymnt[0].url,
+        payLink: paymnt[0]?.url ?? '',
         bank_detailis: `${_customer.bank} / ${_customer.AccountNumber} / ${_customer.ifsc} / ${_customer.accountType}`,
         agent_details: _customer.agent ? `${_customer.agent.employeeCode}-${_customer.agent.firstName} ${_customer.agent.LastName} / ${_customer.agent.phone}` : 'NA',
         processing_fee: `Rs. ${costWithoutGst} + Rs. ${gst} = Rs. ${totalCost}`,

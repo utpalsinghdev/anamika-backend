@@ -13,7 +13,7 @@ export class MailService {
     switch (createMailDto.type) {
 
       case mailEnums.JOINING.toString():
-        message = `Congratulations! ${createMailDto.value?.split("|")[0]} Welcome to Fundwisor Finance Business Services Pvt. Ltd. Your Joining has been Accepted By Company. Your EMP ID ${createMailDto.value?.split("|")[1]}, pass-${createMailDto.value?.split("|")[2]} caslon &templateid=1707169985689943172`;
+        message = `Congratulations! ${createMailDto.value?.split("|")[0]} Welcome to Bhavya Financial Services Private Limited. Your Joining has been Accepted By Company. Your EMP ID ${createMailDto.value?.split("|")[1]}, pass-${createMailDto.value?.split("|")[2]} caslon &templateid=1707169985689943172`;
         break;
 
     }

@@ -130,7 +130,7 @@ export class AgentService {
       }
     })
     const data = {
-      message: `Congratulations! Welcome to Green Apple Financial Services Pvt. Ltd. Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${body.password}`,
+      message: `Congratulations! Welcome to Bhavya Financial Services Private Limited Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${body.password}`,
       numbers: body.Phone
     }
     await this.mail.sendSms({
@@ -228,7 +228,7 @@ export class AgentService {
 
     while (!isUnique) {
       const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
-      const employeeCode = `EFID${randomPin}`;
+      const employeeCode = `BFID${randomPin}`;
 
       const agents = await this.prisma.employee.findUnique({
         where: {

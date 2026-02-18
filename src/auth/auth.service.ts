@@ -34,7 +34,7 @@ export class AuthService {
 
     })
     // const data = {
-    //   message: `Congratulations! Welcome to Green Apple Financial Services Pvt. Ltd. Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${payload.password}`,
+    //   message: `Congratulations! Welcome to Bhavya Financial Services Private Limited Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${payload.password}`,
     //   numbers: "6205909123"
     // }
     // const res = await this.mailService.sendSms(data)
