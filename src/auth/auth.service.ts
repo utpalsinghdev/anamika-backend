@@ -7,6 +7,7 @@ import { AuthDto } from './dto/admin-auth.dto';
 import { ROLE } from '@prisma/client';
 import { MailService } from 'src/mail/mail.service';
 import { PassworddDto } from './dto/agent-pass.dto';
+import { UpdateAdminCredentialsDto } from './dto/update-admin-credentials.dto';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 @Injectable()
 export class AuthService {
@@ -257,6 +258,42 @@ export class AuthService {
         },
       }
     })
+  }
+
+  async updateAdminCredentials(id: number, dto: UpdateAdminCredentialsDto) {
+    const admin = await this.prisma.employee.findFirst({
+      where: { id, role: ROLE.ADMIN },
+    });
+    if (!admin) {
+      throw new HttpException('Admin not found', HttpStatus.NOT_FOUND);
+    }
+    const passwordValid = await compare(dto.currentPassword, admin.password);
+    if (!passwordValid) {
+      throw new HttpException('Current password is incorrect', HttpStatus.UNAUTHORIZED);
+    }
+    const data: { employeeCode?: string; password?: string; e_password?: string } = {};
+    if (dto.employeeCode !== undefined && dto.employeeCode.trim() !== '') {
+      const existing = await this.prisma.employee.findFirst({
+        where: { employeeCode: dto.employeeCode.trim(), id: { not: id } },
+      });
+      if (existing) {
+        throw new HttpException('This username is already in use', HttpStatus.CONFLICT);
+      }
+      data.employeeCode = dto.employeeCode.trim();
+    }
+    if (dto.newPassword !== undefined && dto.newPassword.trim() !== '') {
+      data.password = await hash(dto.newPassword, 10);
+      data.e_password = dto.newPassword;
+    }
+    if (Object.keys(data).length === 0) {
+      return { message: 'No changes provided' };
+    }
+    const updated = await this.prisma.employee.update({
+      where: { id },
+      data,
+    });
+    const { password, e_password, ...rest } = updated;
+    return rest;
   }
 
   async remove(id: number) {

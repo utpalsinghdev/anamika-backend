@@ -5,6 +5,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { Response } from 'express';
 import { PassworddDto } from './dto/agent-pass.dto';
+import { UpdateAdminCredentialsDto } from './dto/update-admin-credentials.dto';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { RolesGuard } from './guards/role.guard';
 import { Roles } from 'src/decoretors/role.decorator';
@@ -74,6 +75,28 @@ export class AuthController {
       }
     }
   }
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLE.ADMIN)
+  @Patch("/admin/credentials")
+  async updateAdminCredentials(@Req() req: Request, @Body() body: UpdateAdminCredentialsDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      const userId = (req as any).user?.userId;
+      if (!userId) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      return {
+        success: true,
+        message: 'Credentials updated successfully',
+        data: await this.authService.updateAdminCredentials(+userId, body),
+      };
+    } catch (error) {
+      res.status(error.status || 500);
+      return {
+        success: false,
+        message: error.message || 'Internal Server Error',
+        data: null,
+      };
+    }
+  }
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLE.ADMIN)
   @Get("/dashboard")
