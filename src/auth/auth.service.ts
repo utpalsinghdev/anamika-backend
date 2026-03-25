@@ -35,7 +35,7 @@ export class AuthService {
 
     })
     // const data = {
-    //   message: `Congratulations! Welcome to Bhavya Financial Services Private Limited Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${payload.password}`,
+    //   message: `Congratulations! Welcome to Anamika Capital Finance Pvt. Ltd. Your Joining has been Accepted By Company. Your Login ID ${a_id} And Password is ${payload.password}`,
     //   numbers: "6205909123"
     // }
     // const res = await this.mailService.sendSms(data)
@@ -313,7 +313,7 @@ export class AuthService {
 
     while (!isUnique) {
       const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
-      const employeeCode = `EFID${randomPin}`;
+      const employeeCode = `ACFID${randomPin}`;
 
       const agents = await this.prisma.employee.findUnique({
         where: {

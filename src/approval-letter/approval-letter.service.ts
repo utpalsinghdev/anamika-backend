@@ -80,7 +80,7 @@ export class ApprovalLetterService {
       const paymnt = await this.prisma.paymentqr.findMany({})
 
       const dynamicData = {
-        company: 'Bhavya Financial Services Private Limited',
+        company: 'ANAMIKA CAPITAL FINANCE PVT. LTD.',
         name: _customer.name,
         mob: _customer.phone,
         photoUrl: createApprovalLetterDto.photo ? createApprovalLetterDto.photo : _customer.photo.url,
@@ -182,7 +182,7 @@ export class ApprovalLetterService {
       const paymnt = await this.prisma.paymentqr.findMany({})
 
       const dynamicData = {
-        company: 'Bhavya Financial Services Private Limited',
+        company: 'ANAMIKA CAPITAL FINANCE PVT. LTD.',
         name: _customer.name,
         mob: _customer.phone,
         file_charge: _approval.processingCharge,
