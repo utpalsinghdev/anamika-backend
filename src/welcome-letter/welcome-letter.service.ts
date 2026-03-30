@@ -125,15 +125,15 @@ export class WelcomeLetterService {
           },
         })
         const last_application = applicationId[0]
-        let a_id = "BFID"
+        let a_id = "ACID"
         
         if (!last_application?.loanId) {
           a_id = a_id + "0001"
         } else {
           const last_id = last_application.loanId
           // Handle both SFAID and EFAID prefixes
-          if (last_id.startsWith("BFID")) {
-            const _id = last_id.split("BFID")[1]
+          if (last_id.startsWith("ACID")) {
+            const _id = last_id.split("ACID")[1]
             const id = parseInt(_id) + 1
             a_id = a_id + id.toString().padStart(4, '0')
           } else {
@@ -145,7 +145,7 @@ export class WelcomeLetterService {
       } else {
         // Fall back to random generation like customer service
         const randomPin = Math.floor(10000 + Math.random() * 90000).toString();
-        uniqueCode = `BFID${randomPin}`;
+        uniqueCode = `ACID${randomPin}`;
       }
 
       // Check if this loan ID already exists
